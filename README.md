@@ -3,7 +3,7 @@
 Configuration & Setup with NPM
 ---
 ### Creating the base of your project
-Lets get started with the base of your new React project where we will learn about manipulating Pieces OS and creating our own assets locally on device.
+Let's get started with the base of your new React project where we will learn about manipulating Pieces OS and creating our own assets locally on device.
 
 ##### **How your .tsconfig should look when you are done:**
 ```json
@@ -14,12 +14,9 @@ Lets get started with the base of your new React project where we will learn abo
      "allowJs": true,  
      "checkJs": true,  
      "maxNodeModuleJsDepth": 1,  
-    "forceConsistentCasingInFileNames": true,  
-  
-    /* Type Checking */  
+    "forceConsistentCasingInFileNames": true,
     "strict": false,  
-    "skipLibCheck": true,  
-    /* Skip type checking all .d.ts files. */  
+    "skipLibCheck": true,
     "jsx": "react"  
   },  
   "exclude": ["node_modules"]  
@@ -60,27 +57,26 @@ Along with the typing, you will need to install the full packages for react, rea
 npm install react && npm install react-dom && npm install react-scripts
 ```
 
-> [!note] Recommendation
-> The order that all of the npm packages are saved and added to your dependencies is important and will  effect your installation flow. **This slowed me down for quite a bit.**
+> **Recommendation**
+> The order that npm packages are saved and added to your dependencies is important and will affect your installation flow. **This slowed me down for quite a bit.**
 >
 > If you are having issues with your installation, it is likely due to a conflict in Typescript versions - `npm uninstall typescript` - then go back and perform all other npm installations before reinstalling typescript again.
 >
 
-And last but not least its a good idea to add a few scripts into your `package.json` to help with development:
+And last but not least it's a good idea to add a few scripts into your `package.json` to help with development:
 
 ```json
-scripts: {
-	// Helper scripts i reccomend.
-	"dev": "ts-node index.tsx",  
-	"clean": "rm -r node_modules && rm package-lock.json",
-	
-	// React scripts for testing.
-	"start": "react-scripts start",
-	"build": "react-scripts build",
+{ 
+  "scripts": {
+    "dev": "ts-node index.tsx",
+    "clean": "rm -r node_modules && rm package-lock.json",
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  }
 }
 ```
 
-> [!info] Don't Forget
+> **Don't Forget**
 > You can run any script that you add here via `npm run <your-script>`. For example to run "start" you would simple run `npm run start`
 
 ## Setting up your `public` Directory
@@ -98,35 +94,35 @@ Next you can go ahead and create a new directory called `public` that will hold 
 ---
 Now that the initial `.html` file has been created, you can start to work on your src directory and getting the rest of your core files added to the project.
 
-Inside of the `src` directory, add two files:
+Inside the `src` directory, add two files:
 - **`singleton.ts`** - single instance container for a few global functions and features
 - **`index.tsx`**- where the core info is and where we are going to be spending most of the time during this project following the setup.
 
 Once you open `index.tsx` you should follow these steps to get your base Application window created:
 
 1. Import the full react library at the top of your file, along with a single import from `react-dom`:
-```tsx
-import * as React from "react";
-import { render } from 'react-dom';
-```
+    ```tsx
+    import * as React from "react";
+    import { render } from 'react-dom';
+    ```
 
 2. Follow that with the full App() function and main run of the application:
-```tsx
-function App(): React.JSX.Element {  
-    return (  
-        <div>  
-            <h1>Hello Pieces Dev Community :)</h1>  
-        </div>  
-    )}
-```
+    ```tsx
+    function App(): React.JSX.Element {  
+        return (  
+            <div>  
+                <h1>Hello Pieces Dev Community :)</h1>  
+            </div>
+        )}
+    ```
 
 3. And then add these last two lines to target the `root` element by using the ID that is on it:
-```tsx
-const rootElement = document.getElementById("root");  
-const root = createRoot(rootElement);
-```
+    ```tsx
+    const rootElement = document.getElementById("root");  
+    const root = createRoot(rootElement);
+    ```
 
-> [!faq] Helpful tip
+> **Helpful tip**
 > When working in this environment I noticed some @babel errors during the build process (or running `npm run start`) and found this workaround that you can install via npm as well [here](https://www.npmjs.com/package/@babel/plugin-transform-private-property-in-object).
 
 
@@ -145,11 +141,11 @@ Now that everything is ready to go, lets run this command here:
 npm run start
 ```
 
-And after a few seconds you should be able to see in your chrome browser (or your primary browser) a blank window that looks like this:
+And after a few seconds you should be able to see in your Chrome browser (or your primary browser) a blank window that looks like this:
 
-![[Screenshot 2023-10-24 at 2.03.32 PM.png]]
+![Getting a 200 Back on Connect](/assets/success_connect.png)
 
-##### **You have now successfully setup your dev environment, and will be ready to test different endpoints inside of Pieces OS.**
+##### **You have now successfully set up your dev environment, and will be ready to test different endpoints inside of Pieces OS.**
 
 ## Connecting your Application
 ---
@@ -174,7 +170,7 @@ To create the `Application` object for your project, you will need to make sure 
 Connecting your application here is as easy as a single **POST** request and can be done via the Response interface of the **Fetch Api**. Remember that you can name this whatever you would like to, just be sure to include the updated variable name in the `options` down below.
 
 > [!example]
-> When creating the `tracked_application` item, you will need to use a type that is not available inside of the current `npm_deployment`.
+> When creating the `tracked_application` item, you will need to use a type that is not available inside the current `npm_deployment`.
 >
 > This structure is the same as the tracked_application full example you see here below, and the only difference from the unavailable type `SeededTrackedApplication` and the available type `TrackedApplication` is `id: number`.
 
@@ -191,8 +187,8 @@ const tracked_application = {
 - **name**: Brave
 - **platform**: Depending on your current environment, you need to set the platform parameter to match your current operating system. Select between `.Macos`, `.Windows`, `.Linux`
 
-> [!faq] Imports
-> Be sure to double check that you have the following import added to the first few lines of your `index.tsx` file if you have not already: `import * as Pieces from "@pieces-app/client";`
+> **Imports**
+> Be sure to double-check that you have the following import added to the first few lines of your `index.tsx` file if you have not already: `import * as Pieces from "@pieces-app/client";`
 
 ### Creating `connect()` Function
 When your program starts, it needs to connect to Pieces OS to gain access to any functional data and to exchange information on the `localhost:1000` route. Now that you have your `tracked_application` - lets get into the into the details.
@@ -208,11 +204,11 @@ async function connect(): Promise<Boolean> {
 	    method: 'POST',  
 	    body: JSON.stringify({ application: tracked_application}  
     ),
-  },
+  }
 }
 ```
 
-Now lets add few more things to this file
+Now let's add few more things to this file
 - **`_flag: Boolean`** - for marking the success or failure of the try catch
 - **try, catch**
     - `response` - for capturing the fetch response back from OS Server
@@ -220,7 +216,7 @@ Now lets add few more things to this file
     - `e` - error that is coming back if the response fails
 
 #### Running `connect().then()`:
-This will just run the connect function and then log the response in your console, inside of your
+This will just run the connect function and then log the response in your console, inside your
 browser:
 
 ```tsx
@@ -232,7 +228,7 @@ Below this final line should be:
 - `const rootElement ...`
 - `root.render(...)`
 
-Here is the entire file for you to double check your work:
+Here is the entire file for you to double-check your work:
 
 ```tsx
   
@@ -301,9 +297,9 @@ And you should have the same content in the main browser window as before once t
 
 ![[Screenshot 2023-10-24 at 4.45.49 PM.png]]
 
-This includes both the full OS response object with all of the data that you will need to get going with other endpoints, and your application is now connected and ready to go for the rest of your exploration and discovery!
+This includes both the full OS response object with all the data that you will need to get going with other endpoints, and your application is now connected and ready to go for the rest of your exploration and discovery!
 
-Follow along with these nexts steps to learn about **assets and formats,** two things that are very important for managing any form of data with Pieces OS.
+Follow along with these next steps to learn about **assets and formats,** two things that are very important for managing any form of data with Pieces OS.
 
 ## Getting Started with `/asset` + `/assets`
 ---
@@ -314,7 +310,7 @@ Follow along with these nexts steps to learn about **assets and formats,** two t
 > If I want to create a snippet (lets call it `var`), I need to send this to the master `Assets` list, you would first create `var` itself with the proper formats and data added to the `var` object, then send the newly created SeededAsset over to the Assets list (assets/create). Then you will receive the asset back as the response from the server. Cool, right?
 
 
-> [!faq] HEY! Read this.
+> **HEY! Read this.**
 > Traditionally, `Assets` is a linear list of flat `Asset` objects stored in an array or list.
 >
 > **You can use identifiers to get a specific asset from the asset list called a UUID.** But you'll learn more about that later on.
@@ -322,12 +318,12 @@ Follow along with these nexts steps to learn about **assets and formats,** two t
 ### `/asset`
 Initially when creating your application, you will have no snippets saved to your project, will not be signed in, and you will have not completed onboarding. These are properties that you may see during this creation.
 
-> [!info] Check out `localhost:1000/assets` while Pieces OS is running to see the empty object that is there.
+> Check out `localhost:1000/assets` while Pieces OS is running to see the empty object that is there.
 
 #### **Creating your First Asset**
 While creating an asset, there are some required parameters that you will need to be sure to include the proper **format** data.
 
-> [!example] Explaining Format
+> **Explaining Format**
 >
 > For each `Asset` object, each required parameter must be included, and the Asset must be seeded before it is sent to be created.
 
@@ -899,7 +895,7 @@ The response back will look similar to the following:
 ---
 Now when you follow this guide, you will be receiving this data back from inside of your console in the browser. But if you would like to view your data incrementally through the full browser window, you can navigate to `http://localhost:1000/assets` to view a full list of snippets that have been saved.
 
-> [!tip] Recommendation  
+> **Recommendation**  
 > We use [JSON Viewer](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh) internally when developing and **recommend** using some form of web based extension that assists with reading JSON DATA
 
 
@@ -907,6 +903,7 @@ Now when you follow this guide, you will be receiving this data back from inside
 This is a very simple guide on how to get up and running using the @pieces-app/client npm package and create a web environment that you can build on top of. **Fork this repo** to get started and learn about the depth of possibilities you have with Pieces OS.
 
 More guides will be coming soon around:
+- Adding a UI to view multiple snippets from `/assets`
 - Using Pieces OS as a database
 - Creating a personal Copilot that understands your context
 - Learning about `/search` endpoints
