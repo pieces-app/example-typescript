@@ -1,9 +1,9 @@
-# Get Started with Pieces OS and the @pieces-app/client npm package
+# Get Started with Pieces OS and the @pieces.app/client npm package
 
 Follow this guide to get an early look at using Pieces OS in your own development environment. You can use this to get familiar with some key terms and endpoints: `assets`, `asset`, `connect`, `format`, `formats`, and `create`. There are other topics that are touched on, and further expansion on this starter project is coming soon. 
 
 See the NPM package here: 
-- [https://www.npmjs.com/package/@pieces-app/client](https://www.npmjs.com/package/@pieces-app/client)
+- [https://www.npmjs.com/package/@pieces.app/client](https://www.npmjs.com/package/@pieces.app/client)
 
 Read our Current Documentation:
 - [https://docs.pieces.app](https://docs.pieces.app)
@@ -197,12 +197,12 @@ const tracked_application = {
 - **platform**: Depending on your current environment, you need to set the platform parameter to match your current operating system. Select between `.Macos`, `.Windows`, `.Linux`
 
 > **Imports**
-> Be sure to double-check that you have the following import added to the first few lines of your `index.tsx` file if you have not already: `import * as Pieces from "@pieces-app/client";`
+> Be sure to double-check that you have the following import added to the first few lines of your `index.tsx` file if you have not already: `import * as Pieces from "@pieces.app/client";`
 
 ### Creating `connect()` Function
 When your program starts, it needs to connect to Pieces OS to gain access to any functional data and to exchange information on the `localhost:1000` route. Now that you have your `tracked_application` - lets get into the into the details.
 
-Start by defining you connect function and add the initial `/connect` route to your function as the `url` variable and then attache the `options` object. Include your `tracked_application` object passed into a `JSON.stringify()` method under the `application` parameter like so:
+Start by defining you connect function and add the initial `/connect` route to your function as the `url` variable and then attach the `options` object. Include your `tracked_application` object passed into a `JSON.stringify()` method under the `application` parameter like so:
 
 ```tsx
 async function connect(): Promise<Boolean> {
@@ -242,7 +242,7 @@ Here is the entire file for you to double-check your work:
 ```tsx
   
 import * as React from "react";  
-import * as Pieces from "@pieces-app/client";  
+import * as Pieces from "@pieces.app/client";  
   
 import {createRoot} from "react-dom/client";  
  
@@ -909,7 +909,7 @@ Now when you follow this guide, you will be receiving this data back from inside
 
 
 ## Conclusion
-This is a very simple guide on how to get up and running using the @pieces-app/client npm package and create a web environment that you can build on top of. **Fork this repo** to get started and learn about the depth of possibilities you have with Pieces OS.
+This is a very simple guide on how to get up and running using the @pieces.app/client npm package and create a web environment that you can build on top of. **Fork this repo** to get started and learn about the depth of possibilities you have with Pieces OS.
 
 More guides will be coming soon around:
 - Adding a UI to view multiple snippets from `/assets`

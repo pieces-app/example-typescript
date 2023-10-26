@@ -1,9 +1,9 @@
 /// (1) First import the react library here in your index.tsx.
 import * as React from "react";
-import * as Pieces from "@pieces-app/client";
+import * as Pieces from "@pieces.app/client";
 
 import {createRoot} from "react-dom/client";
-import {Application, SeededAsset} from "@pieces-app/client";
+import {Application, SeededAsset} from "@pieces.app/client";
 
 
 //=============================[GLOBALS]================================//
