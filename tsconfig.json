@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "CommonJS",
+     "allowJs": true,
+     "checkJs": true,
+     "maxNodeModuleJsDepth": 1,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": false,
+    "skipLibCheck": true,
+    /* Skip type checking all .d.ts files. */
+    "jsx": "react"
+  },
+  "exclude": ["node_modules"]
+}
