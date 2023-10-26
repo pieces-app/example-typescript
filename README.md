@@ -1,7 +1,16 @@
 # Get Started with Pieces OS and the @pieces-app/client npm package
 
-Configuration & Setup with NPM
----
+Follow this guide to get an early look at using Pieces OS in your own development environment. You can use this to get familiar with some key terms and endpoints: `assets`, `asset`, `connect`, `format`, `formats`, and `create`. There are other topics that are touched on, and further expansion on this starter project is coming soon. 
+
+See the NPM package here: 
+- [https://www.npmjs.com/package/@pieces-app/client](https://www.npmjs.com/package/@pieces-app/client)
+
+Read our Current Documentation:
+- [https://docs.pieces.app](https://docs.pieces.app)
+- **Developer docs coming soon**
+
+## Configuration & Setup with NPM
+
 ### Creating the base of your project
 Let's get started with the base of your new React project where we will learn about manipulating Pieces OS and creating our own assets locally on device.
 
@@ -893,7 +902,7 @@ The response back will look similar to the following:
 
 ## View Your Data
 ---
-Now when you follow this guide, you will be receiving this data back from inside of your console in the browser. But if you would like to view your data incrementally through the full browser window, you can navigate to `http://localhost:1000/assets` to view a full list of snippets that have been saved.
+Now when you follow this guide, you will be receiving this data back from inside your console in the browser. But if you would like to view your data incrementally through the full browser window, you can navigate to `http://localhost:1000/assets` to view a full list of snippets that have been saved.
 
 > **Recommendation**  
 > We use [JSON Viewer](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh) internally when developing and **recommend** using some form of web based extension that assists with reading JSON DATA
