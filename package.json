@@ -9,7 +9,7 @@
     "build": "react-scripts build"
   },
   "dependencies": {
-    "@pieces.app/client": "^0.0.7",
+    "@pieces.app/client": "^0.0.6",
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
     "react-dom": "^18.2.0",

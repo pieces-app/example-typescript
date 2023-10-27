@@ -1,8 +1,10 @@
 /// (1) First import the react library here in your index.tsx.
 import * as React from "react";
+// @ts-ignore
 import * as Pieces from "@pieces.app/client";
 
 import {createRoot} from "react-dom/client";
+// @ts-ignore
 import {Application, SeededAsset} from "@pieces.app/client";
 
 
