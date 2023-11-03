@@ -304,7 +304,7 @@ npm run start
 
 And you should have the same content in the main browser window as before once this completes. But if you open up your inspector using `cmd+option+i` or `ctrl+shift+c` you will see this inside of your console:
 
-![Console Output](image.png)
+![Console Output](assets/image.png)
 
 This includes both the full OS response object with all the data that you will need to get going with other endpoints, and your application is now connected and ready to go for the rest of your exploration and discovery!
 
