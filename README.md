@@ -310,7 +310,7 @@ This includes both the full OS response object with all the data that you will n
 
 Follow along with these next steps to learn about **assets and formats,** two things that are very important for managing any form of data with Pieces OS.
 
-## Getting Started with `Asset` + `Assets`
+## Getting Started with `Asset` + `/assets`
 ---
 **Asset** is a very important models who's primary purpose is to manage the seeded data that comes in to the application, and is stored inside of Pieces OS. Each asset is a identifiable piece of saved data, or pre-seeded data.
 
@@ -373,7 +373,7 @@ let seed: SeededAsset = {
 ```
 
 
-### `Assets/create`
+### `/assets/create`
 Now before continuing forward, we will need to prepare the `create()` function to connect to the proper `Assets/create` endpoint. Create slightly differs from connect, since previously our json object did not require any new data that was returned back from the server. In this case **we will need to include the application data that was returned back from our initial call to `/connect`.**
 
 The `create()` function needs to accomplish a few things:
@@ -912,7 +912,7 @@ Now when you follow this guide, you will be receiving this data back from inside
 This is a very simple guide on how to get up and running using the @pieces.app/client npm package and create a web environment that you can build on top of. **Fork this repo** to get started and learn about the depth of possibilities you have with Pieces OS.
 
 More guides will be coming soon around:
-- Adding a UI to view multiple snippets from `Assets`
+- Adding a UI to view multiple snippets from ` /assets`
 - Using Pieces OS as a database
 - Creating a personal Copilot that understands your context
 - Learning about `/search` endpoints
