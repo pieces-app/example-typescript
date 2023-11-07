@@ -105,7 +105,6 @@ function renameAsset(_name: string, _id: String){
 
                 _asset.name = _name;
 
-
                 new Pieces.AssetApi().assetUpdate({asset: _asset}).then(_updated => {
                     console.log("updated:", _updated);
                 })
