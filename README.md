@@ -69,7 +69,7 @@ npm install react && npm install react-dom && npm install react-scripts
 > **Recommendation**
 > The order that npm packages are saved and added to your dependencies is important and will affect your installation flow. **This slowed me down for quite a bit.**
 >
-> If you are having issues with your installation, it is likely due to a conflict in Typescript versions - `npm uninstall typescript` - then go back and perform all other npm installations before reinstalling typescript again.
+> **If you are having issues with your installation, it is likely due to a conflict in Typescript versions - `npm uninstall typescript` - then go back and perform all other npm installations before reinstalling typescript again**.
 >
 
 And last but not least it's a good idea to add a few scripts into your `package.json` to help with development:
@@ -304,13 +304,13 @@ npm run start
 
 And you should have the same content in the main browser window as before once this completes. But if you open up your inspector using `cmd+option+i` or `ctrl+shift+c` you will see this inside of your console:
 
-![[Screenshot 2023-10-24 at 4.45.49 PM.png]]
+![Console Output](assets/image.png)
 
 This includes both the full OS response object with all the data that you will need to get going with other endpoints, and your application is now connected and ready to go for the rest of your exploration and discovery!
 
 Follow along with these next steps to learn about **assets and formats,** two things that are very important for managing any form of data with Pieces OS.
 
-## Getting Started with `/asset` + `/assets`
+## Getting Started with `Asset` + `/assets`
 ---
 **Asset** is a very important models who's primary purpose is to manage the seeded data that comes in to the application, and is stored inside of Pieces OS. Each asset is a identifiable piece of saved data, or pre-seeded data.
 
@@ -324,7 +324,7 @@ Follow along with these next steps to learn about **assets and formats,** two th
 >
 > **You can use identifiers to get a specific asset from the asset list called a UUID.** But you'll learn more about that later on.
 
-### `/asset`
+### `Asset`
 Initially when creating your application, you will have no snippets saved to your project, will not be signed in, and you will have not completed onboarding. These are properties that you may see during this creation.
 
 > Check out `localhost:1000/assets` while Pieces OS is running to see the empty object that is there.
@@ -374,7 +374,7 @@ let seed: SeededAsset = {
 
 
 ### `/assets/create`
-Now before continuing forward, we will need to prepare the `create()` function to connect to the proper `/assets/create` endpoint. Create slightly differs from connect, since previously our json object did not require any new data that was returned back from the server. In this case **we will need to include the application data that was returned back from our initial call to `/connect`.**
+Now before continuing forward, we will need to prepare the `create()` function to connect to the proper `Assets/create` endpoint. Create slightly differs from connect, since previously our json object did not require any new data that was returned back from the server. In this case **we will need to include the application data that was returned back from our initial call to `/connect`.**
 
 The `create()` function needs to accomplish a few things:
 
@@ -912,7 +912,7 @@ Now when you follow this guide, you will be receiving this data back from inside
 This is a very simple guide on how to get up and running using the @pieces.app/client npm package and create a web environment that you can build on top of. **Fork this repo** to get started and learn about the depth of possibilities you have with Pieces OS.
 
 More guides will be coming soon around:
-- Adding a UI to view multiple snippets from `/assets`
+- Adding a UI to view multiple snippets from ` /assets`
 - Using Pieces OS as a database
 - Creating a personal Copilot that understands your context
 - Learning about `/search` endpoints
