@@ -95,6 +95,11 @@ function deleteAsset(_id: String){
     })
 }
 
+// used to rename an asset, takes in an _id and _name that comes from the input fields on
+// NameInput + DataInput fields.
+//
+// this uses your asset snapshot to get your list of snippets, then() to get the snippet list back,
+// then use the _id to select the snippet from the list of all snippets.
 function renameAsset(_name: string, _id: String){
 
     new Pieces.AssetsApi().assetsSnapshot({}).then(_assetList => {
@@ -113,34 +118,13 @@ function renameAsset(_name: string, _id: String){
     })
 }
 
-
-//==============================[Getting assets list (snapshot)]==================================//
-// function refreshSnippetList() {
-//     new Pieces.AssetsApi().assetsSnapshot({}).then((assets) => {
-//         // console.log('Response', assets)
-//         for (let i = 0; i < 1; i++) {
-//          console.log('iterable', assets.iterable[i]);
-//          console.log('id of asset:', assets.iterable[i].id);
-//          console.log('name of asset:', assets.iterable[i].name);
-//          console.log('classification of asset:', assets.iterable[i].original.reference.classification);
+// you primary App function where all react elements render at their core.
+// for reactivity i added a number of state based properties here, and made the highest level
+// a little more verbose.
 //
-//          let _local: LocalAsset = {
-//              id: assets.iterable[i].id,
-//              name: assets.iterable[i].name,
-//              classification: assets.iterable[i].original.reference.classification
-//          }
-//
-//          snippetList.push(_local);
-//
-//         }
-//     })
-// }
-
-//==============================[.end Getting assets list (snapshot)]==================================//
-
-
-
-/// (3) Then create your function() here to call your webpage AKA your application:
+// refresh is responsible for adding new assets to the snippet list itself when you create a new asset.
+// the refresh button is connected to first <button> element you see below the header and div there.
+// TODO: update the logic here for refresh, it is having issues and populating the snippet viewing area with the old list along with the new one, creating duplicates.
 function App(): React.JSX.Element {
 
     const [array, setArray] = useState([]);
@@ -227,17 +211,6 @@ function Indicator(): React.JSX.Element {
     )
 }
 
-// function SnippetsList(): React.JSX.Element {
-//
-//     return (
-//         <div style={{ width: "auto", border: '2px solid black', height: '400px', padding: '20px', borderRadius: '9px' }}>
-//             <div></div>
-//         </div>
-//     )
-// }
-
-
-
 function NameTextInput() {
     const [value, setValue] = useState('');
 
@@ -318,7 +291,7 @@ function CreateButton(): React.JSX.Element {
 
 connect().then(__ => {
     // TODO: this needs improvement but is okay for now. since the types are not here yet,
-    // for some reason i had to parse the stringified full_context object
+    // for some reason i had to parse the stringified full_context object to get correct typing.
     full_context = __;
     let _t = JSON.parse(JSON.stringify(full_context));
     applicationData = _t.application;
