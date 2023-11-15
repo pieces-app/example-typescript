@@ -9,7 +9,76 @@ Read our Current Documentation:
 - [https://docs.pieces.app](https://docs.pieces.app)
 - **Developer docs coming soon**
 
+## Table of Contents
+
+- [Operating System Support](#operating-system-support)
+- [Installing](#-installing)
+    - [Pieces OS](#-pieces-os)
+    - [Downloading NPM Package](#-downloading-npm-package)
+- [Testing Usage](#testing-usage)
+- [Examples](#examples)
+    - [/connect](#connect)
+    - [Asset + /assets](#creating-with-asset--assets)
+    - [SeededAsset](#seededasset)
+    - [/assets/create](#using-assetscreate)
+    - [/assets/snapshot](#get-your-assets-snapshot)
+      - [Refresh Your Snapshot](#refresh-your-snapshot)
+    - [/asset/update](#update-your-assets-metadata-or-properties)
+    - [/assets/delete](#deleting-an-asset)
+- [Supported Versions](#supported-versions-)
+
+
 ## Configuration & Setup with NPM
+
+You can choose to follow the following steps to configure your project by hand, or you can use `npx create-react-app <your-app-name>` instead.
+
+## Installing
+When developing on the Pieces platform, you need two primary things:
+
+1. **Download the Pieces OS application**
+2. **Install the npm package**
+
+## Pieces OS
+Pieces OS runs in the background of your computer and serves as a hub for all plugins and extensions developed by the team. In order to utilize your own Server locally and support all the functionality that powers things like [Global Search](https://docs.pieces.app/features/global-search), [Copilot Chats](https://docs.pieces.app/features/pieces-copilot), [Asset Saving](https://docs.pieces.app/features/managing-saved-materials), [context](https://docs.pieces.app/features/pieces-copilot#set-your-own-copilot-context), and more.
+
+Select the right version to download Pieces OS for your operating system:
+- [macOS](https://docs.pieces.app/installation-getting-started/macos) - [Compatible with macOS 11 Big Sur or higher]
+- [Windows](https://docs.pieces.app/installation-getting-started/windows) - [Compatible with Windows 10 version 1809 or higher]
+- [Linux](https://docs.pieces.app/installation-getting-started/linux) - [Compatible with Ubuntu 18 or Higher]
+
+You can also visit our user facing documentation to learn more about different features that are available now to give you an idea of some of the things that you can potentially do.
+
+## Downloading NPM Package
+
+Using npm:
+
+```bash
+npm install @pieces.app/client
+```
+
+Using pnpm:
+
+```bash
+pnpm add @pieces.app/client
+```
+
+After you install the package, you  can import the library into your file(s) using `require`:
+
+```js
+const pieces = require('@pieces.app/client')
+```
+
+or you can import the package using `import` as well:
+
+```js
+import * as pieces from '@pieces.app/client'
+```
+
+> **Recommendation**
+> The order that npm packages are saved and added to your dependencies is important and will affect your installation flow. **This slowed me down for quite a bit.**
+>
+> **If you are having issues with your installation, it is likely due to a conflict in Typescript versions - `npm uninstall typescript` - then go back and perform all other npm installations before reinstalling typescript again**.
+
 
 ### Creating the base of your project
 Let's get started with the base of your new React project where we will learn about manipulating Pieces OS and creating our own assets locally on device.
@@ -32,7 +101,7 @@ Let's get started with the base of your new React project where we will learn ab
 }
 ```
 
-### Installing with npm
+### Installing packages with npm
 
 #### Need this if you are going to work with ts files
 ```bash
@@ -51,7 +120,6 @@ Then getting the types package for node can also be super beneficially and in so
 npm install -D tslib @types/node
 ```
 
-
 I ended up also installing a few react libraries to get a more visual experience while learning about the api itself.
 
 Here are those npm commands for `@types`:
@@ -65,12 +133,6 @@ Along with the typing, you will need to install the full packages for react, rea
 ```bash
 npm install react && npm install react-dom && npm install react-scripts
 ```
-
-> **Recommendation**
-> The order that npm packages are saved and added to your dependencies is important and will affect your installation flow. **This slowed me down for quite a bit.**
->
-> **If you are having issues with your installation, it is likely due to a conflict in Typescript versions - `npm uninstall typescript` - then go back and perform all other npm installations before reinstalling typescript again**.
->
 
 And last but not least it's a good idea to add a few scripts into your `package.json` to help with development:
 
@@ -89,7 +151,6 @@ And last but not least it's a good idea to add a few scripts into your `package.
 > You can run any script that you add here via `npm run <your-script>`. For example to run "start" you would simple run `npm run start`
 
 ## Setting up your `public` Directory
----
 Next you can go ahead and create a new directory called `public` that will hold your `index.html` file where your entry point exists. Create the file inside of public and save it there. You do not have to add anything to the `index.html` file at this time, as we will come back to this later. If you would like, you can add the following as a placeholder for now:
 
 ```html
@@ -100,7 +161,6 @@ Next you can go ahead and create a new directory called `public` that will hold 
 ```
 
 ## Setting up your `src` Directory
----
 Now that the initial `.html` file has been created, you can start to work on your src directory and getting the rest of your core files added to the project.
 
 Inside the `src` directory, add two files:
@@ -136,7 +196,6 @@ Once you open `index.tsx` you should follow these steps to get your base Applica
 
 
 ## Running your Project for the First Time
----
 Everything has been added. We are nearly there and will need to perform a final few checks before starting our dev project.
 
 1. Be sure that Pieces OS is running
@@ -237,66 +296,37 @@ Below this final line should be:
 - `const rootElement ...`
 - `root.render(...)`
 
-Here is the entire file for you to double-check your work:
+Here is the entire connection function for you to double-check your work:
 
 ```tsx
-  
-import * as React from "react";  
-import * as Pieces from "@pieces.app/client";  
-  
-import {createRoot} from "react-dom/client";  
- 
-const tracked_application = {  
-    name: Pieces.ApplicationNameEnum.Brave,  
-    version: '0.0.1',  
-    platform: Pieces.PlatformEnum.Macos,  
-}  
-  
-async function connect(): Promise<Boolean> {  
-  
-    const url: string = 'http://localhost:1000/connect';  
-    const options: {method: string, body: string} = {  
-        method: 'POST',  
-        body: JSON.stringify({ application: tracked_application}  
-        ),    }  
-    let _flag: Boolean = false;  
-  
-    try {  
-        const response: Response = await fetch(url, options);  
-        const data: Promise<any> = await response.json();  
-        console.log(data);  
-        _flag = true;  
-    } catch (e) {  
-        console.error(e);  
-    }  
-    return _flag;  
-}  
-  
-connect().then( __=> console.log("Response back from /connect:", __));  
-  
-function App(): React.JSX.Element {  
-    return (  
-        <div>  
-            <h1>Hello Pieces Dev Community :)</h1>  
-        </div>  
-    )}  
-  
-const rootElement = document.getElementById("root");  
-const root = createRoot(rootElement);  
-  
-root.render(  
-    <React.StrictMode>  
-        <App />  
-    </React.StrictMode>  
-);
+async function connect(): Promise<JSON> {
+
+    const url: string = 'http://localhost:1000/connect';
+    const options: {method: string, body: string} = {
+        method: 'POST',
+        body: JSON.stringify({ application: tracked_application}
+        ),
+    }
+
+    let _output: Promise<JSON>;
+
+    try {
+        const response: Response = await fetch(url, options);
+        const data: Promise<JSON> = await response.json();
+        _output = data;
+        return _output;
+    } catch (e) {
+        console.error(e);
+    }
+
+}
 ```
 
 
 ## View Console Output in your Browser
----
 Now that everything has been correctly configured (fingers crossed) you can run your sample application and connect to Pieces OS for the first time.
 
-Inside of your terminal at the root directory of your project, use NPM to run one of the scripts that we added to the package.json file called "start":
+Inside your terminal at the root directory of your project, use NPM to run one of the scripts that we added to the package.json file called "start":
 
 ```bash 
 npm run start
@@ -311,13 +341,11 @@ This includes both the full OS response object with all the data that you will n
 Follow along with these next steps to learn about **assets and formats,** two things that are very important for managing any form of data with Pieces OS.
 
 ## Getting Started with `Asset` + `/assets`
----
 **Asset** is a very important models who's primary purpose is to manage the seeded data that comes in to the application, and is stored inside of Pieces OS. Each asset is a identifiable piece of saved data, or pre-seeded data.
 
 **Assets** is equally important, but instead of containing a single asset with parameters storing data on it, Assets serves as the list of `type: Asset` objects that are stored there. Also you will find the operations for adding, deleting, searching, and other functions that are related to referencing a number of different snippets to make a comparison. For instance:
 
 > If I want to create a snippet (lets call it `var`), I need to send this to the master `Assets` list, you would first create `var` itself with the proper formats and data added to the `var` object, then send the newly created SeededAsset over to the Assets list (assets/create). Then you will receive the asset back as the response from the server. Cool, right?
-
 
 > **HEY! Read this.**
 > Traditionally, `Assets` is a linear list of flat `Asset` objects stored in an array or list.
@@ -354,22 +382,14 @@ At the top level of this object you will see:
 With each call you need to include your application object that you created earlier - and we can do this inside of the .then() following the return from `connect()` which is defined here:
 
 ```tsx
-connect().then(__ => {  
-    full_context = __;  
-    let _t = JSON.parse(JSON.stringify(full_context));  
-    app = _t.application;  
-    console.log(app);  
-});
+connect().then(__ => {
+    // parsing this value and restringifying it properly gives it its type.
+    full_context = __;
+    let _t = JSON.parse(JSON.stringify(full_context));
+    applicationData = _t.application;
+    console.log('Application Data: ', applicationData);
 
-// creating the seeded asset in its simplist form.
-let seed: SeededAsset = {  
-    application: app,  
-    format: {  
-        fragment: {  
-            string: { raw: 'Testing the string param' }    
-		 }
-	 }
-}
+})
 ```
 
 
@@ -381,24 +401,29 @@ The `create()` function needs to accomplish a few things:
 1. Create a new asset using our simple `SeededAsset` configuration that we just created as the `seed` object
 2. Send a POST request to the new `http://localhost:1000/assets/create` with out data
 3. Return the response back after this is completed
-
+    
 Here is what the `create()` function looks like in its entirety:
 
 ```tsx
-async function create(_seed: SeededAsset): Promise<JSON> {  
-    const _url: string = 'http://localhost:1000/assets/create';  
-    const options: {method: string, body: string} = {  
-        method: 'POST',  
-        body: JSON.stringify({asset: _seed, type: 'SEEDED_ASSET'}),  
-    }  
-  
-    try {  
-        const response: Response = await fetch(_url, options);  
-        const data: Promise<JSON> = await response.json();  
-        return data;  
-    } catch (e) {  
-        console.error(e);  
-    }}
+function createAsset() {
+    let _seededAsset: SeededAsset = {
+        application: applicationData,
+        format: {
+            fragment: {
+                string: { raw: data },
+            },
+        },
+        metadata: {
+            name: name
+        }
+    }
+
+    // create your seed
+    let _seed: Pieces.Seed = {
+        asset: _seededAsset,
+        type: SeedTypeEnum.Asset
+    }
+}
 ```
 
 Now that we have the create function created, all that is left is to call `create()` and log our new asset to the console!
@@ -406,503 +431,138 @@ Now that we have the create function created, all that is left is to call `creat
 You can add this final call to the end of the `connect.then()`:
 
 ```tsx
-create(seed).then(__ => {  
-    console.log('Asset Created! Here is it\'s data: ', __);  
+// make your api call.
+new Pieces.AssetsApi().assetsCreateNewAsset({seed: _seed}).then(_a => {
+    console.log("well howdy", _a);
 })
 ```
 
 #### Response
-Once you receive your response back from Pieces OS, you will notice the drastic difference in the response back here. There is quite a long list of parameters that you can store along side your assets to make them more powerful.
+Once you receive your response back from Pieces OS, you will notice the drastic difference in the response back here. There is quite a long list of parameters that you can store alongside your assets to make them more powerful.
 
-The response back will look similar to the following:
+The response back will look similar to the following: [https://jwaf.pieces.cloud/?p=24e242a85e](https://jwaf.pieces.cloud/?p=24e242a85e)
 
-```
-{
-    "id": "34a2a447-0c7c-4171-903a-755712e43a9f",
-    "name": "Text Snippet",
-    "creator": "",
-    "created": {
-        "value": "2023-10-26T15:30:01.617743Z",
-        "readable": "Just now..."
-    },
-    "updated": {
-        "value": "2023-10-26T15:30:01.618784Z",
-        "readable": "Just now..."
-    },
-    "synced": {
-        "value": "2023-10-26T15:30:01.617743Z",
-        "readable": "Just now..."
-    },
-    "deleted": {
-        "value": "2023-10-26T15:30:01.617743Z",
-        "readable": "Just now..."
-    },
-    "formats": {
-        "iterable": [
-            {
-                "id": "15a216ed-d790-4690-a422-d03e5738d363",
-                "creator": "",
-                "classification": {
-                    "generic": "TEXT",
-                    "specific": "text"
-                },
-                "role": "BOTH",
-                "application": {
-                    "schema": {
-                        "migration": 0,
-                        "semantic": "MAJOR_0_MINOR_0_PATCH_1"
-                    },
-                    "id": "55f4576b-8be6-4508-bf89-e85f263a083b",
-                    "name": "BRAVE",
-                    "version": "0.0.1",
-                    "platform": "MACOS",
-                    "onboarded": false,
-                    "privacy": "OPEN",
-                    "capabilities": "BLENDED",
-                    "mechanism": "MANUAL",
-                    "automaticUnload": false
-                },
-                "asset": {
-                    "id": "34a2a447-0c7c-4171-903a-755712e43a9f",
-                    "name": "Text Snippet",
-                    "creator": "",
-                    "created": {
-                        "value": "2023-10-26T15:30:01.617743Z",
-                        "readable": "Just now..."
-                    },
-                    "updated": {
-                        "value": "2023-10-26T15:30:01.617743Z",
-                        "readable": "Just now..."
-                    },
-                    "synced": {
-                        "value": "2023-10-26T15:30:01.617743Z",
-                        "readable": "Just now..."
-                    },
-                    "deleted": {
-                        "value": "2023-10-26T15:30:01.617743Z",
-                        "readable": "Just now..."
-                    },
-                    "formats": {
-                        "iterable": [
-                            {
-                                "id": "15a216ed-d790-4690-a422-d03e5738d363"
-                            }
-                        ]
-                    },
-                    "preview": {
-                        "base": "15a216ed-d790-4690-a422-d03e5738d363"
-                    },
-                    "original": "15a216ed-d790-4690-a422-d03e5738d363",
-                    "mechanism": "MANUAL"
-                },
-                "bytes": {
-                    "value": 24,
-                    "readable": "24 B"
-                },
-                "created": {
-                    "value": "2023-10-26T15:30:01.617743Z",
-                    "readable": "Just now..."
-                },
-                "updated": {
-                    "value": "2023-10-26T15:30:01.618788Z",
-                    "readable": "Just now..."
-                },
-                "deleted": {
-                    "value": "2023-10-26T15:30:01.617743Z",
-                    "readable": "Just now..."
-                },
-                "synced": {
-                    "value": "2023-10-26T15:30:01.617743Z",
-                    "readable": "Just now..."
-                },
-                "fragment": {
-                    "string": {
-                        "raw": "Testing the string param"
-                    },
-                    "bytes": {
-                        "raw": [
-                            84,
-                            101,
-                            115,
-                            116,
-                            105,
-                            110,
-                            103,
-                            32,
-                            116,
-                            104,
-                            101,
-                            32,
-                            115,
-                            116,
-                            114,
-                            105,
-                            110,
-                            103,
-                            32,
-                            112,
-                            97,
-                            114,
-                            97,
-                            109
-                        ],
-                        "base64": [],
-                        "base64_url": [],
-                        "data_url": []
-                    }
-                },
-                "analysis": {
-                    "code": {
-                        "schema": {
-                            "migration": 0,
-                            "semantic": "MAJOR_0_MINOR_0_PATCH_1"
-                        },
-                        "tokenized": [],
-                        "type": "TEXT",
-                        "prediction": {},
-                        "similarity": {},
-                        "top5Colors": [],
-                        "top5Sorted": [],
-                        "id": "8db688f9-fb54-4d5a-888d-db3b17328bc7",
-                        "analysis": "1d8ae90e-2f46-4085-afe8-209658e07040",
-                        "model": {
-                            "schema": {
-                                "migration": 0,
-                                "semantic": "MAJOR_0_MINOR_0_PATCH_1"
-                            },
-                            "id": "48d2a32b-aa93-455c-a6b6-e52dfce4118e",
-                            "version": "t02-v02-i03",
-                            "created": {
-                                "value": "2022-02-17T05:00:00.000Z",
-                                "readable": "about a year ago"
-                            },
-                            "name": "Text vs. Code Model",
-                            "cloud": false,
-                            "type": "SPEED",
-                            "usage": "TEXT_VS_CODE",
-                            "cpu": true
-                        }
-                    },
-                    "id": "1d8ae90e-2f46-4085-afe8-209658e07040",
-                    "format": "15a216ed-d790-4690-a422-d03e5738d363"
-                }
-            }
-        ],
-        "asset": {
-            "id": "34a2a447-0c7c-4171-903a-755712e43a9f",
-            "name": "Text Snippet",
-            "creator": "",
-            "created": {
-                "value": "2023-10-26T15:30:01.617743Z",
-                "readable": "Just now..."
-            },
-            "updated": {
-                "value": "2023-10-26T15:30:01.617743Z",
-                "readable": "Just now..."
-            },
-            "synced": {
-                "value": "2023-10-26T15:30:01.617743Z",
-                "readable": "Just now..."
-            },
-            "deleted": {
-                "value": "2023-10-26T15:30:01.617743Z",
-                "readable": "Just now..."
-            },
-            "formats": {
-                "iterable": [
-                    {
-                        "id": "15a216ed-d790-4690-a422-d03e5738d363"
-                    }
-                ]
-            },
-            "preview": {
-                "base": "15a216ed-d790-4690-a422-d03e5738d363"
-            },
-            "original": "15a216ed-d790-4690-a422-d03e5738d363",
-            "mechanism": "MANUAL"
-        }
-    },
-    "preview": {
-        "base": {
-            "id": "15a216ed-d790-4690-a422-d03e5738d363",
-            "reference": {
-                "id": "15a216ed-d790-4690-a422-d03e5738d363",
-                "creator": "",
-                "classification": {
-                    "generic": "TEXT",
-                    "specific": "text"
-                },
-                "role": "BOTH",
-                "application": {
-                    "schema": {
-                        "migration": 0,
-                        "semantic": "MAJOR_0_MINOR_0_PATCH_1"
-                    },
-                    "id": "55f4576b-8be6-4508-bf89-e85f263a083b",
-                    "name": "BRAVE",
-                    "version": "0.0.1",
-                    "platform": "MACOS",
-                    "onboarded": false,
-                    "privacy": "OPEN",
-                    "capabilities": "BLENDED",
-                    "mechanism": "MANUAL",
-                    "automaticUnload": false
-                },
-                "asset": "34a2a447-0c7c-4171-903a-755712e43a9f",
-                "bytes": {
-                    "value": 24,
-                    "readable": "24 B"
-                },
-                "created": {
-                    "value": "2023-10-26T15:30:01.617743Z",
-                    "readable": "Just now..."
-                },
-                "updated": {
-                    "value": "2023-10-26T15:30:01.617743Z",
-                    "readable": "Just now..."
-                },
-                "deleted": {
-                    "value": "2023-10-26T15:30:01.617743Z",
-                    "readable": "Just now..."
-                },
-                "synced": {
-                    "value": "2023-10-26T15:30:01.617743Z",
-                    "readable": "Just now..."
-                },
-                "fragment": {
-                    "string": {
-                        "raw": "Testing the string param"
-                    },
-                    "bytes": {
-                        "raw": [
-                            84,
-                            101,
-                            115,
-                            116,
-                            105,
-                            110,
-                            103,
-                            32,
-                            116,
-                            104,
-                            101,
-                            32,
-                            115,
-                            116,
-                            114,
-                            105,
-                            110,
-                            103,
-                            32,
-                            112,
-                            97,
-                            114,
-                            97,
-                            109
-                        ],
-                        "base64": [],
-                        "base64_url": [],
-                        "data_url": []
-                    }
-                },
-                "analysis": {
-                    "code": {
-                        "schema": {
-                            "migration": 0,
-                            "semantic": "MAJOR_0_MINOR_0_PATCH_1"
-                        },
-                        "tokenized": [],
-                        "type": "TEXT",
-                        "prediction": {},
-                        "similarity": {},
-                        "top5Colors": [],
-                        "top5Sorted": [],
-                        "id": "8db688f9-fb54-4d5a-888d-db3b17328bc7",
-                        "analysis": "1d8ae90e-2f46-4085-afe8-209658e07040",
-                        "model": {
-                            "schema": {
-                                "migration": 0,
-                                "semantic": "MAJOR_0_MINOR_0_PATCH_1"
-                            },
-                            "id": "48d2a32b-aa93-455c-a6b6-e52dfce4118e",
-                            "version": "t02-v02-i03",
-                            "created": {
-                                "value": "2022-02-17T05:00:00.000Z",
-                                "readable": "about a year ago"
-                            },
-                            "name": "Text vs. Code Model",
-                            "cloud": false,
-                            "type": "SPEED",
-                            "usage": "TEXT_VS_CODE",
-                            "cpu": true
-                        }
-                    },
-                    "id": "1d8ae90e-2f46-4085-afe8-209658e07040",
-                    "format": "15a216ed-d790-4690-a422-d03e5738d363"
-                }
-            }
-        }
-    },
-    "original": {
-        "id": "15a216ed-d790-4690-a422-d03e5738d363",
-        "reference": {
-            "id": "15a216ed-d790-4690-a422-d03e5738d363",
-            "creator": "",
-            "classification": {
-                "generic": "TEXT",
-                "specific": "text"
-            },
-            "role": "BOTH",
-            "application": {
-                "schema": {
-                    "migration": 0,
-                    "semantic": "MAJOR_0_MINOR_0_PATCH_1"
-                },
-                "id": "55f4576b-8be6-4508-bf89-e85f263a083b",
-                "name": "BRAVE",
-                "version": "0.0.1",
-                "platform": "MACOS",
-                "onboarded": false,
-                "privacy": "OPEN",
-                "capabilities": "BLENDED",
-                "mechanism": "MANUAL",
-                "automaticUnload": false
-            },
-            "asset": "34a2a447-0c7c-4171-903a-755712e43a9f",
-            "bytes": {
-                "value": 24,
-                "readable": "24 B"
-            },
-            "created": {
-                "value": "2023-10-26T15:30:01.617743Z",
-                "readable": "Just now..."
-            },
-            "updated": {
-                "value": "2023-10-26T15:30:01.617743Z",
-                "readable": "Just now..."
-            },
-            "deleted": {
-                "value": "2023-10-26T15:30:01.617743Z",
-                "readable": "Just now..."
-            },
-            "synced": {
-                "value": "2023-10-26T15:30:01.617743Z",
-                "readable": "Just now..."
-            },
-            "fragment": {
-                "string": {
-                    "raw": "Testing the string param"
-                },
-                "bytes": {
-                    "raw": [
-                        84,
-                        101,
-                        115,
-                        116,
-                        105,
-                        110,
-                        103,
-                        32,
-                        116,
-                        104,
-                        101,
-                        32,
-                        115,
-                        116,
-                        114,
-                        105,
-                        110,
-                        103,
-                        32,
-                        112,
-                        97,
-                        114,
-                        97,
-                        109
-                    ],
-                    "base64": [],
-                    "base64_url": [],
-                    "data_url": []
-                }
-            },
-            "analysis": {
-                "code": {
-                    "schema": {
-                        "migration": 0,
-                        "semantic": "MAJOR_0_MINOR_0_PATCH_1"
-                    },
-                    "tokenized": [],
-                    "type": "TEXT",
-                    "prediction": {},
-                    "similarity": {},
-                    "top5Colors": [],
-                    "top5Sorted": [],
-                    "id": "8db688f9-fb54-4d5a-888d-db3b17328bc7",
-                    "analysis": "1d8ae90e-2f46-4085-afe8-209658e07040",
-                    "model": {
-                        "schema": {
-                            "migration": 0,
-                            "semantic": "MAJOR_0_MINOR_0_PATCH_1"
-                        },
-                        "id": "48d2a32b-aa93-455c-a6b6-e52dfce4118e",
-                        "version": "t02-v02-i03",
-                        "created": {
-                            "value": "2022-02-17T05:00:00.000Z",
-                            "readable": "about a year ago"
-                        },
-                        "name": "Text vs. Code Model",
-                        "cloud": false,
-                        "type": "SPEED",
-                        "usage": "TEXT_VS_CODE",
-                        "cpu": true
-                    }
-                },
-                "id": "1d8ae90e-2f46-4085-afe8-209658e07040",
-                "format": "15a216ed-d790-4690-a422-d03e5738d363"
-            }
-        }
-    },
-    "mechanism": "MANUAL",
-    "websites": {
-        "iterable": [],
-        "indices": {}
-    },
-    "tags": {
-        "iterable": [],
-        "indices": {}
-    },
-    "sensitives": {
-        "iterable": []
-    },
-    "persons": {
-        "iterable": [],
-        "indices": {}
-    },
-    "discovered": false,
-    "score": {
-        "manual": 0,
-        "automatic": 0
-    },
-    "pseudo": false,
-    "annotations": {
-        "iterable": [],
-        "indices": {}
-    },
-    "hints": {
-        "iterable": [],
-        "indices": {}
-    },
-    "anchors": {
-        "iterable": [],
-        "indices": {}
+
+## View Your Data - Assets Snapshot
+Now when you follow this guide, you will be receiving this data back from inside your console in the browser. But if you would like to view your data incrementally through the full browser window, you can navigate to `http://localhost:1000/assets` to view a full list of snippets that have been saved.
+
+As you move through your assets there are a number of things you may need your full assets list for without needing all of your data. (for example: the list view and carousel views in Pieces for Developers)
+
+To get your assets snapshot, you can use this to list each asset: 
+
+```tsx
+new Pieces.AssetsApi().assetsSnapshot({}).then(_assetList => {
+    for (let i = 0; i < _assetList.iterable.length; i++) {
+        // this will log the asset to the console.
+       console.log(_assetsList[i]);
     }
+})
+```
+
+Each asset will have and ID on it that can be used to match a singular asset here. Very useful when trying to get a specific asset from your full assetsSnapshot.
+
+## Using asset/update
+Individual assets can be manipulated with a number of different properties and metadata. You can add **titles**, **annotations**, **tags**, **links**, **anchors**, and much more all through this single endpoint. To use it properly first use the assetSnapshot to get your asset using its ID property, and store your asset in a variable in your `.then()`. You can then adjust any of the properties on this asset you have stored on `_asset`, then pass into `requestParameters` on the `assetUpdate` endpoint. 
+
+Check out this code block with an example of how to rename an asset:
+
+```tsx
+function renameAsset(_name: string, _id: String){
+    new Pieces.AssetsApi().assetsSnapshot({}).then(_assetList => {
+        for (let i = 0; i < _assetList.iterable.length; i++) {
+            if (_assetList.iterable[i].id == _id) {
+
+                let _asset = _assetList.iterable[i];
+
+                _asset.name = _name;
+
+                new Pieces.AssetApi().assetUpdate({asset: _asset}).then(_updated => {
+                    console.log("updated:", _updated);
+                })
+            }
+        }
+    })
 }
 ```
 
+Then inside your UI you can connect the renameAsset() function to your button and text inputs. Note that in order to perform this operation you need both the id of the asset, and also the new name that you would like to update you asset to. 
 
-## View Your Data
----
-Now when you follow this guide, you will be receiving this data back from inside your console in the browser. But if you would like to view your data incrementally through the full browser window, you can navigate to `http://localhost:1000/assets` to view a full list of snippets that have been saved.
+The code block below includes the state management for the text input, along with the button that initiates the asset update as well.
+
+This is what that looks like: 
+
+```tsx
+function RenameAssetInput() {
+    const [name, setNameValue] = useState('');
+    const [id, setIdValue] = useState('');
+
+    const handleNameChange = (event) => {
+        setNameValue(event.target.value);
+    };
+
+    const handleIdChange = (event) => {
+        setIdValue(event.target.value);
+    };
+
+    return (
+        <>
+            <p>Name:</p>
+            <input value={name} style={{ width: '450px', verticalAlign: 'top' }} onChange={handleNameChange} />
+            <p>ID:</p>
+            <input value={id} style={{ width: '450px', verticalAlign: 'top' }} onChange={handleIdChange} />
+            <button style={{ marginTop: '10px', maxWidth: '200px' }} onClick={() => renameAsset(name, id)}>Rename Snippet</button>
+        </>
+
+    );
+}
+```
+
+## Refresh Your Snapshot
+In order to get updates to your assetSnapshot as a whole, you may need to update you local list in order to reflect changes that come from Pieces OS and give information on the assets stored there. In order to perform a refresh you can use this code block here: 
+
+```tsx
+const [array, setArray] = useState([]);
+
+const refresh = (_newAsset: LocalAsset) => {
+    setArray(prevArray => [...prevArray, _newAsset])
+}
+
+function refreshSnippetList() {
+    new Pieces.AssetsApi().assetsSnapshot({}).then((assets) => {
+        
+        // loop through your assets.
+        for (let i = 0; i < assets.iterable.length; i++) {
+            let _local: LocalAsset = {
+                id: assets.iterable[i].id,
+                name: assets.iterable[i].name,
+                classification: assets.iterable[i].original.reference.classification.specific
+            }
+
+            refresh(_local);
+
+        }
+    })
+}
+```
+
+I added this to the top level for reactivity inside the main `App()` call. You can choose to place this in a different location if you are not in need of any reactive data.
+
+## Delete Using /assets/delete
+
+Assets can be deleted from your Assets list entirely by passing them into the `assetsDeleteAsset` endpoint. Just like the above example to rename a specific asset, you will need the ID of the asset that you are trying to remove. In order to get that you will need to use assetSnapshot in tandem with your delete endpoint: 
+
+```tsx
+ new Pieces.AssetsApi().assetsSnapshot({}).then(_assetList => {
+    for (let i = 0; i < _assetList.iterable.length; i++) {
+        if (_assetList.iterable[i].id == _id) {
+            new Pieces.AssetsApi().assetsDeleteAsset({asset: _assetList.iterable[i].id }).then(_ => console.log("delete confirmed!"))
+        }
+    }
+})
+```
+
+After a successful delete, you may have to reload your browser window in order to see the updated snippet list.
+
 
 > **Recommendation**  
 > We use [JSON Viewer](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh) internally when developing and **recommend** using some form of web based extension that assists with reading JSON DATA
