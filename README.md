@@ -12,20 +12,27 @@ Read our Current Documentation:
 ## Table of Contents
 
 - [Operating System Support](#operating-system-support)
-- [Installing](#-installing)
-    - [Pieces OS](#-pieces-os)
-    - [Downloading NPM Package](#-downloading-npm-package)
-- [Testing Usage](#testing-usage)
-- [Examples](#examples)
-    - [/connect](#connect)
-    - [Asset + /assets](#creating-with-asset--assets)
-    - [SeededAsset](#seededasset)
-    - [/assets/create](#using-assetscreate)
-    - [/assets/snapshot](#get-your-assets-snapshot)
-      - [Refresh Your Snapshot](#refresh-your-snapshot)
-    - [/asset/update](#update-your-assets-metadata-or-properties)
-    - [/assets/delete](#deleting-an-asset)
-- [Supported Versions](#supported-versions-)
+- [Installing](#installing)
+    - [Pieces OS](#pieces-os)
+    - [Downloading NPM Package](#downloading-npm-package)
+    - [Creating Project Base](#creating-the-base-of-your-project)
+    - [Installing Package Dependencies with NPM](#install-package-dependencies-with-npm)
+- [Running Your Project](#running-your-project-for-the-first-time)
+- [Create Connect() Function](#creating-connect-function)
+- [Connecting your Application](#connecting-your-application)
+  - [View Output in Browser](#view-console-output-in-your-browser)
+- [Asset + /assets](#getting-started-with-asset--assets)
+  - [Asset](#asset)
+  - [SeededAsset](#seededasset)
+- [/assets/create](#assetscreate)
+- [/assets/snapshot](#assets-snapshot-assetssnapshot)
+- [/asset/update](#using-assetupdate)
+- [Refresh Your Snapshot](#refresh-your-snapshot)
+- [/assets/delete](#delete-using-assetsdelete)
+
+## Operating System Support
+
+Currently, Pieces OS is utilized as the primary backend service with Pieces for Developers that powers all of the features that can be used there. Both programs are designed for full support by all operating systems, although our Linux Platform is available, it leans towards a 'heavily supported beta' and may experience incremental issues on specific flavors of linux.
 
 
 ## Configuration & Setup with NPM
@@ -101,7 +108,7 @@ Let's get started with the base of your new React project where we will learn ab
 }
 ```
 
-### Installing packages with npm
+### Install Package Dependencies with npm
 
 #### Need this if you are going to work with ts files
 ```bash
@@ -216,7 +223,6 @@ And after a few seconds you should be able to see in your Chrome browser (or you
 ##### **You have now successfully set up your dev environment, and will be ready to test different endpoints inside of Pieces OS.**
 
 ## Connecting your Application
----
 When Pieces OS is running in the background of your machine, it is communicating with other local applications that use Pieces software, and up until recently only supporting internally built tools.
 
 As each plugin, extension, or application initializes they 'reach out' to Pieces OS and authenticate with the application themselves. There are a number of application formats that we support and provide for each of our applications. ==When developing on Pieces OS, you can use **"LOCAL_DEV"**
@@ -237,7 +243,6 @@ To create the `Application` object for your project, you will need to make sure 
 #### `tracked_application`
 Connecting your application here is as easy as a single **POST** request and can be done via the Response interface of the **Fetch Api**. Remember that you can name this whatever you would like to, just be sure to include the updated variable name in the `options` down below.
 
-> [!example]
 > When creating the `tracked_application` item, you will need to use a type that is not available inside the current `npm_deployment`.
 >
 > This structure is the same as the tracked_application full example you see here below, and the only difference from the unavailable type `SeededTrackedApplication` and the available type `TrackedApplication` is `id: number`.
@@ -443,7 +448,7 @@ Once you receive your response back from Pieces OS, you will notice the drastic 
 The response back will look similar to the following: [https://jwaf.pieces.cloud/?p=24e242a85e](https://jwaf.pieces.cloud/?p=24e242a85e)
 
 
-## View Your Data - Assets Snapshot
+## Assets Snapshot (assets/snapshot)
 Now when you follow this guide, you will be receiving this data back from inside your console in the browser. But if you would like to view your data incrementally through the full browser window, you can navigate to `http://localhost:1000/assets` to view a full list of snippets that have been saved.
 
 As you move through your assets there are a number of things you may need your full assets list for without needing all of your data. (for example: the list view and carousel views in Pieces for Developers)
@@ -572,8 +577,8 @@ After a successful delete, you may have to reload your browser window in order t
 This is a very simple guide on how to get up and running using the @pieces.app/client npm package and create a web environment that you can build on top of. **Fork this repo** to get started and learn about the depth of possibilities you have with Pieces OS.
 
 More guides will be coming soon around:
-- Adding a UI to view multiple snippets from ` /assets`
-- Using Pieces OS as a database
 - Creating a personal Copilot that understands your context
-- Learning about `/search` endpoints
+- Examples on `/search` endpoints
+- Improvements to the project structure + UI
+- Testing custom implementations and combining endpoints
 - ...more! 
