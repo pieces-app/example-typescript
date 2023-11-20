@@ -29,18 +29,19 @@ These are, in general, rules that you should be following while contributing to 
 
 ### Pre-requisites
 
-Ensure you have the latest version of Pieces OS installed on your system
-Windows 
-macOS 
-Linux
-Ensure that you have NPM installed
+1. Ensure you have the latest version of Pieces OS installed on your system:
+- [Windows](https://docs.pieces.app/installation-getting-started/windows)
+- [macOS](https://docs.pieces.app/installation-getting-started/macos)
+- [Linux](https://docs.pieces.app/installation-getting-started/linux)
+
+2. Ensure that you have [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed
 
 
 ### Pull Request
 
 **1.** Fork the repository on GitHub
 
-**2.** Clone the forked repository. Open up the GitBash/Command Line and type
+**2.** Clone the forked repository. Open up the GitBash/Command Line and type:
 
 ```
 git clone https://github.com/<YOUR_USER_NAME>/<FORKED_REPO_NAME>.git
