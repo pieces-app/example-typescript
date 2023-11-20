@@ -1,3 +1,0 @@
-# Hello 
-
-This is for the internal team to upload the final version of design mockups for this open-source project.
