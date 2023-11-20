@@ -33,8 +33,8 @@ These are, in general, rules that you should be following while contributing to 
 
 1. Ensure you have the latest version of Pieces OS installed on your system:
    - [Windows](https://docs.pieces.app/installation-getting-started/windows)
-     - [macOS](https://docs.pieces.app/installation-getting-started/macos)
-       - [Linux](https://docs.pieces.app/installation-getting-started/linux)
+   - [macOS](https://docs.pieces.app/installation-getting-started/macos)
+   - [Linux](https://docs.pieces.app/installation-getting-started/linux)
 
 2. Ensure that you have [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
 
