@@ -4,7 +4,6 @@
     "module": "CommonJS",
      "allowJs": true,
      "checkJs": true,
-     "maxNodeModuleJsDepth": 1,
     "forceConsistentCasingInFileNames": true,
 
     /* Type Checking */
