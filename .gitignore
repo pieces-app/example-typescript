@@ -1,6 +1,33 @@
-node_modules
-.idea
-build
+# Ignore node_modules folder
+node_modules/
+
+# Ignore logs
+logs
+*.log
+npm-debug.log*
+
+# Ignore the build directory
+/build
+
+# Ignore IDE specific files
+.idea/
+.vscode/
+
+# Ignore package-lock.json to avoid conflicts
 package-lock.json
+
+# Ignore TypeScript compiler output
+**/*.tsc
+
+# Ignore JetBrains IDE specific files
+*.iml
+.idea/
+
+# Ignore Visual Studio Code specific files
+.vscode/
 vscode.deb
-.vscode
+
+# Ignore other unnecessary files
+.DS_Store
+Thumbs.db
+
