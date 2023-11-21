@@ -27,9 +27,7 @@ let snippetList: Array<LocalAsset>;
 // the refresh button is connected to first <button> element you see below the header and div there.
 export function App(): React.JSX.Element {
 
-  const [array, setArray] = useState<Array<LocalAsset>>([]);
-  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
-
+  const [array, setArray] = useState([]);
 
   const refresh = (_newAsset: LocalAsset) => {
     setArray(prevArray => [...prevArray, _newAsset])
@@ -42,10 +40,6 @@ export function App(): React.JSX.Element {
   const clearArray = () => {
     setArray([])
   }
-
-  const handleSelect = (index) => {
-    setSelectedIndex(index!=selectedIndex?index:-1);
-};
 
   function refreshSnippetList() {
     new Pieces.AssetsApi().assetsSnapshot({}).then((assets) => {
@@ -71,36 +65,19 @@ export function App(): React.JSX.Element {
           <Header />
 
           <div style={{ width: "auto", border: '2px solid black', height: '400px', padding: '20px', borderRadius: '9px' }}>
-            <div style={{ overflow: "scroll", height: 'inherit' }}>
-              {array.map((item: LocalAsset, index) => (
-                <div
-                  key={index}
-                  style={{
-                    marginTop: '5px',
-                    marginBottom: '5px',
-                    alignItems: 'center',
-                    padding: "10px",
-                    borderRadius: '10px',
-                    border: '1px solid gray',
-                    maxHeight: '100px',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: "space-between",
-                    backgroundColor: selectedIndex == index ? 'lightblue' : 'white', // Add background color based on selection
-                    cursor: 'pointer' // Add cursor style to indicate clickability
-                  }}
-                  onClick={() => handleSelect(index)} 
-                >
-                    <div>
-                      <h3>{item.name}</h3>
-                      <div style={{ flexDirection: "column" }}>
-                        <p>{item.id}</p>
-                        <p>{item.classification}</p>
+              <div style={{ overflow: "scroll", height: 'inherit' }}>
+                  {array.map((item: LocalAsset, index) => (
+                      <div key={index} style={{ marginTop: '5px', marginBottom: '5px', alignItems: 'center', padding: "10px", borderRadius: '10px', border: '1px solid gray', maxHeight: '100px', display: 'flex', flexDirection: 'row', justifyContent: "space-between" }}>
+                          <h3>{item.name}</h3>
+                          <div style={{flexDirection: "column"}}>
+                              <p>{item.id}</p>
+                              <p>{item.classification}</p>
+                          </div>
+
                       </div>
-                    </div>
-                  </div>
-              ))}
-            </div>
+
+                  ))}
+              </div>
           </div>
 
           <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -108,10 +85,11 @@ export function App(): React.JSX.Element {
               <h3>Create a Snippet</h3>
               <DataTextInput applicationData={applicationData}/>
               <h3>Delete Snippet</h3>
-              <DeleteAssetIDInput assetID={(selectedIndex!=-1? array[selectedIndex].id:"")}/>
+              <h4>ID:</h4>
+              <DeleteAssetIDInput />
               <h3>Rename Snippet</h3>
               <h4>New Name:</h4>
-              <RenameAssetInput assetID={(selectedIndex!=-1? array[selectedIndex].id:"")}/>
+              <RenameAssetInput />
 
           </div>
       </div>
