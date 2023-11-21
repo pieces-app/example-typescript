@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import * as Pieces from "@pieces.app/client";
 import {Application} from "@pieces.app/client";
 import {DataTextInput, DeleteAssetIDInput, RenameAssetInput} from './components/TextInput';
@@ -25,30 +25,39 @@ let snippetList: Array<LocalAsset>;
 //
 // refresh is responsible for adding new assets to the snippet list itself when you create a new asset.
 // the refresh button is connected to first <button> element you see below the header and div there.
-// TODO: update the logic here for refresh, it is having issues and populating the snippet viewing area with the old list along with the new one, creating duplicates.
 export function App(): React.JSX.Element {
 
   const [array, setArray] = useState([]);
 
   const refresh = (_newAsset: LocalAsset) => {
-      setArray(prevArray => [...prevArray, _newAsset])
+    setArray(prevArray => [...prevArray, _newAsset])
+  }
+
+  useEffect(() => {
+    refreshSnippetList();
+    }, []);
+
+  const clearArray = () => {
+    setArray([])
   }
 
   function refreshSnippetList() {
-      new Pieces.AssetsApi().assetsSnapshot({}).then((assets) => {
-          // console.log('Response', assets)
+    new Pieces.AssetsApi().assetsSnapshot({}).then((assets) => {
+      // console.log('Response', assets)
+      clearArray()
 
-          for (let i = 0; i < assets.iterable.length; i++) {
-              let _local: LocalAsset = {
-                  id: assets.iterable[i].id,
-                  name: assets.iterable[i].name,
-                  classification: assets.iterable[i].original.reference.classification.specific
-              }
+      for (let i = 0; i < assets.iterable.length; i++) {
+        let _local: LocalAsset = {
+          id: assets.iterable[i].id,
+          name: assets.iterable[i].name,
+          classification: assets.iterable[i].original.reference.classification.specific
+        }
 
-              refresh(_local);
+        refresh(_local);
 
-          }
-      })
+      }
+    })
+    
   }
 
   return (
