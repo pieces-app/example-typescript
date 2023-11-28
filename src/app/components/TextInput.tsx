@@ -27,41 +27,27 @@ export function DataTextInput({applicationData}) {
   );
 }
 
-export function DeleteAssetIDInput() {
-  const [value, setValue] = useState('');
-
-  const handleChange = (event) => {
-      setValue(event.target.value);
-  };
+export function DeleteAssetIDInput({assetID}) {
 
   return (
       <>
-          <input value={value} style={{ width: '450px', verticalAlign: 'top' }} onChange={handleChange} />
-          <button style={{ marginTop: '10px', maxWidth: '200px' }} onClick={() => deleteAsset(value)}>Delete Snippet</button>
+          <button style={{ marginTop: '10px', maxWidth: '200px' }} onClick={() => deleteAsset(assetID)}>Delete Snippet</button>
       </>
 
   );
 }
 
-export function RenameAssetInput() {
+export function RenameAssetInput({assetID}) {
   const [name, setNameValue] = useState('');
-  const [id, setIdValue] = useState('');
 
   const handleNameChange = (event) => {
       setNameValue(event.target.value);
   };
 
-  const handleIdChange = (event) => {
-      setIdValue(event.target.value);
-  };
-
   return (
       <>
-          <p>Name:</p>
           <input value={name} style={{ width: '450px', verticalAlign: 'top' }} onChange={handleNameChange} />
-          <p>ID:</p>
-          <input value={id} style={{ width: '450px', verticalAlign: 'top' }} onChange={handleIdChange} />
-          <button style={{ marginTop: '10px', maxWidth: '200px' }} onClick={() => renameAsset(name, id)}>Rename Snippet</button>
+          <button style={{ marginTop: '10px', maxWidth: '200px' }} onClick={() => renameAsset(name, assetID)}>Rename Snippet</button>
       </>
 
   );
