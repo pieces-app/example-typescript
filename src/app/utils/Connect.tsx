@@ -1,4 +1,4 @@
-import * as Pieces from "@pieces.app/client";
+import * as Pieces from "@pieces.app/pieces-os-client";
 
 // ============================ [/connect]=============================//
 const tracked_application = {

@@ -1,6 +1,6 @@
-import * as Pieces from "@pieces.app/client";
-import {SeededAsset, SeedTypeEnum} from "@pieces.app/client";
-import {Application} from "@pieces.app/client";
+import * as Pieces from "@pieces.app/pieces-os-client";
+import {SeededAsset, SeedTypeEnum} from "@pieces.app/pieces-os-client";
+import {Application} from "@pieces.app/pieces-os-client";
 
 //==============================[/create]==================================//
 export function createAsset(applicationData: Application, data: string, name: string) {
