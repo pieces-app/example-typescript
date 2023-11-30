@@ -60,7 +60,7 @@ You can also visit our user facing documentation to learn more about different f
 Using npm:
 
 ```bash
-npm install @pieces.app/client
+npm install @pieces.app/pieces-os-client
 ```
 
 Using pnpm:

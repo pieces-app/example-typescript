@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState, useEffect} from "react";
-import * as Pieces from "@pieces.app/client";
-import {Application} from "@pieces.app/client";
+import * as Pieces from "@pieces.app/pieces-os-client";
+import {Application} from "@pieces.app/pieces-os-client";
 import {DataTextInput, DeleteAssetIDInput, RenameAssetInput} from './components/TextInput';
 import {Header} from './components/Header'
 import {connect} from './utils/Connect'

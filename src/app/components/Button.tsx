@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { createAsset } from './Asset';
-import { Application } from '@pieces.app/client';
 
 export function CreateButton({applicationData, data, name}): React.JSX.Element {
   return (
