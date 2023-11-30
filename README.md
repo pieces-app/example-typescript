@@ -1,9 +1,9 @@
-# Get Started with Pieces OS and the @pieces.app/client npm package
+# Get Started with Pieces OS and the @pieces.app/pieces-os-client npm package
 
 Follow this guide to get an early look at using Pieces OS in your own development environment. You can use this to get familiar with some key terms and endpoints: `assets`, `asset`, `connect`, `format`, `formats`, and `create`. There are other topics that are touched on, and further expansion on this starter project is coming soon. 
 
 See the NPM package here: 
-- [https://www.npmjs.com/package/@pieces.app/client](https://www.npmjs.com/package/@pieces.app/client)
+- [https://www.npmjs.com/package/@pieces.app/pieces-os-client](https://www.npmjs.com/package/@pieces.app/pieces-os-client)
 
 Read our Current Documentation:
 - [https://docs.pieces.app](https://docs.pieces.app)
@@ -66,19 +66,19 @@ npm install @pieces.app/client
 Using pnpm:
 
 ```bash
-pnpm add @pieces.app/client
+pnpm add @pieces.app/pieces-os-client
 ```
 
 After you install the package, you  can import the library into your file(s) using `require`:
 
 ```js
-const pieces = require('@pieces.app/client')
+const pieces = require('@pieces.app/pieces-os-client')
 ```
 
 or you can import the package using `import` as well:
 
 ```js
-import * as pieces from '@pieces.app/client'
+import * as pieces from '@pieces.app/pieces-os-client'
 ```
 
 > **Recommendation**
@@ -261,10 +261,10 @@ const tracked_application = {
 - **platform**: Depending on your current environment, you need to set the platform parameter to match your current operating system. Select between `.Macos`, `.Windows`, `.Linux`
 
 > **Imports**
-> Be sure to double-check that you have the following import added to the first few lines of your `index.tsx` file if you have not already: `import * as Pieces from "@pieces.app/client";`
+> Be sure to double-check that you have the following import added to the first few lines of your `index.tsx` file if you have not already: `import * as Pieces from "@pieces.app/pieces-os-client";`
 
 ### Creating `connect()` Function
-When your program starts, it needs to connect to Pieces OS to gain access to any functional data and to exchange information on the `localhost:1000` route. Now that you have your `tracked_application` - lets get into the into the details.
+When your program starts, it needs to connect to Pieces OS to gain access to any functional data and to exchange information on the `localhost:1000` route. Now that you have your `tracked_application` - lets get into the details.
 
 Start by defining you connect function and add the initial `/connect` route to your function as the `url` variable and then attach the `options` object. Include your `tracked_application` object passed into a `JSON.stringify()` method under the `application` parameter like so:
 
@@ -574,7 +574,7 @@ After a successful delete, you may have to reload your browser window in order t
 
 
 ## Conclusion
-This is a very simple guide on how to get up and running using the @pieces.app/client npm package and create a web environment that you can build on top of. **Fork this repo** to get started and learn about the depth of possibilities you have with Pieces OS.
+This is a very simple guide on how to get up and running using the @pieces.app/pieces-os-client npm package and create a web environment that you can build on top of. **Fork this repo** to get started and learn about the depth of possibilities you have with Pieces OS.
 
 More guides will be coming soon around:
 - Creating a personal Copilot that understands your context
