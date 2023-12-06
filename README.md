@@ -55,6 +55,35 @@ Select the right version to download Pieces OS for your operating system:
 
 You can also visit our user facing documentation to learn more about different features that are available now to give you an idea of some of the things that you can potentially do.
 
+## Installing Node using NVM
+
+To install the current version of `node`, simply run the command:
+
+```bash
+nvm install --lts
+```
+
+To check what version of `node` that's currently running on your machine, run the command:
+
+```bash
+node --version
+```
+
+To install a specific version of `node`, you can run the command:
+
+```bash
+nvm install [version-of-node]
+```
+
+To switch between different versions of `node`, you can run the command: 
+
+```bash
+nvm use [version-of-node]
+```
+
+`npm` comes installed when you use `nvm` to install `node`. 
+
+
 ## Downloading NPM Package
 
 Using npm:
