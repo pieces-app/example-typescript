@@ -27,11 +27,21 @@ let snippetList: Array<LocalAsset>;
 // the refresh button is connected to first <button> element you see below the header and div there.
 export function App(): React.JSX.Element {
 
-  const [array, setArray] = useState<Array<LocalAsset>>([]);
+  const [items, setItems] = useState<Array<LocalAsset>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const filteredItems = React.useMemo(() => {
+    if (searchTerm) {
+      const searchTermRegex = new RegExp(searchTerm, 'i');
+      return items.filter(e => searchTermRegex.test(e.name));
+    }
+    return items;
+  }, [searchTerm, items]);
+
 
   const refresh = (_newAsset: LocalAsset) => {
-    setArray(prevArray => [...prevArray, _newAsset])
+    setItems(prevArray => [...prevArray, _newAsset])
   }
 
   useEffect(() => {
@@ -39,7 +49,7 @@ export function App(): React.JSX.Element {
     }, []);
 
   const clearArray = () => {
-    setArray([])
+    setItems([])
   }
 
   const handleSelect = (index) => {
@@ -67,11 +77,10 @@ export function App(): React.JSX.Element {
 
   return (
       <div style={{ padding: '10px 20px' }}>
-          <Header />
-
+          <Header setSearchTerm={setSearchTerm} />
           <div style={{ width: "auto", border: '2px solid black', height: '400px', padding: '20px', borderRadius: '9px' }}>
           <div style={{ overflow: "scroll", height: 'inherit' }}>
-              {array.map((item: LocalAsset, index) => (
+              {filteredItems.map((item: LocalAsset, index) => (
                 <div
                   key={index}
                   style={{
@@ -100,6 +109,11 @@ export function App(): React.JSX.Element {
                   </div>
 
                   ))}
+                  {searchTerm && !filteredItems.length && <div>
+                      <p style={{textAlign:"center"}}>No search result found</p>
+                    </div>
+                    }
+
               </div>
           </div>
 
@@ -108,11 +122,10 @@ export function App(): React.JSX.Element {
               <h3>Create a Snippet</h3>
               <DataTextInput applicationData={applicationData}/>
               <h3>Delete Snippet</h3>
-              <DeleteAssetIDInput assetID={(selectedIndex!=-1? array[selectedIndex].id:"")}/>
+              <DeleteAssetIDInput assetID={(selectedIndex!=-1? items[selectedIndex].id:"")}/>
               <h3>Rename Snippet</h3>
               <h4>New Name:</h4>
-              <RenameAssetInput assetID={(selectedIndex!=-1? array[selectedIndex].id:"")}/>
-
+              <RenameAssetInput assetID={(selectedIndex!=-1? items[selectedIndex].id:"")}/>
           </div>
       </div>
   )
