@@ -70,10 +70,12 @@ export function App(): React.JSX.Element {
           <Header />
 
         <div style={{
-          width: "auto",
+          // width: "auto",
           border: '2px solid black',
-          backgroundColor: 'black',
+          backgroundColor: '#0e1111',
           height: '600px',
+          minWidth: '1175px',
+          maxWidth: '1175px',
           padding: '20px',
           borderRadius: '9px',
           display: "flex",
@@ -183,7 +185,7 @@ connect().then(__ => {
   // conditional for the response back on application.
   //
   // (1) first @jordan-pieces came in here and added this turing statement here inside a new
-  // if statement. this is an upgrade in comparison to the previous if statment that would not check to
+  // if statement. this is an upgrade in comparison to the previous if statement that would not check to
   // see if the _indicator itself is added to the DOM yet.
   if (_indicator != null) {
     __ != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
