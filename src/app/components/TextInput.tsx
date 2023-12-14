@@ -27,11 +27,12 @@ export function DataTextInput({applicationData}) {
   );
 }
 
-export function DeleteAssetIDInput({assetID}) {
-
+// (7) now we are bringing selected index into the button here and using it to determine the visibility of the button
+// and will now show when selected.
+export function DeleteAssetButton({assetID, selectedIndex}) {
   return (
       <>
-          <button style={{ marginTop: '10px', maxWidth: '200px' }} onClick={() => deleteAsset(assetID)}>Delete Snippet</button>
+          <button style={{ visibility: selectedIndex != -1 ? 'visible' : 'hidden', marginLeft: '1rem', maxWidth: 'fit-content', backgroundColor: 'transparent', color: 'red', border: '1px solid red', borderRadius: '5px', padding: '2px 20px', cursor: 'pointer' }} onClick={() => deleteAsset(assetID)}>DELETE</button>
       </>
 
   );
@@ -49,6 +50,5 @@ export function RenameAssetInput({assetID}) {
           <input value={name} style={{ width: '450px', verticalAlign: 'top' }} onChange={handleNameChange} />
           <button style={{ marginTop: '10px', maxWidth: '200px' }} onClick={() => renameAsset(name, assetID)}>Rename Snippet</button>
       </>
-
   );
 }
