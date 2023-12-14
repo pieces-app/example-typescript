@@ -17,11 +17,9 @@ export function DataTextInput({applicationData}) {
 
   return (
       <>
-          <h4>Name:</h4>
-          <input type="text" value={name} style={{ maxWidth: '450px' }} onChange={handleNameChange} />
-          <h4>Add Data:</h4>
-          <textarea value={data} style={{ height: '200px', width: '450px', verticalAlign: 'top' }} onChange={handleDataChange} />
-          <CreateButton applicationData={applicationData} data={data} name={name}/>
+          <input placeholder="Type the name of your snippet..." type="text" value={name} style={{ maxWidth: '450px', marginBottom: '10px' }} onChange={handleNameChange} />
+          <textarea placeholder={"Add your code/text content into this box"} value={data} style={{ height: '200px', width: '450px', verticalAlign: 'top' }} onChange={handleDataChange} />
+          <CreateButton applicationData={applicationData} data={data} name={name} />
       </>
 
   );
@@ -48,7 +46,19 @@ export function RenameAssetInput({assetID}) {
   return (
       <>
           <input value={name} style={{ width: '450px', verticalAlign: 'top' }} onChange={handleNameChange} />
-          <button style={{ marginTop: '10px', maxWidth: '200px' }} onClick={() => renameAsset(name, assetID)}>Rename Snippet</button>
+          <button  style={{
+            marginTop: '10px',
+            maxWidth: 'fit-content',
+            height: 'fit-content',
+            backgroundColor: "black",
+            border: '1px solid white',
+            borderRadius: '5px',
+            padding: '8px 24px',
+            color: 'white',
+            flexWrap: 'nowrap',
+            cursor: 'pointer',
+            fontSize: '12px'
+          }} onClick={() => renameAsset(name, assetID)}>Rename Selected Snippet</button>
       </>
   );
 }

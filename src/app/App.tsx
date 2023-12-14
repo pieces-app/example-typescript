@@ -103,8 +103,8 @@ export function App(): React.JSX.Element {
                 border: '1px solid white',
                 borderRadius: '5px',
                 padding: '8px 24px',
-                color: "white",
-                textWrap: 'nowrap',
+                color: 'white',
+                flexWrap: 'nowrap',
                 cursor: 'pointer',
                 fontSize: '12px'
               }} onClick={refreshSnippetList}>Refresh Snippet List
@@ -114,6 +114,7 @@ export function App(): React.JSX.Element {
 
             <div style={{
               overflow: "scroll",
+              minWidth: '700px',
               minHeight: "80%",
               paddingRight: '5px',
               display: "grid",
@@ -155,11 +156,9 @@ export function App(): React.JSX.Element {
             </div>
 
           </div>
-          <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
-            <h3>Create a Snippet</h3>
+          <div style={{display: 'flex', flexDirection: 'column', padding: '10px', maxHeight: '90%', alignSelf: 'end'}}>
+            <h3 style={{color: 'white', fontWeight: 'normal' }}>Create a New Snippet</h3>
             <DataTextInput applicationData={applicationData}/>
-            <h3>Rename Snippet</h3>
-            <h4>New Name:</h4>
             <RenameAssetInput assetID={(selectedIndex != -1 ? array[selectedIndex].id : "")}/>
 
           </div>
