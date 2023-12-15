@@ -153,7 +153,7 @@ export function App(): React.JSX.Element {
 
               ))}
 
-              {/* (5) i moved this button up higher in this file and placed it inside the same column div as the snippet list.
+              {/* (5) @jordan-pieces moved the refresh button up higher in this file and placed it inside the same column div as the snippet list.
                 this will create the more side by side look that you were going for in your design example */}
             </div>
 
