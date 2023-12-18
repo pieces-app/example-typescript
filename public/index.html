@@ -1,18 +1,39 @@
+
+<!-- (2) here @jordan-pieces commented out this html here - in react projects it is best practice to actually
+    take this code and use it inside a component like structure as you can see on the other components
+    present on the App.tsx file -> <Header /> for example.
+
+    Also, this disconnects the available api usage from the DOM and instead serves this static file.
+    Here you can see the reversion back to the old structure of this file.
+
+    Take a peek at the <div id="root"></div> present in the code that is here now. that is the element that is used
+    as a reference from the index.tsx.
+
+    Here is that line: const rootElement = document.getElementById("root");
+
+    then inside of App.tsx we can do the different things that we want to such as add improve styles and more and accomplish
+    what I believe you were looking to accomplish!
+
+    BTW i stored your old code here: https://jwaf.pieces.cloud/?p=282742a8b3 in case you want to reference.
+
+    I'm going to walk you through this via the comments so following along and track the numbers! Let's go to the /components folder and open the /components/header file! -->
+
 <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
-
-    <title>Pieces Demo Todo List</title>
+    <title>Pieces Example Typescript Package</title>
 </head>
 
 <body>
 <noscript>
     You need JS to run this application!
 </noscript>
+
 <div id="root"></div>
 </body>
 
 
 </html>
+
