@@ -10,15 +10,16 @@
   },
   "dependencies": {
     "@pieces.app/pieces-os-client": "^1.0.0",
-    "@types/react": "^18.2.31",
-    "@types/react-dom": "^18.2.14",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/node": "^20.8.7"
+    "@types/node": "^20.8.7",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "typescript": "^4.9.5"
   },
   "browserslist": {
     "production": [
