@@ -190,4 +190,15 @@ connect().then(__ => {
   if (_indicator != null) {
     __ != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
   }
+  //agrim implemented - Upon connecting to the Pieces OS, there is a need to enhance the user experience by implementing a timer 
+  //that automatically hides the "You're Connected" text and shrinks the button after a certain duration
+  let time = 3000;
+  setTimeout(() => {
+    if (_indicator != null) {
+      let indicatorText = document.getElementById("indicator_text");
+      indicatorText.innerText = "";
+      _indicator.style.transition = "all 0.3s ease";
+      _indicator.style.transform = "scale(0.8)";
+    }
+  }, time);
 })
