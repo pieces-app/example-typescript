@@ -4,6 +4,7 @@ import * as Pieces from "@pieces.app/pieces-os-client";
 import {Application} from "@pieces.app/pieces-os-client";
 import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/TextInput';
 import {Header} from './components/Header'
+import {CopilotChat} from './components/Copilot'
 import {connect} from './utils/Connect'
 
 // types
@@ -15,7 +16,7 @@ type LocalAsset = {
 
 //=============================[GLOBALS]================================//
 let full_context: JSON;
-let applicationData: Application;
+export var applicationData: Application;
 let _indicator: HTMLElement;
 let snippetList: Array<LocalAsset>;
 
@@ -164,6 +165,22 @@ export function App(): React.JSX.Element {
             <RenameAssetInput assetID={(selectedIndex != -1 ? array[selectedIndex].id : "")}/>
 
           </div>
+        </div>
+
+        {/* this is the copilot container. the copilot logic is inside of /components/Copilot.tsx */}
+        <div style={{
+          border: '2px solid black',
+          backgroundColor: '#0e1111',
+          height: '600px',
+          minWidth: '1175px',
+          maxWidth: '1175px',
+          padding: '20px',
+          borderRadius: '9px',
+          display: "flex",
+          boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',
+          marginTop: '20px'
+        }}>
+            <CopilotChat />
         </div>
 
 
