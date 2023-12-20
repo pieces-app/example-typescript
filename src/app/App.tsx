@@ -81,7 +81,7 @@ export function App(): React.JSX.Element {
           padding: '20px',
           borderRadius: '9px',
           display: "flex",
-        boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',marginBottom:"10px"}}> Pieces OS is not running in the background. Click You're Connected to connect </div>}
+        boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',marginBottom:"10px"}}> Pieces OS is not running in the background. Click You're Not Connected to connect </div>}
         <div style={{
           // width: "auto",
           border: '2px solid black',
@@ -203,6 +203,7 @@ connect().then(__ => {
   if (_indicator != null) {
     __ != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
   }
+  _indicator.firstElementChild.innerHTML = __ != undefined ? "You're Connected!" : "You're Not Connected";
   //agrim implemented - Upon connecting to the Pieces OS, there is a need to enhance the user experience by implementing a timer 
   //that automatically hides the "You're Connected" text and shrinks the button after a certain duration
 })
