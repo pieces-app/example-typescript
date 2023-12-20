@@ -3,11 +3,12 @@ import {useEffect, useState} from 'react'
 import * as Pieces from "@pieces.app/pieces-os-client";
 import {ConversationTypeEnum, SeededConversation} from "@pieces.app/pieces-os-client";
 
+
 import { applicationData } from "../App";
 
 
 let GlobalConversationID: string;
-let GlobalConversationAnswers: Array<Pieces.QGPTQuestionAnswer> = [];
+// let GlobalConversationAnswers: Array<Pieces.QGPTQuestionAnswer> = [];
 
 // this gets all conversations that are currently available for a user. there is an optional param that you can set to
 // also return the first asset in the list.
@@ -89,19 +90,19 @@ function sendConversationMessage(prompt: string, conversationID: string = Global
     // console.log(_answers);
 
     // let's store the new answers globally for this file:
-    GlobalConversationAnswers = [..._answers];
+    // GlobalConversationAnswers = [..._answers];
   })
 }
 
 function ChatsComponent() {
 
-  return <div>
-    {GlobalConversationAnswers.map((item: Pieces.QGPTQuestionAnswer, index) => (
-      <div
-        key={index}
-        style={{}}></div>
-      ))};
-  </div>
+  // return <div>
+  //   {GlobalConversationAnswers.map((item: Pieces.QGPTQuestionAnswer, index) => (
+  //     <div
+  //       key={index}
+  //       style={{}}></div>
+  //     ))};
+  // </div>
 }
 
 export async function askQuestion({
@@ -219,7 +220,7 @@ export function CopilotChat(): React.JSX.Element {
           </div>
           {/* this is the bottom container that is where the messages go. */}
           <div style={{ overflow: "hidden", zIndex: 1, width: '-webkit-fill-available', position: "absolute", height: '100%', borderRadius: '10px', display: 'flex', justifyContent: 'center' }}>
-            <div style={{ border: '2px solid red', width: '70%'}}>
+            <div style={{ border: '2px solid transparent', width: '70%'}}>
                 <ChatsComponent />
             </div>
           </div>
