@@ -6,6 +6,7 @@ import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/T
 import {Header} from './components/Header'
 import {CopilotChat} from './components/Copilot'
 import {connect} from './utils/Connect'
+import CopilotStreamController from "./controllers/copilotStreamController";
 
 // types
 type LocalAsset = {
@@ -37,6 +38,7 @@ export function App(): React.JSX.Element {
 
   useEffect(() => {
     refreshSnippetList();
+    CopilotStreamController.getInstance();
     }, []);
 
   const clearArray = () => {

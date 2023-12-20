@@ -5,6 +5,7 @@ import {ConversationTypeEnum, SeededConversation} from "@pieces.app/pieces-os-cl
 
 
 import { applicationData } from "../App";
+import CopilotStreamController from '../controllers/copilotStreamController';
 
 
 let GlobalConversationID: string;
@@ -144,6 +145,7 @@ export async function askQuestion({
 export function CopilotChat(): React.JSX.Element {
   const [chatSelected, setChatSelected] = useState('-- no chat selected --');
   const [chatInputData, setData] = useState('');
+  const [message, setMessage] = useState<string>('');
 
   // handles the data changes on the chat input.
   const handleCopilotChatInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -216,12 +218,12 @@ export function CopilotChat(): React.JSX.Element {
               border: 'none',
               resize: 'none'
             }} value={chatInputData} onChange={handleCopilotChatInputChange}></textarea>
-            <button onClick={() => sendConversationMessage(chatInputData)} style={{maxHeight: '25px', minWidth: '60px', alignSelf: 'center', marginBottom: '5px', marginRight: '5px', marginLeft: '10px'}}>Ask</button>
+            <button onClick={() => CopilotStreamController.getInstance().askQGPT({query: chatInputData, setMessage})} style={{maxHeight: '25px', minWidth: '60px', alignSelf: 'center', marginBottom: '5px', marginRight: '5px', marginLeft: '10px'}}>Ask</button>
           </div>
           {/* this is the bottom container that is where the messages go. */}
           <div style={{ overflow: "hidden", zIndex: 1, width: '-webkit-fill-available', position: "absolute", height: '100%', borderRadius: '10px', display: 'flex', justifyContent: 'center' }}>
             <div style={{ border: '2px solid transparent', width: '70%'}}>
-                <ChatsComponent />
+                <p style={{ color: "white"}} >{message}</p>
             </div>
           </div>
 

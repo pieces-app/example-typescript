@@ -1,13 +1,8 @@
-/* eslint-disable @typescript-eslint/comma-dangle */
-/* eslint-disable comma-dangle */
 
 import * as Pieces from "@pieces.app/pieces-os-client";
 
 export type MessageOutput = {
   answer: string;
-  relevant: Pieces.RelevantQGPTSeeds;
-  queryId: string;
-  answerId: string;
 };
 
 /**
@@ -18,7 +13,7 @@ export default class CopilotStreamController {
 
   private ws: WebSocket | null = null; // the qgpt websocket
 
-  private answerEl: HTMLElement | null = null; // the current answer element to be updated from socket events
+  private setMessage: (message: string) => void; // the current answer element to be updated from socket events
 
   // this will resolve the current promise that is created by this.handleMessage
   private messageResolver: null | ((arg0: MessageOutput) => void) = null;
@@ -48,149 +43,43 @@ export default class CopilotStreamController {
    */
   public async askQGPT({
                          query,
-                         answerEl,
+                         setMessage
                        }: {
     query: string;
-    answerEl: HTMLElement;
+    setMessage: (message: string) => void;
   }): Promise<MessageOutput | undefined> {
     if (!this.ws) {
       this.connect();
     } // need to connect the socket if it's not established.
-    await fetch(`http://localhost:${port}/.well-known/health`).catch(() => {
-      return connectionPoller();
-    });
-    const application = await getApplication();
-    if (!application) return;
-
-    const relevanceInput: RelevanceRequest = {
-      qGPTRelevanceInput: {
-        query,
-        paths: QGPTView.contextSelectionModal.paths,
-        assets: { iterable: QGPTView.contextSelectionModal.assets },
-        messages: { iterable: QGPTView.contextSelectionModal.grounding },
-      },
-    };
-
-    const relevanceOutput =
-      await ConnectorSingleton.getInstance().QGPTApi.relevance(relevanceInput);
-
-    if (QGPTView.relevant) {
-      relevanceOutput.relevant.iterable.push({
-        seed: {
-          type: SeedTypeEnum.Asset,
-          asset: {
-            application,
-            format: {
-              fragment: {
-                string: {
-                  raw: Pieces.QGPTView.relevant.text,
-                },
-                metadata: {
-                  ext: QGPTView.relevant.extension,
-                },
-              },
-            },
-          },
-        },
-      });
-    }
-
-    for (const codeBlock of QGPTView.codeBlocks) {
-      relevanceOutput.relevant.iterable.push({
-        seed: {
-          type: SeedTypeEnum.Asset,
-          asset: {
-            application,
-            format: {
-              fragment: {
-                string: {
-                  raw: codeBlock.text,
-                },
-                metadata: {
-                  ext: codeBlock.extension,
-                },
-              },
-            },
-          },
-        },
-      });
-    }
-
-    const relevantEl = QGPTViewBuilder.buildRelevantElement({
-      answerDiv: answerEl.parentElement! as HTMLDivElement,
-      files: relevanceOutput.relevant.iterable,
+    await fetch(`http://localhost:1000/.well-known/health`).catch(() => {
+      // @TODO add error handling here
     });
 
-    if (relevantEl) {
-      const isAtBottom = this.isAtBottom(answerEl);
-      answerEl.parentElement?.parentElement?.parentElement?.appendChild(
-        relevantEl
-      );
-      if (isAtBottom) this.forceScroll(answerEl);
-    }
-
-    const input: QGPTStreamInput = {
+    // @TODO add conversation id
+    const input: Pieces.QGPTStreamInput = {
       question: {
         query,
-        relevant: relevanceOutput.relevant,
-        model: CopilotLLMConfigModal.selectedModel
-          ? CopilotLLMConfigModal.selectedModel
-          : undefined,
+        relevant: {iterable: []} //@TODO hook up /relevance here for context
       },
-      conversation: QGPTView.conversationId,
     };
 
-    return this.handleMessages({ input, answerEl });
-  }
-
-  /**
-   * If the user has not used their mousewheel, scroll their container to the bottom.
-   * @param answerEl The answer element that is being updated
-   * @returns void
-   */
-  public forceScroll(answerEl: HTMLElement) {
-    if (!answerEl.parentElement?.parentElement?.parentElement)
-      throw new Error(
-        'Change in dom structure broke our autoscroll behavior in the Copilot Stream Controller'
-      );
-    answerEl.parentElement.parentElement.parentElement.onscroll = () => {
-      this.hasScrolled = true;
-    };
-    answerEl.parentElement.parentElement.parentElement.scrollTop =
-      answerEl.parentElement.parentElement.parentElement.scrollHeight;
-  }
-
-  public isAtBottom(answerEl: HTMLElement): boolean {
-    if (!answerEl.parentElement?.parentElement?.parentElement)
-      throw new Error(
-        'Change in dom structure broke our autoscroll behavior in the Copilot Stream Controller'
-      );
-    const element = answerEl.parentElement.parentElement.parentElement;
-    const scrollHeight = element.scrollHeight;
-    const scrollTop = element.scrollTop;
-    const offsetHeight = element.offsetHeight;
-
-    if (offsetHeight === 0) {
-      return true;
-    }
-
-    return scrollTop >= scrollHeight - offsetHeight - 1;
+    return this.handleMessages({ input, setMessage });
   }
 
   /**
    * Connects the websocket, handles all message callbacks, error handling, and rendering.
    */
   private connect() {
-    this.ws = new WebSocket(`ws://localhost:${port}/qgpt/stream`);
+    this.ws = new WebSocket(`ws://localhost:1000/qgpt/stream`);
 
     let totalMessage = '';
-    let relevantSnippets: RelevantQGPTSeed[] = [];
+    let relevantSnippets: Pieces.RelevantQGPTSeed[] = [];
 
     this.ws.onmessage = (msg) => {
       const json = JSON.parse(msg.data);
-      const result = QGPTStreamOutputFromJSON(json);
-      let answer: QGPTQuestionAnswer | undefined;
-      let relevant: RelevantQGPTSeeds | undefined;
+      const result = Pieces.QGPTStreamOutputFromJSON(json);
+      let answer: Pieces.QGPTQuestionAnswer | undefined;
+      let relevant: Pieces.RelevantQGPTSeeds | undefined;
 
       // we got something from /relevance
       if (result.relevance) {
@@ -211,58 +100,21 @@ export default class CopilotStreamController {
       } else {
         // the message is complete, or we do nothing
         if (result.status === 'COMPLETED') {
-          QGPTView.lastConversationMessage = new Date();
           // add the buttons to the answer element's code blocks.
           if (!totalMessage) {
-            this.answerEl!.innerHTML =
-              "I'm sorry, it seems I don't have any relevant context to that question. Please try again 😃";
+            this.setMessage("I'm sorry, it seems I don't have any relevant context to that question. Please try again 😃")
           }
-          let queryIndicie: [string, number] = ['', -1];
-          let answerIndicie: [string, number] = ['', -1];
-          ConnectorSingleton.getInstance()
-            .conversationApi.conversationGetSpecificConversation({
-            conversation: result.conversation,
-          })
-            .then((conversation) => {
-              // get the latest two messages on the conversation
-              // this assumes the last message indicie is our answerid
-              // and the 2nd to last message indicie is our queryid
-              // this is the most efficient way I could figure this out - caleb
-              for (const key in conversation.messages.indices ?? {}) {
-                const index = conversation.messages.indices![key];
-                if (index > answerIndicie[1]) {
-                  queryIndicie = answerIndicie;
-                  answerIndicie = [key, index];
-                } else if (index > queryIndicie[1]) {
-                  queryIndicie = [key, index];
-                }
-              }
-            })
-            .finally(() => {
-              // render the new total message
-              const isAtBottom = this.isAtBottom(this.answerEl!);
-              this.handleRender(
-                totalMessage,
-                this.answerEl!,
-                relevantSnippets,
-                true
-              );
-              if (isAtBottom) this.forceScroll(this.answerEl!);
-              QGPTViewBuilder.addMessageActions(
-                this.answerEl!.parentElement!,
-                false,
-                answerIndicie[0]
-              );
-              this.messageResolver!({
-                answer: totalMessage,
-                relevant: { iterable: relevantSnippets },
-                answerId: answerIndicie[0],
-                queryId: queryIndicie[0],
-              });
-              // cleanup
-              totalMessage = '';
-              relevantSnippets = [];
-            });
+
+          // render the new total message
+          this.handleRender(
+            totalMessage,
+          );
+          this.messageResolver!({
+            answer: totalMessage,
+          });
+          // cleanup
+          totalMessage = '';
+
         } else if (result.status === 'FAILED' || result.status === 'UNKNOWN') {
           if (this.messageRejector) this.messageRejector(result);
           totalMessage = '';
@@ -275,9 +127,7 @@ export default class CopilotStreamController {
         totalMessage += answer.text;
       }
       // render the new total message
-      const isAtBottom = this.isAtBottom(this.answerEl!);
-      this.handleRender(totalMessage, this.answerEl!, relevantSnippets);
-      if (isAtBottom) this.forceScroll(this.answerEl!);
+      this.handleRender(totalMessage);
     };
 
     const refreshSockets = (error?: any) => {
@@ -307,20 +157,14 @@ export default class CopilotStreamController {
    */
   private async handleMessages({
                                  input,
-                                 answerEl,
+                                 setMessage,
                                }: {
-    input: QGPTStreamInput;
-    answerEl: HTMLElement;
+    input: Pieces.QGPTStreamInput;
+    setMessage: (message: string) => void;
   }) {
     if (!this.ws) this.connect();
-    ConversationStreamController.getInstance().resetConnection();
     await this.connectionPromise;
-    this.answerEl = answerEl;
-
-    // scroll the container to the bottom
-    answerEl!.parentElement!.parentElement!.scrollTop =
-      answerEl!.parentElement!.parentElement!.scrollHeight;
-    this.hasScrolled = false;
+    this.setMessage = setMessage;
 
     // init message promise
     const promise = new Promise<MessageOutput>((res, rej) => {
@@ -328,25 +172,7 @@ export default class CopilotStreamController {
       this.messageRejector = rej;
     });
 
-    // seed the next conversation if there is not one.
-    if (!QGPTView.conversationId.length) {
-      const seededConversation: SeededConversation = {
-        type: ConversationTypeEnum.Copilot,
-      };
-      const conversation =
-        await ConnectorSingleton.getInstance().conversationsApi.conversationsCreateSpecificConversation(
-          {
-            transferables: false,
-            seededConversation,
-          }
-        );
-      input.conversation = conversation.id;
-      QGPTView.conversationId = conversation.id;
-    } else {
-      input.conversation = QGPTView.conversationId;
-    }
     try {
-      QGPTView.lastConversationMessage = new Date();
       this.ws!.send(JSON.stringify(input));
     } catch (err) {
       console.error('err', err);
@@ -363,23 +189,9 @@ export default class CopilotStreamController {
    */
   private handleRender(
     totalMessage: string,
-    answerEl: HTMLElement,
-    relevant: RelevantQGPTSeed[],
-    completed = false
   ) {
-    const sanitized = QGPTComponentBuilder.sanitize(totalMessage);
-    const htmlString = marked.parse(sanitized);
-    const div = document.createElement('div');
-    div.innerHTML = htmlString;
-    QGPTViewBuilder.highlightCodeBlocks(
-      Array.from(div.querySelectorAll('pre > code')),
-      relevant,
-      !completed
-    );
-
-    div.classList.add(...answerEl.classList);
-    answerEl.replaceWith(div);
-    this.answerEl = div;
+    // this is set up to only do one dom change, that way we prevent flickering in the case we want to do markdown parsing or syntax highlighting
+    this.setMessage?.(totalMessage);
   }
 
   public static getInstance() {
