@@ -5,6 +5,7 @@ import {Application} from "@pieces.app/pieces-os-client";
 import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/TextInput';
 import {Header} from './components/Header'
 import {connect} from './utils/Connect'
+import { Indicator } from "./components/Indicator";
 
 // types
 type LocalAsset = {
@@ -192,13 +193,4 @@ connect().then(__ => {
   }
   //agrim implemented - Upon connecting to the Pieces OS, there is a need to enhance the user experience by implementing a timer 
   //that automatically hides the "You're Connected" text and shrinks the button after a certain duration
-  let time = 3000;
-  setTimeout(() => {
-    if (_indicator != null) {
-      let indicatorText = document.getElementById("indicator_text");
-      indicatorText.innerText = "";
-      _indicator.style.transition = "all 0.3s ease";
-      _indicator.style.transform = "scale(0.8)";
-    }
-  }, time);
 })
