@@ -30,6 +30,7 @@ export function App(): React.JSX.Element {
 
   const [array, setArray] = useState<Array<LocalAsset>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [error, setError] = useState(null);
 
   const refresh = (_newAsset: LocalAsset) => {
     setArray(prevArray => [...prevArray, _newAsset])
@@ -62,14 +63,25 @@ export function App(): React.JSX.Element {
         refresh(_local);
 
       }
-    })
-    
+    }).catch((error) => {
+      console.error(error);
+      setError(error);
+    });
   }
+  
 
   return (
       <div style={{ padding: '10px 20px' }}>
-          <Header />
-
+      <Header />
+      {error && <div style={{border: '2px solid black',
+        backgroundColor: '#0e1111',
+          color: 'red',
+          minWidth: '1175px',
+          maxWidth: '1175px',
+          padding: '20px',
+          borderRadius: '9px',
+          display: "flex",
+        boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',marginBottom:"10px"}}> Pieces OS is not running in the background. Click You're Connected to connect </div>}
         <div style={{
           // width: "auto",
           border: '2px solid black',
