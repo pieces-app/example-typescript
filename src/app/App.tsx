@@ -84,18 +84,6 @@ export function App(): React.JSX.Element {
           display: "flex",
           boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',
         }}>
-          {/* (6) here we can take this div and give it a min height, so that even when the list is not filled with snippets,
-              the refresh button is still located towards the bottom of the column.
-
-              to match our new header, we can go ahead and start adjusting some of the colors here before moving on to
-              make some final tweaks to the components.
-
-              a. added a background color to the main view container directly one level above ^^
-              b. add the light shadow to the container as well from the component file for the /component/header.tsx
-              c. add some minimal padding to the container for you snippets that contains the array.map
-              d. add a title to this side - 'Saved Snippets' from your design
-
-              */}
           <div style={{minHeight: '100%', display: "flex", flexDirection: "column", justifyContent: 'space-between'}}>
 
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -155,9 +143,6 @@ export function App(): React.JSX.Element {
                 </div>
 
               ))}
-
-              {/* (5) @jordan-pieces moved the refresh button up higher in this file and placed it inside the same column div as the snippet list.
-                this will create the more side by side look that you were going for in your design example */}
             </div>
 
           </div>
@@ -169,7 +154,7 @@ export function App(): React.JSX.Element {
           </div>
         </div>
 
-        {/* this is the copilot container. the copilot logic is inside of /components/Copilot.tsx */}
+        {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
         <div style={{
           border: '2px solid black',
           backgroundColor: '#0e1111',
@@ -203,9 +188,7 @@ connect().then(__ => {
 
   // conditional for the response back on application.
   //
-  // (1) first @jordan-pieces came in here and added this turing statement here inside a new
-  // if statement. this is an upgrade in comparison to the previous if statement that would not check to
-  // see if the _indicator itself is added to the DOM yet.
+  // TODO: add some better error handling components and log - abstract the connect to its own file as well.
   if (_indicator != null) {
     __ != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
   }
