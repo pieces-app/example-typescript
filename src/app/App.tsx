@@ -65,14 +65,14 @@ export function App(): React.JSX.Element {
       }
     }).catch((error) => {
       console.error(error);
-      setError(error);
+      setError(true);
     });
   }
   
 
   return (
       <div style={{ padding: '10px 20px' }}>
-      <Header />
+      <Header isConnected={ !error} />
       {error && <div style={{border: '2px solid black',
         backgroundColor: '#0e1111',
           color: 'red',

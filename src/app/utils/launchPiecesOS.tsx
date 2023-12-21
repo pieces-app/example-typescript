@@ -28,6 +28,7 @@ const launchPiecesOS = async () => {
       if (_indicator != null) {
         _indicator != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
       }
+      _indicator.firstElementChild.innerHTML = _indicator != undefined ? "You're Connected!" : "You're Not Connected";
     })
   } // Add a missing closing parenthesis and semicolon here
 }
