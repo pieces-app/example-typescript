@@ -177,8 +177,9 @@ connect().then(__ => {
   full_context = __;
   let _t = JSON.parse(JSON.stringify(full_context));
   applicationData = _t.application;
+  let osVersion = _t.health.os.version
   console.log('Application Data: ', applicationData);
-
+  localStorage.setItem("version", osVersion)
   // define the indicator now that it exists.
   _indicator = document.getElementById("indicator");
 

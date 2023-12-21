@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Indicator } from "./Indicator"
+import { connect } from '../utils/Connect'
 
 // (3) Here you can see some of the html structure that you were writing in the index.html file. Inside the
 // return (
