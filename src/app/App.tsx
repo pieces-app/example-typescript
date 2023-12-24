@@ -6,7 +6,9 @@ import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/T
 import {Header} from './components/Header'
 import {CopilotChat} from './components/Copilot'
 import {connect} from './utils/Connect'
+import { Indicator } from "./components/Indicator";
 import CopilotStreamController from "./controllers/copilotStreamController";
+
 
 // types
 type LocalAsset = {
@@ -31,6 +33,7 @@ export function App(): React.JSX.Element {
 
   const [array, setArray] = useState<Array<LocalAsset>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [error, setError] = useState(null);
 
   const refresh = (_newAsset: LocalAsset) => {
     setArray(prevArray => [...prevArray, _newAsset])
@@ -64,14 +67,25 @@ export function App(): React.JSX.Element {
         refresh(_local);
 
       }
-    })
-    
+    }).catch((error) => {
+      console.error(error);
+      setError(true);
+    });
   }
+  
 
   return (
       <div style={{ padding: '10px 20px' }}>
-          <Header />
-
+      <Header isConnected={ !error} />
+      {error && <div style={{border: '2px solid black',
+        backgroundColor: '#0e1111',
+          color: 'red',
+          minWidth: '1175px',
+          maxWidth: '1175px',
+          padding: '20px',
+          borderRadius: '9px',
+          display: "flex",
+        boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',marginBottom:"10px"}}> Pieces OS is not running in the background. Click You're Not Connected to connect </div>}
         <div style={{
           // width: "auto",
           border: '2px solid black',
@@ -191,6 +205,8 @@ connect().then(__ => {
   if (_indicator != null) {
     __ != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
   }
+  
+  _indicator.firstElementChild.innerHTML = __ != undefined ? "You're Connected!" : "You're Not Connected";
 
   // @agrim implemented - Upon connecting to the Pieces OS, there is a need to enhance the user experience by implementing a timer 
   // that automatically hides the "You're Connected" text and shrinks the button after a certain duration
