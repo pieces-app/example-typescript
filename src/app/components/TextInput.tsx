@@ -25,8 +25,6 @@ export function DataTextInput({applicationData}) {
   );
 }
 
-// (7) now we are bringing selected index into the button here and using it to determine the visibility of the button
-// and will now show when selected.
 export function DeleteAssetButton({assetID, selectedIndex}) {
   return (
       <>
