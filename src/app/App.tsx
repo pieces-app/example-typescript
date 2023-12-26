@@ -4,7 +4,11 @@ import * as Pieces from "@pieces.app/pieces-os-client";
 import {Application} from "@pieces.app/pieces-os-client";
 import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/TextInput';
 import {Header} from './components/Header'
+import {CopilotChat} from './components/Copilot'
 import {connect} from './utils/Connect'
+import { Indicator } from "./components/Indicator";
+import CopilotStreamController from "./controllers/copilotStreamController";
+
 
 // types
 type LocalAsset = {
@@ -15,7 +19,7 @@ type LocalAsset = {
 
 //=============================[GLOBALS]================================//
 let full_context: JSON;
-let applicationData: Application;
+export var applicationData: Application;
 let _indicator: HTMLElement;
 let snippetList: Array<LocalAsset>;
 
@@ -29,6 +33,7 @@ export function App(): React.JSX.Element {
 
   const [array, setArray] = useState<Array<LocalAsset>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [error, setError] = useState(null);
 
   const refresh = (_newAsset: LocalAsset) => {
     setArray(prevArray => [...prevArray, _newAsset])
@@ -36,6 +41,7 @@ export function App(): React.JSX.Element {
 
   useEffect(() => {
     refreshSnippetList();
+    CopilotStreamController.getInstance();
     }, []);
 
   const clearArray = () => {
@@ -61,14 +67,25 @@ export function App(): React.JSX.Element {
         refresh(_local);
 
       }
-    })
-    
+    }).catch((error) => {
+      console.error(error);
+      setError(true);
+    });
   }
+  
 
   return (
       <div style={{ padding: '10px 20px' }}>
-          <Header />
-
+      <Header isConnected={ !error} />
+      {error && <div style={{border: '2px solid black',
+        backgroundColor: '#0e1111',
+          color: 'red',
+          minWidth: '1175px',
+          maxWidth: '1175px',
+          padding: '20px',
+          borderRadius: '9px',
+          display: "flex",
+        boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',marginBottom:"10px"}}> Pieces OS is not running in the background. Click You're Not Connected to connect </div>}
         <div style={{
           // width: "auto",
           border: '2px solid black',
@@ -81,18 +98,6 @@ export function App(): React.JSX.Element {
           display: "flex",
           boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',
         }}>
-          {/* (6) here we can take this div and give it a min height, so that even when the list is not filled with snippets,
-              the refresh button is still located towards the bottom of the column.
-
-              to match our new header, we can go ahead and start adjusting some of the colors here before moving on to
-              make some final tweaks to the components.
-
-              a. added a background color to the main view container directly one level above ^^
-              b. add the light shadow to the container as well from the component file for the /component/header.tsx
-              c. add some minimal padding to the container for you snippets that contains the array.map
-              d. add a title to this side - 'Saved Snippets' from your design
-
-              */}
           <div style={{minHeight: '100%', display: "flex", flexDirection: "column", justifyContent: 'space-between'}}>
 
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -152,9 +157,6 @@ export function App(): React.JSX.Element {
                 </div>
 
               ))}
-
-              {/* (5) @jordan-pieces moved the refresh button up higher in this file and placed it inside the same column div as the snippet list.
-                this will create the more side by side look that you were going for in your design example */}
             </div>
 
           </div>
@@ -164,6 +166,22 @@ export function App(): React.JSX.Element {
             <RenameAssetInput assetID={(selectedIndex != -1 ? array[selectedIndex].id : "")}/>
 
           </div>
+        </div>
+
+        {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
+        <div style={{
+          border: '2px solid black',
+          backgroundColor: '#0e1111',
+          height: '600px',
+          minWidth: '1175px',
+          maxWidth: '1175px',
+          padding: '20px',
+          borderRadius: '9px',
+          display: "flex",
+          boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',
+          marginTop: '20px'
+        }}>
+            <CopilotChat />
         </div>
 
 
@@ -184,11 +202,22 @@ connect().then(__ => {
   _indicator = document.getElementById("indicator");
 
   // conditional for the response back on application.
-  //
-  // (1) first @jordan-pieces came in here and added this turing statement here inside a new
-  // if statement. this is an upgrade in comparison to the previous if statement that would not check to
-  // see if the _indicator itself is added to the DOM yet.
+  // TODO: add some better error handling components and log - abstract the connect to its own file as well.
   if (_indicator != null) {
     __ != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
   }
+  
+  _indicator.firstElementChild.innerHTML = __ != undefined ? "You're Connected!" : "You're Not Connected";
+
+  // @agrim implemented - Upon connecting to the Pieces OS, there is a need to enhance the user experience by implementing a timer 
+  // that automatically hides the "You're Connected" text and shrinks the button after a certain duration
+  let time = 3000;
+  setTimeout(() => {
+    if (_indicator != null) {
+      let indicatorText = document.getElementById("indicator_text");
+      indicatorText.innerText = "";
+      _indicator.style.transition = "all 0.3s ease";
+      _indicator.style.transform = "scale(0.8)";
+    }
+  }, time);
 })
