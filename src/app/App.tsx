@@ -8,6 +8,7 @@ import {CopilotChat} from './components/Copilot'
 import {connect} from './utils/Connect'
 import { Indicator } from "./components/Indicator";
 import CopilotStreamController from "./controllers/copilotStreamController";
+import "./global.css";
 
 
 // types
@@ -120,7 +121,7 @@ export function App(): React.JSX.Element {
             </div>
 
             <div style={{
-              overflow: "scroll",
+              overflowY: "scroll",
               minWidth: '700px',
               minHeight: "80%",
               paddingRight: '5px',
