@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Indicator } from "./Indicator"
+import { connect } from '../utils/Connect'
 
 
 // this is the header element with its children:
