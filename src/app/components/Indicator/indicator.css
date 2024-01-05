@@ -1,0 +1,43 @@
+/* styles.css */
+
+.center-container {
+    display: inherit;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .custom-button {
+    background: transparent;
+    border: 1px solid black;
+  }
+  
+  .indicator {
+    height: 24px;
+    border-radius: 20px;
+    border: 1px solid black;
+    padding: 4px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .indicator.green {
+    background-color: green;
+  }
+  
+  .indicator.red {
+    background-color: red;
+  }
+  
+  .indicator-text {
+    color: white;
+    font-size: 14px;
+  }
+  
+  .checkmark {
+    height: 20px;
+    width: 20px;
+    margin: 0 5px;
+  }
+  
