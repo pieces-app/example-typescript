@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createAsset } from "../Asset/Asset";
-import "./button.css";
+import "./Button.css";
 
 export function CreateButton({
   applicationData,
@@ -9,7 +9,7 @@ export function CreateButton({
 }): React.JSX.Element {
   return (
     <button
-      className="btn"
+      className="button"
       onClick={() => createAsset(applicationData, data, name)}
     >
       Create Snippet

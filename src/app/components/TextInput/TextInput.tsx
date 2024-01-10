@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { deleteAsset, renameAsset } from "../Asset/Asset";
 import { CreateButton } from "../Button/Button";
-import "./textinput.css";
+import "./TextInput.css";
 
 export function DataTextInput({ applicationData }) {
   const [name, setName] = useState("");

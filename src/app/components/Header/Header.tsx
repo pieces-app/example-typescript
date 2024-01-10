@@ -12,7 +12,7 @@ interface HeaderProps {
 // We don't support logic for detecting the offline status but will be adding it soon!
 export function Header({ isConnected }: HeaderProps): React.JSX.Element {
   return (
-    <div className="custom-div">
+    <div className="header-div">
       <h3>
         Pieces OS Client SDK for Typescript
         <span>Open Source by Pieces</span>
