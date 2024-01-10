@@ -1,0 +1,15 @@
+.button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-width: fit-content;
+  height: fit-content;
+  /* margin-left: 10px; */ /* Uncomment if needed */
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 8px 24px;
+  color: white;
+  flex-wrap: nowrap;
+  cursor: pointer;
+  font-size: 12px;
+}
