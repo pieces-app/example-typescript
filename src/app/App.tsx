@@ -2,11 +2,11 @@ import * as React from "react";
 import {useState, useEffect} from "react";
 import * as Pieces from "@pieces.app/pieces-os-client";
 import {Application} from "@pieces.app/pieces-os-client";
-import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/TextInput';
-import {Header} from './components/Header'
-import {CopilotChat} from './components/Copilot'
+import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/TextInput/TextInput';
+import {Header} from './components/Header/Header'
+import {CopilotChat} from './components/Copilot/Copilot'
 import {connect} from './utils/Connect'
-import { Indicator } from "./components/Indicator";
+import { Indicator } from "./components/Indicator/Indicator";
 import CopilotStreamController from "./controllers/copilotStreamController";
 import "./global.css";
 
