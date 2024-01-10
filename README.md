@@ -2,6 +2,8 @@
 
 Follow this guide to get an early look at using Pieces OS in your own development environment. You can use this to get familiar with some key terms and endpoints: `assets`, `asset`, `connect`, `format`, `formats`, and `create`. There are other topics that are touched on, and further expansion on this starter project is coming soon. 
 
+[![npm version](https://badge.fury.io/js/@pieces.app%2Fpieces-os-client.svg)](https://badge.fury.io/js/@pieces.app%2Fpieces-os-client)
+
 See the NPM package here: 
 - [https://www.npmjs.com/package/@pieces.app/pieces-os-client](https://www.npmjs.com/package/@pieces.app/pieces-os-client)
 
