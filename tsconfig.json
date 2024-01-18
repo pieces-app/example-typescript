@@ -4,13 +4,14 @@
     "module": "CommonJS",
      "allowJs": true,
      "checkJs": true,
-    "forceConsistentCasingInFileNames": true,
-
+     "types": ["@testing-library/jest-dom"],
+     "forceConsistentCasingInFileNames": true,
+      
     /* Type Checking */
     "strict": false,
     "skipLibCheck": true,
     /* Skip type checking all .d.ts files. */
     "jsx": "react"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules","jest.config.js"]
 }
