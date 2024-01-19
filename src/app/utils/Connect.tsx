@@ -22,6 +22,7 @@ export async function connect(): Promise<JSON> {
       const response: Response = await fetch(url, options);
       const data: Promise<JSON> = await response.json();
       _output = data;
+      console.log('data', data);
       return _output;
   } catch (e) {
       console.error(e);

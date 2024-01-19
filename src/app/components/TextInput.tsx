@@ -17,8 +17,8 @@ export function DataTextInput({applicationData}) {
 
   return (
       <>
-          <input placeholder="Type the name of your snippet..." type="text" value={name} style={{ maxWidth: '450px', marginBottom: '10px' }} onChange={handleNameChange} />
-          <textarea placeholder={"Add your code/text content into this box"} value={data} style={{ height: '200px', width: '450px', verticalAlign: 'top' }} onChange={handleDataChange} />
+          <input placeholder="Type the name of your snippet..." type="text" value={name} style={{ maxWidth: '250px', marginBottom: '10px' }} onChange={handleNameChange} />
+          <textarea placeholder={"Add your code/text content into this box"} value={data} style={{ height: '200px', width: '250px', verticalAlign: 'top' }} onChange={handleDataChange} />
           <CreateButton applicationData={applicationData} data={data} name={name} />
       </>
 
@@ -43,7 +43,7 @@ export function RenameAssetInput({assetID}) {
 
   return (
       <>
-          <input value={name} style={{ width: '450px', verticalAlign: 'top' }} onChange={handleNameChange} />
+          <input value={name} style={{ width: '250px', verticalAlign: 'top' }} onChange={handleNameChange} />
           <button  style={{
             marginTop: '10px',
             maxWidth: 'fit-content',

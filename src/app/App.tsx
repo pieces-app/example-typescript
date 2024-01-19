@@ -8,6 +8,7 @@ import {CopilotChat} from './components/Copilot'
 import {connect} from './utils/Connect'
 import { Indicator } from "./components/Indicator";
 import CopilotStreamController from "./controllers/copilotStreamController";
+import WorkflowActivityList from "./components/WorkflowActivity";
 
 
 // types
@@ -75,27 +76,44 @@ export function App(): React.JSX.Element {
   
 
   return (
-      <div style={{ padding: '10px 20px' }}>
+      <div style={{ padding: '10px 20px'}}>
       <Header isConnected={ !error} />
       {error && <div style={{border: '2px solid black',
         backgroundColor: '#0e1111',
           color: 'red',
-          minWidth: '1175px',
-          maxWidth: '1175px',
+          // minWidth: '1175px',
+          // maxWidth: '1175px',
           padding: '20px',
           borderRadius: '9px',
           display: "flex",
         boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',marginBottom:"10px"}}> Pieces OS is not running in the background. Click You're Not Connected to connect </div>}
+        <div style={{display:'flex',flex:1,flexDirection:'row-reverse'}}>
+        <div style={{border: '2px solid black',
+          backgroundColor: '#0e1111',
+          height: '600px',
+          minWidth: '250px',
+          // maxWidth: '1175px',
+          padding: '20px',
+          borderRadius: '9px',
+          display: "flex",
+          flex:1,
+          flexDirection: 'column',
+          boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',}}>
+            <h3 style={{color: 'white', fontWeight: 'normal' }}>Workflow Activity</h3>
+            <WorkflowActivityList />
+        </div>
         <div style={{
           // width: "auto",
           border: '2px solid black',
           backgroundColor: '#0e1111',
           height: '600px',
-          minWidth: '1175px',
-          maxWidth: '1175px',
+          minWidth: '1000px',
+          // maxWidth: '1175px',
           padding: '20px',
           borderRadius: '9px',
           display: "flex",
+          flex:1,
+          marginRight: '10px',
           boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',
         }}>
           <div style={{minHeight: '100%', display: "flex", flexDirection: "column", justifyContent: 'space-between'}}>
@@ -121,7 +139,7 @@ export function App(): React.JSX.Element {
 
             <div style={{
               overflow: "scroll",
-              minWidth: '700px',
+              // minWidth: '700px',
               minHeight: "80%",
               paddingRight: '5px',
               display: "grid",
@@ -160,12 +178,13 @@ export function App(): React.JSX.Element {
             </div>
 
           </div>
-          <div style={{display: 'flex', flexDirection: 'column', padding: '10px', maxHeight: '90%', alignSelf: 'end'}}>
+          <div style={{display: 'flex', flexDirection: 'column', padding: '10px', maxHeight: '90%', alignSelf: 'end',marginLeft:'10px'}}>
             <h3 style={{color: 'white', fontWeight: 'normal' }}>Create a New Snippet</h3>
             <DataTextInput applicationData={applicationData}/>
             <RenameAssetInput assetID={(selectedIndex != -1 ? array[selectedIndex].id : "")}/>
 
           </div>
+        </div>
         </div>
 
         {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
@@ -173,8 +192,8 @@ export function App(): React.JSX.Element {
           border: '2px solid black',
           backgroundColor: '#0e1111',
           height: '600px',
-          minWidth: '1175px',
-          maxWidth: '1175px',
+          // minWidth: '1175px',
+          // maxWidth: '1175px',
           padding: '20px',
           borderRadius: '9px',
           display: "flex",
