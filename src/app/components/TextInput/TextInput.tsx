@@ -35,10 +35,10 @@ export function DataTextInput({ applicationData }) {
   );
 }
 
-export function DeleteAssetButton({ assetID, selectedIndex ,refreshSnippetList}) {
+export function DeleteAssetButton({ assetID, selectedIndex ,setArray}) {
   return (
     <>
-      <button className="delete-button" onClick={() => deleteAsset(assetID,refreshSnippetList)}>
+      <button className="delete-button" onClick={() => deleteAsset(assetID,setArray)}>
         DELETE
       </button>
     </>
