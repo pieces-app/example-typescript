@@ -1,0 +1,45 @@
+/* DataTextInput styles */
+.input-name {
+    max-width: 450px;
+    margin-bottom: 10px;
+  }
+  
+  .textarea-data {
+    height: 200px;
+    width: 450px;
+    vertical-align: top;
+  }
+  
+  /* DeleteAssetButton styles */
+  .delete-button {
+    visibility: visible;
+    margin-left: 1rem;
+    max-width: fit-content;
+    background-color: transparent;
+    color: red;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 2px 20px;
+    cursor: pointer;
+  }
+  
+  /* RenameAssetInput styles */
+  .input-rename {
+    width: 450px;
+    vertical-align: top;
+  }
+  
+  .rename-button {
+    margin-top: 10px;
+    max-width: fit-content;
+    height: fit-content;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 8px 24px;
+    color: white;
+    flex-wrap: nowrap;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  

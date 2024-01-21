@@ -1,0 +1,24 @@
+.header-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  padding: 0px 10px;
+  margin-bottom: 1rem;
+  box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  min-width: 1200px;
+  max-width: 1200px;
+}
+
+.header-div h3 {
+  color: white;
+  font-weight: normal;
+}
+
+.header-div span {
+  font-size: 8px;
+  margin-left: 5px;
+  font-weight: 100;
+}

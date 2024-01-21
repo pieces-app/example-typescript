@@ -4,12 +4,12 @@
   "main": "src/index.tsx",
   "scripts": {
     "dev": "ts-node src/index.tsx",
-    "clean": "rm -r node_modules && rm package-lock.json",
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "clean": "rimraf node_modules && rimraf package-lock.json",
+    "start": "cross-env react-scripts start",
+    "build": "cross-env react-scripts build"
   },
   "dependencies": {
-    "@pieces.app/pieces-os-client": "1.2.0",
+    "@pieces.app/pieces-os-client": "1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
@@ -19,6 +19,8 @@
     "@types/node": "^20.8.7",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.17",
+    "cross-env": "^7.0.3",
+    "rimraf": "^3.0.2",
     "typescript": "^4.9.5"
   },
   "browserslist": {
@@ -31,6 +33,19 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-private-methods",
+      "@babel/plugin-transform-numeric-separator",
+      "@babel/plugin-transform-nullish-coalescing-operator",
+      "@babel/plugin-transform-class-properties",
+      "@babel/plugin-transform-optional-chaining",
+      "@rollup/plugin-terser"
     ]
+  },
+  "overrides": {
+    "typescript": "^4.9.5",
+    "postcss": "^8.4.33",
+    "nth-check": "^2.1.0"
   }
 }

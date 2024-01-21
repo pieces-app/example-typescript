@@ -2,12 +2,13 @@ import * as React from "react";
 import {useState, useEffect} from "react";
 import * as Pieces from "@pieces.app/pieces-os-client";
 import {Application} from "@pieces.app/pieces-os-client";
-import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/TextInput';
-import {Header} from './components/Header'
-import {CopilotChat} from './components/Copilot'
+import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/TextInput/TextInput';
+import {Header} from './components/Header/Header'
+import {CopilotChat} from './components/Copilot/Copilot'
 import {connect} from './utils/Connect'
-import { Indicator } from "./components/Indicator";
+import { Indicator } from "./components/Indicator/Indicator";
 import CopilotStreamController from "./controllers/copilotStreamController";
+import "./global.css";
 import WorkflowActivityList from "./components/WorkflowActivity";
 
 
@@ -51,6 +52,18 @@ export function App(): React.JSX.Element {
 
   const handleSelect = (index) => {
     setSelectedIndex(index!=selectedIndex?index:-1);
+  };
+
+  const handleDeSelect = () => {
+    setSelectedIndex(-1)
+  };
+
+  // Keyboard event handler
+  const handleKeyPress = (event) => {
+    // Check if 'Cmd' on MacOS or 'Ctrl' on Windows is pressed along with '\'
+    if ((event.metaKey || event.ctrlKey) && event.key === '\\') {
+      handleDeSelect();
+    }
   };
 
   function refreshSnippetList() {
@@ -112,7 +125,7 @@ export function App(): React.JSX.Element {
           padding: '20px',
           borderRadius: '9px',
           display: "flex",
-          flex:1,
+          flex: 1,
           marginRight: '10px',
           boxShadow: '-4px 4px 5px rgba(0,0,0, 0.2)',
         }}>
@@ -134,12 +147,26 @@ export function App(): React.JSX.Element {
                 fontSize: '12px'
               }} onClick={refreshSnippetList}>Refresh Snippet List
               </button>
+              <button style={{
+                maxWidth: 'fit-content',
+                height: 'fit-content',
+                marginLeft: '10px',
+                backgroundColor: "black",
+                border: '1px solid white',
+                borderRadius: '5px',
+                padding: '8px 24px',
+                color: 'white',
+                flexWrap: 'nowrap',
+                cursor: 'pointer',
+                fontSize: '12px'
+              }} onClick={handleDeSelect}>DESELECT
+              </button>
               <DeleteAssetButton assetID={(selectedIndex != -1 ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex}/>
             </div>
 
             <div style={{
-              overflow: "scroll",
-              // minWidth: '700px',
+              overflowY: "scroll",
+              minWidth: '700px',
               minHeight: "80%",
               paddingRight: '5px',
               display: "grid",
@@ -149,6 +176,8 @@ export function App(): React.JSX.Element {
             }}>
               {array.map((item: LocalAsset, index) => (
                 <div
+                  onKeyDown={handleKeyPress}
+                  tabIndex={0}
                   key={index}
                   style={{
                     margin: '5px',
@@ -185,7 +214,6 @@ export function App(): React.JSX.Element {
 
           </div>
         </div>
-        </div>
 
         {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
         <div style={{
@@ -205,6 +233,7 @@ export function App(): React.JSX.Element {
 
 
       </div>
+      </div>
   )
 }
 
@@ -214,8 +243,9 @@ connect().then(__ => {
   full_context = __;
   let _t = JSON.parse(JSON.stringify(full_context));
   applicationData = _t.application;
+  let osVersion = _t.health.os.version
   console.log('Application Data: ', applicationData);
-
+  localStorage.setItem("version", osVersion)
   // define the indicator now that it exists.
   _indicator = document.getElementById("indicator");
 

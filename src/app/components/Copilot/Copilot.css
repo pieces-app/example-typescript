@@ -1,0 +1,97 @@
+/* Container styles */
+.container {
+    width: -webkit-fill-available;
+  }
+  
+  /* Header styles */
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .header h1 {
+    color: white;
+  }
+  
+  /* Button styles */
+  .button {
+    max-width: fit-content;
+    height: fit-content;
+    margin-left: 10px;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 8px 24px;
+    color: white;
+    flex-wrap: nowrap;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  /* Footer styles */
+  .footer {
+    width: 500px;
+    max-height: 50px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .footer button {
+    max-height: 25px;
+    min-width: 60px;
+  }
+  
+  /* Chat box styles */
+  .chat-box {
+    border: 2px solid white;
+    height: 80%;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    position: relative;
+  }
+  
+  /* Text area styles */
+  .text-area {
+    z-index: 10;
+    border: 2px solid transparent;
+    width: -webkit-fill-available;
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: white;
+  }
+  
+  .text-area textarea {
+    width: 99.5%;
+    height: 90%;
+    border: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    resize: none;
+  }
+  
+  /* Messages styles */
+  .messages {
+    overflow: hidden;
+    z-index: 1;
+    width: -webkit-fill-available;
+    position: absolute;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .messages p {
+    color: white;
+  }
+  
