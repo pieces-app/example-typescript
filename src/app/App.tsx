@@ -53,6 +53,18 @@ export function App(): React.JSX.Element {
     setSelectedIndex(index!=selectedIndex?index:-1);
   };
 
+  const handleDeSelect = () => {
+    setSelectedIndex(-1)
+  };
+
+  // Keyboard event handler
+  const handleKeyPress = (event) => {
+    // Check if 'Cmd' on MacOS or 'Ctrl' on Windows is pressed along with '\'
+    if ((event.metaKey || event.ctrlKey) && event.key === '\\') {
+      handleDeSelect();
+    }
+  };
+
   function refreshSnippetList() {
     new Pieces.AssetsApi().assetsSnapshot({}).then((assets) => {
       // console.log('Response', assets)
@@ -117,7 +129,21 @@ export function App(): React.JSX.Element {
                 fontSize: '12px'
               }} onClick={refreshSnippetList}>Refresh Snippet List
               </button>
-              <DeleteAssetButton assetID={(selectedIndex != -1 ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex}/>
+              <button style={{
+                maxWidth: 'fit-content',
+                height: 'fit-content',
+                marginLeft: '10px',
+                backgroundColor: "black",
+                border: '1px solid white',
+                borderRadius: '5px',
+                padding: '8px 24px',
+                color: 'white',
+                flexWrap: 'nowrap',
+                cursor: 'pointer',
+                fontSize: '12px'
+              }} onClick={handleDeSelect}>DESELECT
+              </button>
+              <DeleteAssetButton assetID={(selectedIndex != -1 ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex}/> 
             </div>
 
             <div style={{
@@ -132,6 +158,8 @@ export function App(): React.JSX.Element {
             }}>
               {array.map((item: LocalAsset, index) => (
                 <div
+                  onKeyDown={handleKeyPress}
+                  tabIndex={0}
                   key={index}
                   style={{
                     margin: '5px',
