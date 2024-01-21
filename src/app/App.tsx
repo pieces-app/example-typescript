@@ -117,7 +117,7 @@ export function App(): React.JSX.Element {
                 fontSize: '12px'
               }} onClick={refreshSnippetList}>Refresh Snippet List
               </button>
-              <DeleteAssetButton assetID={(selectedIndex != -1 ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex}/>
+              <DeleteAssetButton assetID={(selectedIndex != -1 ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex} refreshSnippetList={refreshSnippetList}/>
             </div>
 
             <div style={{

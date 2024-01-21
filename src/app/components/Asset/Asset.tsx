@@ -33,14 +33,16 @@ export function createAsset(applicationData: Application, data: string, name: st
 }
 //==============================[.end /create]==================================//
 
-export function deleteAsset(_id: String){
+export function deleteAsset(_id: String,refreshSnippetList:Function){
+
 
   new Pieces.AssetsApi().assetsSnapshot({}).then(_assetList => {
       for (let i = 0; i < _assetList.iterable.length; i++) {
           if (_assetList.iterable[i].id == _id) {
-              new Pieces.AssetsApi().assetsDeleteAsset({asset: _assetList.iterable[i].id }).then(_ => console.log("delete confirmed!"))
-          }
+              new Pieces.AssetsApi().assetsDeleteAsset({asset: _assetList.iterable[i].id }).then(_ => console.log("delete confirmed!"));
+            }
       }
+        refreshSnippetList();
   })
 }
 
