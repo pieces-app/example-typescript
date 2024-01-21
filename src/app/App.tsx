@@ -117,7 +117,7 @@ export function App(): React.JSX.Element {
         </div>
         <div style={{
           // width: "auto",
-          border: '2px solid black',
+          border: '2px solid yellow',
           backgroundColor: '#0e1111',
           height: '600px',
           minWidth: '1000px',
@@ -205,14 +205,15 @@ export function App(): React.JSX.Element {
 
               ))}
             </div>
-
           </div>
+
           <div style={{display: 'flex', flexDirection: 'column', padding: '10px', maxHeight: '90%', alignSelf: 'end',marginLeft:'10px'}}>
             <h3 style={{color: 'white', fontWeight: 'normal' }}>Create a New Snippet</h3>
             <DataTextInput applicationData={applicationData}/>
             <RenameAssetInput assetID={(selectedIndex != -1 ? array[selectedIndex].id : "")}/>
 
           </div>
+        </div>
         </div>
 
         {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
@@ -232,7 +233,6 @@ export function App(): React.JSX.Element {
         </div>
 
 
-      </div>
       </div>
   )
 }
