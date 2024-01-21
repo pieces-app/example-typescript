@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Pieces from "@pieces.app/pieces-os-client";
 import ActivityCard from './ActivityCard';
-import { TrackedAssetEventIdentifierDescriptionPairs } from '@pieces.app/pieces-os-client';
 
 interface WorkflowActivity {
     id: string;
@@ -44,7 +43,7 @@ const WorkflowActivityList: React.FC = () => {
             <ul style={{padding:0}}>
                 {activities.map(activity => (
                     <ActivityCard key={activity.id} name={activity.name} description={activity.description} />
-                ))}
+                )).reverse()}
             </ul>
         </div>
     );
