@@ -2,6 +2,13 @@ import * as Pieces from "@pieces.app/pieces-os-client";
 import {SeededAsset, SeedTypeEnum} from "@pieces.app/pieces-os-client";
 import {Application} from "@pieces.app/pieces-os-client";
 
+
+type LocalAsset = {
+    name: string,
+    id: string,
+    classification: Pieces.ClassificationSpecificEnum,
+  }
+
 //==============================[/create]==================================//
 export function createAsset(applicationData: Application, data: string, name: string) {
 
@@ -33,14 +40,25 @@ export function createAsset(applicationData: Application, data: string, name: st
 }
 //==============================[.end /create]==================================//
 
-export function deleteAsset(_id: String){
+export function deleteAsset(_id: String,setArray:Function){
+
+    const newAssetsList : Array<LocalAsset> = [];
 
   new Pieces.AssetsApi().assetsSnapshot({}).then(_assetList => {
       for (let i = 0; i < _assetList.iterable.length; i++) {
           if (_assetList.iterable[i].id == _id) {
-              new Pieces.AssetsApi().assetsDeleteAsset({asset: _assetList.iterable[i].id }).then(_ => console.log("delete confirmed!"))
-          }
+              new Pieces.AssetsApi().assetsDeleteAsset({asset: _assetList.iterable[i].id }).then(()=>console.log(_id));
+            }
+            else{
+                newAssetsList.push( {
+                    id: _assetList.iterable[i].id,
+                    name: _assetList.iterable[i].name,
+                    classification: _assetList.iterable[i].original.reference.classification.specific
+                })
+            }
       }
+      window.alert("selected snippet got deleted");
+      setArray(newAssetsList);
   })
 }
 

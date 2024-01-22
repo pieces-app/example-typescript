@@ -77,9 +77,8 @@ export function App(): React.JSX.Element {
           name: assets.iterable[i].name,
           classification: assets.iterable[i].original.reference.classification.specific
         }
-
+        console.log("refreshSnippet",i,_local);
         refresh(_local);
-
       }
     }).catch((error) => {
       console.error(error);
@@ -147,7 +146,7 @@ export function App(): React.JSX.Element {
                 fontSize: '12px'
               }} onClick={refreshSnippetList}>Refresh Snippet List
               </button>
-              <button style={{
+        <button style={{
                 maxWidth: 'fit-content',
                 height: 'fit-content',
                 marginLeft: '10px',
@@ -161,7 +160,7 @@ export function App(): React.JSX.Element {
                 fontSize: '12px'
               }} onClick={handleDeSelect}>DESELECT
               </button>
-              <DeleteAssetButton assetID={(selectedIndex != -1 ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex}/>
+              <DeleteAssetButton assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex} setArray={setArray}/>
             </div>
 
             <div style={{
@@ -210,7 +209,7 @@ export function App(): React.JSX.Element {
           <div style={{display: 'flex', flexDirection: 'column', padding: '10px', maxHeight: '90%', alignSelf: 'end',marginLeft:'10px'}}>
             <h3 style={{color: 'white', fontWeight: 'normal' }}>Create a New Snippet</h3>
             <DataTextInput applicationData={applicationData}/>
-            <RenameAssetInput assetID={(selectedIndex != -1 ? array[selectedIndex].id : "")}/>
+            <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
 
           </div>
         </div>
