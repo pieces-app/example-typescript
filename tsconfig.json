@@ -13,5 +13,5 @@
     /* Skip type checking all .d.ts files. */
     "jsx": "react"
   },
-  "exclude": ["node_modules","jest.config.js", "/Users/shivaylamba/Desktop/example-ts/__mocks__"]
+  "exclude": ["node_modules","jest.config.js"]
 }

@@ -10,6 +10,3 @@ describe('CreateButton', () => {
     expect(buttonElement).toBeInTheDocument();
   });
 });
-
-
-// lostPixel
