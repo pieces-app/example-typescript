@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "es2022",
     "module": "CommonJS",
      "allowJs": true,
      "checkJs": true,
@@ -13,5 +13,5 @@
     /* Skip type checking all .d.ts files. */
     "jsx": "react"
   },
-  "exclude": ["node_modules","jest.config.js"]
+  "exclude": ["node_modules","jest.config.js", "/Users/shivaylamba/Desktop/example-ts/__mocks__"]
 }
