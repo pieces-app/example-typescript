@@ -13,5 +13,5 @@
     /* Skip type checking all .d.ts files. */
     "jsx": "react"
   },
-  "exclude": ["jest.config.js", "**/__mocks__/*"]
+  "exclude": ["node_modules","jest.config.js", "**/__mocks__/*"]
 }
