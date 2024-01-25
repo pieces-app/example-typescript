@@ -1,62 +1,54 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
+import * as React from 'react'
+import {useEffect, useState} from 'react'
 import * as Pieces from "@pieces.app/pieces-os-client";
-import {
-  ConversationTypeEnum,
-  SeededConversation,
-} from "@pieces.app/pieces-os-client";
+import {ConversationTypeEnum, SeededConversation} from "@pieces.app/pieces-os-client";
 import "./Copilot.css";
 
+
 import { applicationData } from "../../App";
-import CopilotStreamController from "../../controllers/copilotStreamController";
+import CopilotStreamController from '../../controllers/copilotStreamController';
+
 
 let GlobalConversationID: string;
 
+
 // going to use get all conversations with a few extra steps to store the current conversations locally.
 export function createNewConversation() {
+
   // logs --> CREATING CONVERSATION
-  console.log("Begin creating conversation...");
+  console.log('Begin creating conversation...')
 
   // to create a new conversation, you need to first pass in a seeded conversation in the request body.
   // the only mandatory parameter is the ConversationTypeEnum.Copilot value.
-  let seededConversation: SeededConversation = {
-    type: ConversationTypeEnum.Copilot,
-    name: "Demo Seeded Conversation",
-  };
+  let seededConversation: SeededConversation = { type: ConversationTypeEnum.Copilot, name: "Demo Seeded Conversation" }
 
-  console.log("Conversation seeded");
-  console.log(
-    "Passing over the new conversation with name: " + seededConversation.name
-  );
+  console.log('Conversation seeded')
+  console.log('Passing over the new conversation with name: ' + seededConversation.name)
 
   // creates new conversation, .then is for confirmation on creation.
   // note the usage of transfereables here to expose the full conversation data and give access to the id and other
   // conversation values.
-  new Pieces.ConversationsApi()
-    .conversationsCreateSpecificConversationRaw({
-      transferables: true,
-      seededConversation,
-    })
-    .then((_c) => {
-      console.log("Conversation created! : Here is the response:");
-      console.log(_c);
+  new Pieces.ConversationsApi().conversationsCreateSpecificConversationRaw({transferables: true, seededConversation}).then((_c)  => {
+    console.log('Conversation created! : Here is the response:');
+    console.log(_c);
 
-      // check and ensure the response back is clean.
-      if (_c.raw.ok == true && _c.raw.status == 200) {
-        console.log("CLEAN RESPONSE BACK.");
-        _c.value().then((_conversation) => {
-          console.log("Returning new conversation values.");
-          // console.log('ID | ' + _conversation.id);
-          // console.log('NAME | ' + _conversation.name);
-          // console.log('CREATED | ' + _conversation.created.readable);
-          // console.log('ID: ' + _conversation.);
+    // check and ensure the response back is clean.
+    if (_c.raw.ok == true && _c.raw.status == 200) {
+      console.log('CLEAN RESPONSE BACK.')
+      _c.value().then(_conversation => {
+        console.log('Returning new conversation values.');
+        // console.log('ID | ' + _conversation.id);
+        // console.log('NAME | ' + _conversation.name);
+        // console.log('CREATED | ' + _conversation.created.readable);
+        // console.log('ID: ' + _conversation.);
 
-          // Set the conversation variable here for the local file:
-          GlobalConversationID = _conversation.id;
-        });
-      }
-    });
+        // Set the conversation variable here for the local file:
+        GlobalConversationID = _conversation.id;
+      })
+    }
+  })
 }
+
 
 // You can use this here to set and send a conversation message.
 // function sendConversationMessage(prompt: string, conversationID: string = GlobalConversationID){
@@ -80,9 +72,9 @@ export function createNewConversation() {
 // }
 
 export async function askQuestion({
-  query,
-  relevant,
-}: {
+                                    query,
+                                    relevant,
+                                  }: {
   query: string;
   relevant: string;
 }) {
@@ -111,21 +103,17 @@ export async function askQuestion({
     },
   };
   // const result = await Pieces.QGPTApi.question({qGPTQuestionInput: params});
-  const result = new Pieces.QGPTApi().question({ qGPTQuestionInput: params });
-  return { result, query };
+  const result = new Pieces.QGPTApi().question({qGPTQuestionInput: params});
+  return {result, query};
 }
 
-  
-
 export function CopilotChat(): React.JSX.Element {
-  const [chatSelected, setChatSelected] = useState("-- no chat selected --");
-  const [chatInputData, setData] = useState("");
-  const [message, setMessage] = useState<string>("");
+  const [chatSelected, setChatSelected] = useState('-- no chat selected --');
+  const [chatInputData, setData] = useState('');
+  const [message, setMessage] = useState<string>('');
 
   // handles the data changes on the chat input.
-  const handleCopilotChatInputChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
+  const handleCopilotChatInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setData(event.target.value);
   };
 
@@ -143,13 +131,11 @@ export function CopilotChat(): React.JSX.Element {
     const getInitialChat = async () => {
       let _name: string;
 
-      await new Pieces.ConversationsApi()
-        .conversationsSnapshot({})
-        .then((output) => {
-          _name = output.iterable.at(0).name;
-          GlobalConversationID = output.iterable.at(0).id;
-          return output.iterable.at(0).name;
-        });
+      await new Pieces.ConversationsApi().conversationsSnapshot({}).then(output => {
+        _name = output.iterable.at(0).name;
+        GlobalConversationID = output.iterable.at(0).id;
+        return output.iterable.at(0).name
+      });
       setChatSelected(_name);
     };
     getInitialChat();
@@ -160,9 +146,7 @@ export function CopilotChat(): React.JSX.Element {
       <div className="header">
         <div>
           <h1>Copilot Chat</h1>
-          <button className="button" onClick={createNewConversation}>
-            Create Fresh Conversation
-          </button>
+          <button className="button" onClick={createNewConversation}>Create Fresh Conversation</button>
         </div>
         <div className="footer">
           <button>back</button>
@@ -172,18 +156,8 @@ export function CopilotChat(): React.JSX.Element {
       </div>
       <div className="chat-box">
         <div className="text-area">
-          <textarea
-            placeholder="Type your prompt here..."
-            value={chatInputData}
-            onChange={handleCopilotChatInputChange}
-          ></textarea>
-          <button
-            onClick={() => {
-              handleCopilotAskbuttonClick(chatInputData, setMessage);
-            }}
-          >
-            Ask
-          </button>
+          <textarea placeholder="Type your prompt here..." value={chatInputData} onChange={handleCopilotChatInputChange}></textarea>
+          <button onClick={() => handleCopilotAskbuttonClick(chatInputData,setMessage) }>Ask</button>
         </div>
         <div className="messages">
           <div>
