@@ -117,6 +117,15 @@ export function CopilotChat(): React.JSX.Element {
     setData(event.target.value);
   };
 
+  // handles the ask button click.
+  const handleCopilotAskbuttonClick = async (chatInputData, setMessage)=>{
+    CopilotStreamController.getInstance().askQGPT({
+      query: chatInputData,
+      setMessage,
+    });
+    setData("");
+  }
+
   // for setting the initial copilot chat that takes place on page load.
   useEffect(() => {
     const getInitialChat = async () => {
@@ -148,7 +157,7 @@ export function CopilotChat(): React.JSX.Element {
       <div className="chat-box">
         <div className="text-area">
           <textarea placeholder="Type your prompt here..." value={chatInputData} onChange={handleCopilotChatInputChange}></textarea>
-          <button onClick={() => CopilotStreamController.getInstance().askQGPT({ query: chatInputData, setMessage })}>Ask</button>
+          <button onClick={() => handleCopilotAskbuttonClick(chatInputData,setMessage) }>Ask</button>
         </div>
         <div className="messages">
           <div>
