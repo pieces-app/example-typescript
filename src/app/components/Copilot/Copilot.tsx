@@ -134,7 +134,7 @@ export function CopilotChat(): React.JSX.Element {
     setMessage("")
     setData("")
   };
-
+    
   // for setting the initial copilot chat that takes place on page load.
   useEffect(() => {
     const getInitialChat = async () => {
