@@ -46,6 +46,8 @@ export function createNewConversation() {
         GlobalConversationID = _conversation.id;
       })
     }
+
+    
   })
 }
 
@@ -126,6 +128,13 @@ export function CopilotChat(): React.JSX.Element {
     setData("");
   }
 
+  // handles the new conversation button click.
+  const handleNewConversation = async () => {
+    createNewConversation();
+    setMessage("")
+    setData("")
+  };
+    
   // for setting the initial copilot chat that takes place on page load.
   useEffect(() => {
     const getInitialChat = async () => {
@@ -146,7 +155,7 @@ export function CopilotChat(): React.JSX.Element {
       <div className="header">
         <div>
           <h1>Copilot Chat</h1>
-          <button className="button" onClick={createNewConversation}>Create Fresh Conversation</button>
+          <button className="button" onClick={handleNewConversation}>Create Fresh Conversation</button>
         </div>
         <div className="footer">
           <button>back</button>
