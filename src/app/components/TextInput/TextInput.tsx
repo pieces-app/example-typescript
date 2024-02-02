@@ -3,6 +3,7 @@ import { useState } from "react";
 import { deleteAsset, renameAsset } from "../Asset/Asset";
 import { CreateButton } from "../Button/Button";
 import "./TextInput.css";
+import AssetController from "../../controllers/assetController";
 
 export function DataTextInput({ applicationData }) {
   const [name, setName] = useState("");
@@ -10,6 +11,7 @@ export function DataTextInput({ applicationData }) {
 
   const handleDataChange = (event) => {
     setData(event.target.value);
+    AssetController.getInstance().newAssetData = event.target.value;
   };
 
   const handleNameChange = (event) => {
@@ -59,12 +61,13 @@ export function RenameAssetInput({ assetID }) {
         className="input-rename"
         onChange={handleNameChange}
       />
-      <button
-        className="rename-button"
-        onClick={() => renameAsset(name, assetID)}
-      >
-        Rename Selected Snippet
-      </button>
+      {/* TODO: Repair the renaming functionality + move button to other ./Button dir with other components */}
+      {/*<button*/}
+      {/*  className="rename-button"*/}
+      {/*  onClick={() => renameAsset(name, assetID)}*/}
+      {/*>*/}
+      {/*  Rename Selected Snippet*/}
+      {/*</button>*/}
     </>
   );
 }

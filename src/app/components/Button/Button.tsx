@@ -3,14 +3,12 @@ import { createAsset } from "../Asset/Asset";
 import "./Button.css";
 
 export function CreateButton({
-  applicationData,
-  data,
-  name,
+  applicationData
 }): React.JSX.Element {
   return (
     <button
       className="button"
-      onClick={() => createAsset(applicationData, data, name)}
+      onClick={() => createAsset(applicationData)}
     >
       Create Snippet
     </button>

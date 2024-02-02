@@ -10,6 +10,8 @@ import { Indicator } from "./components/Indicator/Indicator";
 import CopilotStreamController from "./controllers/copilotStreamController";
 import "./global.css";
 import WorkflowActivityList from "./components/WorkflowActivity";
+import {CreateButton} from "./components/Button/Button";
+import AssetController from "./controllers/assetController";
 
 
 // types
@@ -210,6 +212,7 @@ export function App(): React.JSX.Element {
             <h3 style={{color: 'white', fontWeight: 'normal' }}>Create a New Snippet</h3>
             <DataTextInput applicationData={applicationData}/>
             <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
+            <CreateButton applicationData={applicationData} />
 
           </div>
         </div>

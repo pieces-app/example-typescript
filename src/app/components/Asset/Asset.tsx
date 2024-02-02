@@ -1,6 +1,7 @@
 import * as Pieces from "@pieces.app/pieces-os-client";
 import {SeededAsset, SeedTypeEnum} from "@pieces.app/pieces-os-client";
 import {Application} from "@pieces.app/pieces-os-client";
+import AssetController from "../../controllers/assetController";
 
 
 type LocalAsset = {
@@ -10,7 +11,11 @@ type LocalAsset = {
   }
 
 //==============================[/create]==================================//
-export function createAsset(applicationData: Application, data: string, name: string) {
+export function createAsset(applicationData: Application) {
+
+
+  // get the data that is in the InputDataText field.
+  const data = AssetController.getInstance().newAssetData;
 
   let _seededAsset: SeededAsset = {
       application: applicationData,
@@ -19,9 +24,6 @@ export function createAsset(applicationData: Application, data: string, name: st
               string: { raw: data },
           },
       },
-      metadata: {
-          name: name
-      }
   }
 
   // create your seed
