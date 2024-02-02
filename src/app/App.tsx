@@ -211,7 +211,7 @@ export function App(): React.JSX.Element {
           <div style={{display: 'flex', flexDirection: 'column', padding: '10px', maxHeight: '90%', alignSelf: 'end',marginLeft:'10px'}}>
             <h3 style={{color: 'white', fontWeight: 'normal' }}>Create a New Snippet</h3>
             <DataTextInput applicationData={applicationData}/>
-            <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
+            {/*<RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>*/}
             <CreateButton applicationData={applicationData} />
 
           </div>
