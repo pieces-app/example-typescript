@@ -207,9 +207,10 @@ Inside the `src` directory, add two files:
 
 Once you open `index.tsx` you should follow these steps to get your base Application window created:
 
-1. Import the full react library at the top of your file, along with a single import from `react-dom`:
+1. Import the full react library at the top of your file, along with a single import from `react-dom`, and the createRoot method:
     ```tsx
     import * as React from "react";
+    import {createRoot} from "react-dom/client";
     import { render } from 'react-dom';
     ```
 
