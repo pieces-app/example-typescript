@@ -283,7 +283,7 @@ First lets take a look at the `tracked_application` object:
 
 ```tsx
 const tracked_application = {  
-    name: Pieces.ApplicationNameEnum.Brave,  
+    name: Pieces.ApplicationNameEnum.OpenSource,  
     version: '0.0.1',  
     platform: Pieces.PlatformEnum.Macos,  
 }
@@ -298,64 +298,37 @@ const tracked_application = {
 ### Creating `connect()` Function
 When your program starts, it needs to connect to Pieces OS to gain access to any functional data and to exchange information on the `localhost:1000` route. Now that you have your `tracked_application` - lets get into the details.
 
-Start by defining you connect function and add the initial `/connect` route to your function as the `url` variable and then attach the `options` object. Include your `tracked_application` object passed into a `JSON.stringify()` method under the `application` parameter like so:
+Start by defining you connect function and the prepare the `connectorApi` on `Pieces.ConnectorApi().connect()` passing in the `tracked_applicaition` we created above:
 
 ```tsx
-async function connect(): Promise<Boolean> {
-
-	const url: string = 'http://localhost:1000/connect';
-
-	const options: {method: string, body: string} = {  
-	    method: 'POST',  
-	    body: JSON.stringify({ application: tracked_application}  
-    ),
-  }
+export async function connect(): Promise<JSON> {
+  const connectorApi = new Pieces.ConnectorApi();
+  const response = await connectorApi.connect({
+    seededConnectorConnection: { application: tracked_application },
+  });
+  
+  return JSON.parse(JSON.stringify(response));
 }
 ```
 
-Now let's add few more things to this file
-- **`_flag: Boolean`** - for marking the success or failure of the try catch
-- **try, catch**
-    - `response` - for capturing the fetch response back from OS Server
-    - `data` - for storing the data and logging it
-    - `e` - error that is coming back if the response fails
-
-#### Running `connect().then()`:
-This will just run the connect function and then log the response in your console, inside your
-browser:
+Here is the entire connext function for you to double-check your work:
 
 ```tsx
-connect().then( __ => console.log("Response back from /connect:", __ ));
-```
+const tracked_application = {
+  name: Pieces.ApplicationNameEnum.Unknown,
+  version: '0.0.1',
+  platform: Pieces.PlatformEnum.Macos,
+}
 
-Below this final line should be:
-- `function App() ...`
-- `const rootElement ...`
-- `root.render(...)`
 
-Here is the entire connection function for you to double-check your work:
+export async function connect(): Promise<JSON> {
+  const connectorApi = new Pieces.ConnectorApi();
 
-```tsx
-async function connect(): Promise<JSON> {
+  const response = await connectorApi.connect({
+    seededConnectorConnection: { application: tracked_application },
+  });
 
-    const url: string = 'http://localhost:1000/connect';
-    const options: {method: string, body: string} = {
-        method: 'POST',
-        body: JSON.stringify({ application: tracked_application}
-        ),
-    }
-
-    let _output: Promise<JSON>;
-
-    try {
-        const response: Response = await fetch(url, options);
-        const data: Promise<JSON> = await response.json();
-        _output = data;
-        return _output;
-    } catch (e) {
-        console.error(e);
-    }
-
+  return JSON.parse(JSON.stringify(response));
 }
 ```
 
