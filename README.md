@@ -311,7 +311,7 @@ export async function connect(): Promise<JSON> {
 }
 ```
 
-Here is the entire connext function for you to double-check your work:
+Here is the entire connect function for you to double-check your work:
 
 ```tsx
 const tracked_application = {
