@@ -18,21 +18,11 @@ export function Indicator({ isConnected }: IndicatorProps): React.JSX.Element {
     <>
       <div className="center-container">
         <button className="custom-button">
-          <div
-            id={"indicator"}
-            className={isConnected ? "indicator green" : "indicator red"}
-            onClick={launchPiecesOS}
-          >
-            <span id={"indicator_text"} className="indicator-text">
-              {isConnected ? "You're Connected" : "You're Not Connected"} v{" "}
-              {osVersion}
+          <div id="indicator" className={isConnected ? 'indicator green' : 'indicator red'} onClick={launchPiecesOS}>
+            <span id="indicator_text" className={`indicator-text ${isConnected ? 'connected' : 'disconnected'}`}>
+              {isConnected ? "You're Connected" : "You're Not Connected"} v {osVersion}
             </span>
-            <img
-              id={"checkmark"}
-              src={check}
-              alt={"checkmark"}
-              className="checkmark"
-            />
+            <img id="checkmark" src={check} alt="checkmark" className= {`checkmark ${isConnected ? 'connected' : 'disconnected'}`} />
           </div>
         </button>
       </div>
