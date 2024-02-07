@@ -118,61 +118,31 @@ import * as pieces from '@pieces.app/pieces-os-client'
 > **If you are having issues with your installation, it is likely due to a conflict in Typescript versions - `npm uninstall typescript` - then go back and perform all other npm installations before reinstalling typescript again**.
 
 
-### Creating the base of your project
-Let's get started with the base of your new React project where we will learn about manipulating Pieces OS and creating our own assets locally on device.
+## Creating a Project from Scratch
+Let's get started with the base of your new React project where we will learn about manipulating Pieces OS and creating our own assets locally on device. First we will create a directory for you project along with some dependancy setup:
 
-##### **How your .tsconfig should look when you are done:**
-```json
-{  
-  "compilerOptions": {  
-    "target": "es2020",  
-    "module": "CommonJS",  
-     "allowJs": true,  
-     "checkJs": true,  
-     "maxNodeModuleJsDepth": 1,  
-    "forceConsistentCasingInFileNames": true,
-    "strict": false,  
-    "skipLibCheck": true,
-    "jsx": "react"  
-  },  
-  "exclude": ["node_modules"]  
-}
-```
+1. Create a directory for your project called <copilot-project> (or the name of your choice)
+2. Open up a Terminal at the root of that directory, and run `npm uninstall typescript` to ensure you are starting fresh
+   - (optional) run `nvm install --lts` to check your node version 
+3. From that same terminal window, use the `prefix` parameter in your install command to install your dependencies: `npm install --prefix ./ @pieces.app/pieces-os-copilot`
 
-### Install Package Dependencies with npm
-
-#### Need this if you are going to work with ts files
+4. Install Dependencies with NPM with these three commands:
 ```bash
-npm install typescript 
-```
+npm install typescript && npm install ts-node
 
-I also recommend installing `ts-node` to get the proper commands running and to run individual test files directly from cmd line. Here is that:
-
-```bash
-npm install ts-node
-```
-
-Then getting the types package for node can also be super beneficially and in some cases needed to work in this environment:
-
-```bash
+# Useful types package
 npm install -D tslib @types/node
 ```
 
-I ended up also installing a few react libraries to get a more visual experience while learning about the api itself.
-
-Here are those npm commands for `@types`:
+5 (optional) additional npm packages
 
 ```bash 
-npm install @types/react && npm install @types/react-dom 
-```
+npm install @types/react && npm install @types/react-dom
 
-Along with the typing, you will need to install the full packages for react, react-dom, and react scripts to properly get started in this project.
-
-```bash
 npm install react && npm install react-dom && npm install react-scripts
 ```
 
-And last but not least it's a good idea to add a few scripts into your `package.json` to help with development:
+6. Add these scripts into your `package.json` to help with development, and be sure to save after adding them:
 
 ```json
 { 
@@ -210,7 +180,7 @@ Once you open `index.tsx` you should follow these steps to get your base Applica
 1. Import the full react library at the top of your file, along with a single import from `react-dom`, and the createRoot method:
     ```tsx
     import * as React from "react";
-    import {createRoot} from "react-dom/client";
+    import { createRoot } from "react-dom/client";
     import { render } from 'react-dom';
     ```
 
@@ -226,7 +196,7 @@ Once you open `index.tsx` you should follow these steps to get your base Applica
 
 3. And then add these last two lines to target the `root` element by using the ID that is on it:
     ```tsx
-    const rootElement = document.getElementById("root");  
+    const rootElement = document.getElementById("root") as Element;  
     const root = createRoot(rootElement);
     ```
 
@@ -238,8 +208,7 @@ Once you open `index.tsx` you should follow these steps to get your base Applica
 Everything has been added. We are nearly there and will need to perform a final few checks before starting our dev project.
 
 1. Be sure that Pieces OS is running
-2. Double check that the port is `localhost:1000`
-3. (optional) Run another npm install (because it never hurts)
+2. (optional) Run another npm install (because it never hurts)
 
 Now that everything is ready to go, lets run this command here:
 
