@@ -119,11 +119,11 @@ import * as pieces from '@pieces.app/pieces-os-client'
 
 
 ## Creating a Project from Scratch
-Let's get started with the base of your new React project where we will learn about manipulating Pieces OS and creating our own assets locally on device. First we will create a directory for you project along with some dependancy setup:
+Let's get started with the base of your new React project! We will do this by learning more about manipulating Pieces OS and creating our own assets locally on device. First, we will create a directory for you project along with some dependancy setup:
 
 1. Create a directory for your project called <copilot-project> (or the name of your choice)
 2. Open up a Terminal at the root of that directory, and run `npm uninstall typescript` to ensure you are starting fresh
-   - (optional) run `nvm install --lts` to check your node version 
+   - (optional) run `nvm install --lts` to check your  version of Node
 3. From that same terminal window, use the `prefix` parameter in your install command to install your dependencies: `npm install --prefix ./ @pieces.app/pieces-os-copilot`
 
 4. Install Dependencies with NPM with these three commands:
