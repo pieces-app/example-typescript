@@ -113,6 +113,9 @@ export function CopilotChat(): React.JSX.Element {
   const [chatSelected, setChatSelected] = useState('-- no chat selected --');
   const [chatInputData, setData] = useState('');
   const [message, setMessage] = useState<string>('');
+  const [chats, setChats] = useState<string[]>([]); // State variable to store chat names
+  const [currentChatIndex, setCurrentChatIndex] = useState<number>(-1); // State variable to track the index of the selected chat
+
 
   // handles the data changes on the chat input.
   const handleCopilotChatInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -136,17 +139,24 @@ export function CopilotChat(): React.JSX.Element {
   };
     
   // for setting the initial copilot chat that takes place on page load.
-  useEffect(() => {
-    const getInitialChat = async () => {
-      let _name: string;
-
-      await new Pieces.ConversationsApi().conversationsSnapshot({}).then(output => {
-        _name = output.iterable.at(0).name;
-        GlobalConversationID = output.iterable.at(0).id;
-        return output.iterable.at(0).name
-      });
+  const getInitialChat = async () => {
+    await new Pieces.ConversationsApi().conversationsSnapshot({}).then(output => {
+      const previousChats = output.iterable.map(conversation => conversation.name);
+      setChats(previousChats);
+      const _name = previousChats[0];
       setChatSelected(_name);
-    };
+      GlobalConversationID = output.iterable.at(0).id;
+    });
+  };
+
+  // Function to handle chat selection
+  const handleChatSelection = (index: number) => {
+    setCurrentChatIndex(index);
+    setChatSelected(chats[index]);
+    // Here you can fetch and display the messages of the selected chat based on its index
+  };
+
+  useEffect(() => {
     getInitialChat();
   }, []);
 
@@ -159,7 +169,9 @@ export function CopilotChat(): React.JSX.Element {
         </div>
         <div className="footer">
           <button>back</button>
-          <p>{chatSelected}</p>
+          {chats.map((chat, index) => (
+             <button key = {index} onClick={() => handleChatSelection(index)}>{chat}</button>
+          ))}
           <button>forward</button>
         </div>
       </div>
