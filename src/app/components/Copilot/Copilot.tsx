@@ -140,12 +140,22 @@ export function CopilotChat(): React.JSX.Element {
     const getInitialChat = async () => {
       let _name: string;
 
-      await new Pieces.ConversationsApi().conversationsSnapshot({}).then(output => {
-        _name = output.iterable.at(0).name;
-        GlobalConversationID = output.iterable.at(0).id;
-        return output.iterable.at(0).name
-      });
-      setChatSelected(_name);
+      await new Pieces.ConversationsApi()
+        .conversationsSnapshot({})
+        .then((output) => {
+          if (
+            output.iterable.length > 0 &&
+            output.iterable.at(0).hasOwnProperty("name")
+          ) {
+            _name = output.iterable.at(0).name;
+            GlobalConversationID = output.iterable.at(0).id;
+          }
+          return _name;
+        });
+        
+      if (_name) {
+        setChatSelected(_name);
+      }
     };
     getInitialChat();
   }, []);
