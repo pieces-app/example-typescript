@@ -86,6 +86,39 @@ export function App(): React.JSX.Element {
     });
   }
   
+  async function searchSnippetList(snippetName: string) {
+    try {
+      const searchedAssets = await new Pieces.SearchApi().fullTextSearch({ query: snippetName });
+  
+      // get the "ID" or identifier of the first match on the string you passed in as the query:
+      let firstSearchMatchAssetIdentifier = searchedAssets.iterable[0].identifier;
+  
+      let matchName: String;
+  
+      // take that identifier to get your assets name using the Pieces.AssetApi()
+      const asset = await new Pieces.AssetApi().assetSnapshot({asset: firstSearchMatchAssetIdentifier});
+  
+      // assign that name to the matchName variable:
+      matchName = asset.name;
+      console.log("the matchName is" + matchName);
+  
+      // then you can do whatever you would like with that match:   
+      return matchName;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const [searchTerm, setSearchTerm] = useState('')
+  
+  const handleSearch = async (event) => {
+    event.preventDefault()
+    const searchTerm = event.target.elements['search-term'].value
+    setSearchTerm(searchTerm ?? '');
+    let result = await searchSnippetList(searchTerm);
+    console.log("The Result is "+ result);
+    console.log(searchTerm);
+  }
 
   return (
       <div className="container">
@@ -102,7 +135,7 @@ export function App(): React.JSX.Element {
               <h2 className="snippets-heading">Saved Snippets</h2>
               <button className="refresh-btn" onClick={refreshSnippetList}>Refresh Snippet List
               </button>
-        <button className="deselect-btn" onClick={handleDeSelect}>DESELECT
+              <button className="deselect-btn" onClick={handleDeSelect}>DESELECT
               </button>
               <DeleteAssetButton assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex} setArray={setArray}/>
             </div>
@@ -133,6 +166,10 @@ export function App(): React.JSX.Element {
           </div>
 
           <div className="snippet-grid-container">
+              <form onSubmit={handleSearch}>
+                <input type="text" style={{ marginRight: "10px" }} name="search-term" />
+                <button style={{ maxWidth: '100px', marginTop: '10px', }} type='submit'>Search</button>
+              </form>
             <h3 className="snippets-heading-2">Create a New Snippet</h3>
             <DataTextInput applicationData={applicationData}/>
             <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
@@ -145,8 +182,6 @@ export function App(): React.JSX.Element {
         <div className="copilot-container">
             <CopilotChat />
         </div>
-
-
       </div>
   )
 }
