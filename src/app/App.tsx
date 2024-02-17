@@ -110,15 +110,18 @@ export function App(): React.JSX.Element {
   };
 
   const [searchTerm, setSearchTerm] = useState('')
-  
+  const [searchResult, setSearchResult] = useState('')
   const handleSearch = async (event) => {
     event.preventDefault()
     const searchTerm = event.target.elements['search-term'].value
-    setSearchTerm(searchTerm ?? '');
+    if (!searchTerm) return
+    setSearchTerm(searchTerm);
     let result = await searchSnippetList(searchTerm);
     console.log("The Result is "+ result);
     console.log(searchTerm);
+    setSearchResult(result.toString());
   }
+
 
   return (
       <div className="container">
@@ -141,7 +144,7 @@ export function App(): React.JSX.Element {
             </div>
 
             <div className="snippets-grid">
-              {array.map((item: LocalAsset, index) => (
+              {array.filter(item => item.name.includes(searchResult)).map((item: LocalAsset, index) => (
                 <div
                   onKeyDown={handleKeyPress}
                   tabIndex={0}
