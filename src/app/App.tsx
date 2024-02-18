@@ -89,7 +89,12 @@ export function App(): React.JSX.Element {
   async function searchSnippetList(snippetName: string) {
     try {
       const searchedAssets = await new Pieces.SearchApi().fullTextSearch({ query: snippetName });
-  
+      
+      // Check if there are no matching snippets 
+      if (searchedAssets.iterable.length === 0) {
+        return 'No matching snippets found';
+      }
+
       // get the "ID" or identifier of the first match on the string you passed in as the query:
       let firstSearchMatchAssetIdentifier = searchedAssets.iterable[0].identifier;
   
@@ -147,7 +152,9 @@ export function App(): React.JSX.Element {
             </div>
 
             <div className="snippets-grid">
-              {array.filter(item => searchTerm === "" || item.name.includes(searchResult)).map((item: LocalAsset, index) => (
+            {
+              array.filter(item => searchTerm === '' || item.name.includes(searchResult)).length > 0 ?
+              array.filter(item => searchTerm === '' || item.name.includes(searchResult)).map((item: LocalAsset, index) => (
                 <div
                   onKeyDown={handleKeyPress}
                   tabIndex={0}
@@ -166,8 +173,10 @@ export function App(): React.JSX.Element {
                     </div>
                   </div>
                 </div>
-
-              ))}
+              ))
+              :
+              <div>No matching snippets found.</div>
+            }
             </div>
           </div>
 
