@@ -175,15 +175,15 @@ export function App(): React.JSX.Element {
                 </div>
               ))
               :
-              <div>No matching snippets found.</div>
+              <div className="white-text">No matching snippets found.</div>
             }
             </div>
           </div>
 
           <div className="snippet-grid-container">
               <form onSubmit={handleSearch}>
-                <input type="text" style={{ marginRight: "10px" }} name="search-term" />
-                <button style={{ maxWidth: '100px', marginTop: '10px', }} type='submit'>Search</button>
+                <input type="text" className="search-input-style" name="search-term" />
+                <button className="search-button-style" type='submit'>Search</button>
               </form>
             <h3 className="snippets-heading-2">Create a New Snippet</h3>
             <DataTextInput applicationData={applicationData}/>
