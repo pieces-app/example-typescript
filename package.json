@@ -4,8 +4,8 @@
   "main": "src/index.tsx",
   "scripts": {
     "dev": "ts-node src/index.tsx",
-    "clean-m": "rm -r node_modules && rm -r package-lock.json && rm -r build",
-    "clean-w": "rimraf node_modules && rimraf package-lock.json",
+    "clean-mac": "rm -r node_modules && rm -r package-lock.json && rm -r build",
+    "clean-windows": "rimraf node_modules && rimraf package-lock.json",
     "start": "cross-env react-scripts start",
     "build": "cross-env react-scripts build",
     "test": "jest"
