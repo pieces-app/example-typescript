@@ -58,6 +58,10 @@ html {
   box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.2);
 }
 
+.white-text {
+  color: white;
+}
+
 .activity-heading {
   color: white;
   font-weight: normal;
@@ -109,6 +113,15 @@ html {
   max-height: 90%;
   align-self: end;
   margin-left: 10px;
+}
+
+.search-input-style {
+  margin-right: 10px;
+}
+
+.search-button-style {
+  max-width: 100px;
+  margin-top: 10px;
 }
 
 .refresh-btn,
