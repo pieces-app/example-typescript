@@ -31,6 +31,7 @@ export function DataTextInput({ applicationData }) {
         className="textarea-data"
         onChange={handleDataChange}
       />
+      <CreateButton applicationData={applicationData} data={data} name={name}/>
     </>
   );
 }
@@ -68,3 +69,5 @@ export function RenameAssetInput({ assetID }) {
     </>
   );
 }
+
+
