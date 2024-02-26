@@ -130,6 +130,45 @@ export function App(): React.JSX.Element {
     setSearchResult(result.toString());
   }
 
+  // This is the state for the application data. It is set to null initially and then set to the application data once the connection is established.
+  const [appData, setAppData] = useState<Application | null>(null);
+
+  // This is the useEffect hook that is called when the component is mounted. It is responsible for connecting to the Pieces OS and setting the application data.
+  useEffect(() => {
+    connect().then(__ => {
+      // TODO: this needs improvement but is okay for now. since the types are not here yet,
+      // for some reason i had to parse the stringified full_context object to get correct typing.
+      full_context = __;
+      let _t = JSON.parse(JSON.stringify(full_context));
+      applicationData = _t.application;
+      setAppData(applicationData);
+      let osVersion = _t.health.os.version
+      console.log('Application Data: ', applicationData);
+      localStorage.setItem("version", osVersion)
+      // define the indicator now that it exists.
+      _indicator = document.getElementById("indicator");
+    
+      // conditional for the response back on application.
+      // TODO: add some better error handling components and log - abstract the connect to its own file as well.
+      if (_indicator != null) {
+        __ != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
+      }
+      
+      _indicator.firstElementChild.innerHTML = __ != undefined ? "You're Connected!" : "You're Not Connected";
+    
+      // @agrim implemented - Upon connecting to the Pieces OS, there is a need to enhance the user experience by implementing a timer 
+      // that automatically hides the "You're Connected" text and shrinks the button after a certain duration
+      let time = 3000;
+      setTimeout(() => {
+        if (_indicator != null) {
+          let indicatorText = document.getElementById("indicator_text");
+          indicatorText.innerText = "";
+          _indicator.style.transition = "all 0.3s ease";
+          _indicator.style.transform = "scale(0.8)";
+        }
+      }, time);
+    })
+  },[]);
 
   return (
       <div className="container">
@@ -186,9 +225,8 @@ export function App(): React.JSX.Element {
                 <button className="search-button-style" type='submit'>Search</button>
               </form>
             <h3 className="snippets-heading-2">Create a New Snippet</h3>
-            <DataTextInput applicationData={applicationData}/>
+            <DataTextInput applicationData={appData}/>
             <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
-
           </div>
         </div>
         </div>
@@ -201,35 +239,3 @@ export function App(): React.JSX.Element {
   )
 }
 
-connect().then(__ => {
-  // TODO: this needs improvement but is okay for now. since the types are not here yet,
-  // for some reason i had to parse the stringified full_context object to get correct typing.
-  full_context = __;
-  let _t = JSON.parse(JSON.stringify(full_context));
-  applicationData = _t.application;
-  let osVersion = _t.health.os.version
-  console.log('Application Data: ', applicationData);
-  localStorage.setItem("version", osVersion)
-  // define the indicator now that it exists.
-  _indicator = document.getElementById("indicator");
-
-  // conditional for the response back on application.
-  // TODO: add some better error handling components and log - abstract the connect to its own file as well.
-  if (_indicator != null) {
-    __ != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
-  }
-  
-  _indicator.firstElementChild.innerHTML = __ != undefined ? "You're Connected!" : "You're Not Connected";
-
-  // @agrim implemented - Upon connecting to the Pieces OS, there is a need to enhance the user experience by implementing a timer 
-  // that automatically hides the "You're Connected" text and shrinks the button after a certain duration
-  let time = 3000;
-  setTimeout(() => {
-    if (_indicator != null) {
-      let indicatorText = document.getElementById("indicator_text");
-      indicatorText.innerText = "";
-      _indicator.style.transition = "all 0.3s ease";
-      _indicator.style.transform = "scale(0.8)";
-    }
-  }, time);
-})
