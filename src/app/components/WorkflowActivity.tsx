@@ -21,7 +21,7 @@ const WorkflowActivityList: React.FC = () => {
 
     React.useEffect(() => {
         new Pieces.ActivitiesApi().activitiesSnapshot({}).then((activities) => {
-            console.log(activities);
+            // console.log(activities);
             clearActivities();
             for(let i = 0; i < activities.iterable.length; i++){
                 if(activities.iterable[i].asset == null){
@@ -32,7 +32,7 @@ const WorkflowActivityList: React.FC = () => {
                     name : activities.iterable[i].asset.name,
                     description : activities.iterable[i].event.asset.identifierDescriptionPair
                 }
-                console.log(_activity);
+                // console.log(_activity);
                 refreshActivities(_activity);
             }
         })
