@@ -77,7 +77,7 @@ export function App(): React.JSX.Element {
           name: assets.iterable[i].name,
           classification: assets.iterable[i].original.reference.classification.specific
         }
-        console.log("refreshSnippet",i,_local);
+        // console.log("refreshSnippet",i,_local);
         refresh(_local);
       }
     }).catch((error) => {
@@ -105,7 +105,7 @@ export function App(): React.JSX.Element {
   
       // assign that name to the matchName variable:
       matchName = asset.name;
-      console.log("the matchName is" + matchName);
+      // console.log("the matchName is" + matchName);
   
       // then you can do whatever you would like with that match:   
       return matchName;
@@ -125,8 +125,8 @@ export function App(): React.JSX.Element {
     }
     setSearchTerm(searchTerm );
     let result = await searchSnippetList(searchTerm);
-    console.log("The Result is "+ result);
-    console.log(searchTerm);
+    // console.log("The Result is "+ result);
+    // console.log(searchTerm);
     setSearchResult(result.toString());
   }
 
@@ -238,4 +238,3 @@ export function App(): React.JSX.Element {
       </div>
   )
 }
-

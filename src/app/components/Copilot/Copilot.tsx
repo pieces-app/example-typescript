@@ -76,9 +76,11 @@ export function createNewConversation() {
 export async function askQuestion({
                                     query,
                                     relevant,
+                                    // model,
                                   }: {
   query: string;
   relevant: string;
+  // model: string;
 }) {
   // TODO: need to get instance here - current config is stored in app.tsx (maybe not actually)
   // const config = ConnectorSingleton.getInstance();
@@ -103,6 +105,7 @@ export async function askQuestion({
         },
       ],
     },
+    // model,
   };
   // const result = await Pieces.QGPTApi.question({qGPTQuestionInput: params});
   const result = new Pieces.QGPTApi().question({qGPTQuestionInput: params});
@@ -124,6 +127,7 @@ export function CopilotChat(): React.JSX.Element {
     CopilotStreamController.getInstance().askQGPT({
       query: chatInputData,
       setMessage,
+      // model: selectedModel,
     });
     setData("");
   }
@@ -157,15 +161,37 @@ export function CopilotChat(): React.JSX.Element {
         setChatSelected(_name);
       }
     };
-    getInitialChat();
+    getInitialChat();  
+    // get all the models and set them to the state.
+    async function getModels() {
+      const models = await new Pieces.ModelsApi().modelsSnapshot();
+      const names = models.iterable.map((model) => model.name);
+      setModelNames(names);
+    }
+    getModels();
   }, []);
+
+
+  const [modelNames, setModelNames] = useState([]);
+  const [selectedModel, setSelectedModel] = useState<String>('GPT-4 Chat Model');
+
+  
 
   return (
     <div className="container">
       <div className="header">
         <div>
-          <h1>Copilot Chat</h1>
+          <h1>Copilot Chat</h1> 
+
           <button className="button" onClick={handleNewConversation}>Create Fresh Conversation</button>
+          <select className='button' onChange={(e) => setSelectedModel(e.target.value)}>
+          {/* style={{width: '100px', height: '30px', borderRadius: '5px',margin: '0 10px'}} */}
+                {modelNames.map((name, index) => (
+                  <option key={index} value={name}>
+                    {name}
+                  </option>
+                ))}
+          </select>
         </div>
         <div className="footer">
           <button>back</button>
