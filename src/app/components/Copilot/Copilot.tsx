@@ -167,12 +167,13 @@ export function CopilotChat(): React.JSX.Element {
           <h1>Copilot Chat</h1>
           <button className="button" onClick={handleNewConversation}>Create Fresh Conversation</button>
         </div>
-        <div className="footer">
-          <button>back</button>
+        <div className="chat-dropdown">
+          <select value={chatSelected} onChange={handleChatSelectChange}>
+            <option value="">-- Select Chat --</option>
           {chats.map((chat, index) => (
-             <button key = {index} onClick={() => handleChatSelection(index)}>{chat}</button>
+             <option key ={index} value={chat}>{chat}</option>
           ))}
-          <button>forward</button>
+          </select>  
         </div>
       </div>
       <div className="chat-box">
