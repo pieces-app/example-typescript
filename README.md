@@ -29,7 +29,6 @@
             <img src="https://img.shields.io/github/license/pieces-app/example-typescript.svg" />
         </a>
 </p>
-
 </p>
 
 ## Introduction
@@ -47,24 +46,23 @@ Before setting up the project we need to:
 
 `NOTE: Commands are to be executed on Linux, Mac, and Windows(using Powershell)`
 
-1. Fork this repository by clicking on the <a href="https://github.com/pieces-app/example-typescript/new/master?readme=1#fork-destination-box"><kbd><b>Fork</b></kbd></a> button.
-2. Clone the repo by running the command
+1. Clone the repo by running the command
 ```sh
 git clone https://github.com/pieces-app/example-typescript.git
 ```
-3. Go inside the folder by command
+2. Go inside the folder by command
 ```sh
 cd example-typescript
 ```
-4. Run the command to install node modules
+3. Run the command to install node modules
 ```sh
 npm install
 ```
-5. Start a web server by running using the following command
+4. Start a web server by running using the following command
 ```sh
 npm start
 ```
-6. Access the url `http://localhost:8000` and start Exploring!
+5. Access the url `http://localhost:8000` and start Exploring!
 
 ## Additional Resources
 
@@ -75,20 +73,19 @@ npm start
 
 ## Contributing
 
-We welcome your contributions to Pieces! All changes (even with commit access) need a pull request & thumbs-up from a core dev
+We welcome your contributions to Pieces! All changes need a pull request & thumbs-up from our maintainers [@shivay-at-pieces](https://github.com/shivay-at-pieces) and [@mason-at-pieces](https://github.com/mason-at-pieces)
 
 We love ❤️ pull requests! Learn how to contribute in our guide: [contribution guide](https://github.com/pieces-app/example-typescript/blob/main/CONTRIBUTING.md).
 
-
 ## Security
 
-If you discover any security-related issues, please email [security@pieces.app](mailto:security@pieces.app), or find a security contact in our [SECURITY.md](https://github.com/pieces-app/example-typescript/blob/main/SECURITY.md).
+If you discover any security-related issues, create an issue and tag our maintainers [@shivay-at-pieces](https://github.com/shivay-at-pieces) and [@mason-at-pieces](https://github.com/mason-at-pieces)
 
 ## Connect with Us
 
 - Join Our [Discord](https://discord.gg/getpieces)
 - Follow us on [Twitter](https://twitter.com/getpieces)
-- Connect with us on [LinkedIn](https://www.linkedin.com/company/getpieces/mycompany)
+- Connect with us on [LinkedIn](https://www.linkedin.com/company/getpieces)
 - Subscribe and turn on notifications to our [YouTube page](https://www.youtube.com/@getpieces)
 
 ## License
