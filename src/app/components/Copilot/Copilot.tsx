@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import * as Pieces from "@pieces.app/pieces-os-client";
 import {ConversationTypeEnum, SeededConversation} from "@pieces.app/pieces-os-client";
 import "./Copilot.css";
-
+import { marked } from 'marked';
 
 import { applicationData } from "../../App";
 import CopilotStreamController from '../../controllers/copilotStreamController';
@@ -180,7 +180,7 @@ export function CopilotChat(): React.JSX.Element {
         </div>
         <div className="messages">
           <div>
-            <p>{message}</p>
+          <p dangerouslySetInnerHTML={{ __html: marked(message) }}></p> 
           </div>
         </div>
       </div>
