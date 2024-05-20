@@ -19,6 +19,11 @@ type LocalAsset = {
   classification: Pieces.ClassificationSpecificEnum,
 }
 
+type SnippetSelector = ( arg: number ) => void;
+type SnippetDeselector = () => void;
+type KeyboardInputHandler = ( arg: React.KeyboardEvent ) => void;
+type FormHandler = (event: React.BaseSyntheticEvent) => void;
+
 //=============================[GLOBALS]================================//
 let full_context: JSON;
 export var applicationData: Application;
@@ -50,16 +55,16 @@ export function App(): React.JSX.Element {
     setArray([])
   }
 
-  const handleSelect = (index) => {
+  const handleSelect: SnippetSelector = (index) => {
     setSelectedIndex(index!=selectedIndex?index:-1);
   };
 
-  const handleDeSelect = () => {
+  const handleDeSelect: SnippetDeselector = () => {
     setSelectedIndex(-1)
   };
 
   // Keyboard event handler
-  const handleKeyPress = (event) => {
+  const handleKeyPress: KeyboardInputHandler = (event) => {
     // Check if 'Cmd' on MacOS or 'Ctrl' on Windows is pressed along with '\'
     if ((event.metaKey || event.ctrlKey) && event.key === '\\') {
       handleDeSelect();
@@ -116,7 +121,7 @@ export function App(): React.JSX.Element {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState('')
-  const handleSearch = async (event) => {
+  const handleSearch: FormHandler = async (event) => {
     event.preventDefault()
     const searchTerm = event.target.elements['search-term'].value
     if (!searchTerm) {
