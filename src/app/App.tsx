@@ -65,26 +65,27 @@ export function App(): React.JSX.Element {
       handleDeSelect();
     }
   };
-
-  function refreshSnippetList() {
-    new Pieces.AssetsApi().assetsSnapshot({}).then((assets) => {
-      // console.log('Response', assets)
-      clearArray()
-
-      for (let i = 0; i < assets.iterable.length; i++) {
-        let _local: LocalAsset = {
-          id: assets.iterable[i].id,
-          name: assets.iterable[i].name,
-          classification: assets.iterable[i].original.reference.classification.specific
+    async function refreshSnippetList() {
+      try {
+        const assets = await new Pieces.AssetsApi().assetsSnapshot({});
+        console.log('Response', assets)
+        clearArray();
+    
+        for (let i = 0; i < assets.iterable.length; i++) {
+          let _local: LocalAsset = {
+            id: assets.iterable[i].id,
+            name: assets.iterable[i].name,
+            classification: assets.iterable[i].original.reference.classification.specific
+          }
+          console.log("refreshSnippet", i, _local);
+          refresh(_local);
         }
-        console.log("refreshSnippet",i,_local);
-        refresh(_local);
+      } catch (error) {
+        console.error(error);
+        setError(true);
       }
-    }).catch((error) => {
-      console.error(error);
-      setError(true);
-    });
-  }
+    }
+  
   
   async function searchSnippetList(snippetName: string) {
     try {
