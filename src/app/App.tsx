@@ -68,7 +68,6 @@ export function App(): React.JSX.Element {
     async function refreshSnippetList() {
       try {
         const assets = await new Pieces.AssetsApi().assetsSnapshot({});
-        console.log('Response', assets)
         clearArray();
     
         for (let i = 0; i < assets.iterable.length; i++) {
