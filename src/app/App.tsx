@@ -251,7 +251,7 @@ export function App(): React.JSX.Element {
                 </div>
               ))
               :
-                <div className="white-text">No matching snippets found.</div>
+              <div className="white-text">No matching snippets found.</div>
             }
               </div>
             </div>
