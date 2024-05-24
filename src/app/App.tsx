@@ -72,7 +72,7 @@ export function App(): React.JSX.Element {
   useEffect(() => {
     refreshSnippetList();
     CopilotStreamController.getInstance();
-  }, []);
+}, []);
 
   const clearArray = () => {
     setArray([])
@@ -96,22 +96,22 @@ export function App(): React.JSX.Element {
 
   function refreshSnippetList() {
     new Pieces.AssetsApi().assetsSnapshot({}).then((assets) => {
-        // console.log('Response', assets)
+      // console.log('Response', assets)
       clearArray()
 
-        for (let i = 0; i < assets.iterable.length; i++) {
-          let _local: LocalAsset = {
-            id: assets.iterable[i].id,
-            name: assets.iterable[i].name,
+      for (let i = 0; i < assets.iterable.length; i++) {
+        let _local: LocalAsset = {
+          id: assets.iterable[i].id,
+          name: assets.iterable[i].name,
           classification: assets.iterable[i].original.reference.classification.specific
         }
         console.log("refreshSnippet",i,_local);
-          refresh(_local);
-        }
+        refresh(_local);
+      }
     }).catch((error) => {
-        console.error(error);
-        setError(true);
-      });
+      console.error(error);
+      setError(true);
+    });
   }
 
   async function searchSnippetList(snippetName: string) {
@@ -212,22 +212,22 @@ export function App(): React.JSX.Element {
       <Header isConnected={ !error} />
       {error && <div className="error-container"> Pieces OS is not running in the background. Click You're Not Connected to connect </div>}
         <div className="flex-container">
-          <div className="workflow-activity-container">
+        <div className="workflow-activity-container">
             <h3 className="activity-heading">Workflow Activity</h3>
             <WorkflowActivityList />
         </div>
         <div className="snippets-container">
           <div className="snippets-header">
             <div className="snippets-subheader">
-                <h2 className="snippets-heading">Saved Snippets</h2>
+              <h2 className="snippets-heading">Saved Snippets</h2>
               <button className="refresh-btn" onClick={refreshSnippetList}>Refresh Snippet List
               </button>
               <button className="deselect-btn" onClick={handleDeSelect}>DESELECT
               </button>
               <DeleteAssetButton assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex} setArray={setArray}/>
-              </div>
+            </div>
 
-              <div className="snippets-grid">
+            <div className="snippets-grid">
             {
               array.filter(item => searchTerm === '' || item.name.includes(searchResult)).length > 0 ?
               array.filter(item => searchTerm === '' || item.name.includes(searchResult)).map((item: LocalAsset, index) => (
@@ -251,17 +251,17 @@ export function App(): React.JSX.Element {
                 </div>
               ))
               :
-                  <div className="white-text">No matching snippets found.</div>
+                <div className="white-text">No matching snippets found.</div>
             }
               </div>
             </div>
 
-            <div className="snippet-grid-container">
+          <div className="snippet-grid-container">
               <form onSubmit={handleSearch}>
                 <input type="text" className="search-input-style" name="search-term" />
                 <button className="search-button-style" type='submit'>Search</button>
               </form>
-              <h3 className="snippets-heading-2">Create a New Snippet</h3>
+            <h3 className="snippets-heading-2">Create a New Snippet</h3>
             <DataTextInput applicationData={appData}/>
             <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
             </div>
@@ -270,7 +270,7 @@ export function App(): React.JSX.Element {
 
         {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
         <div className="copilot-container">
-          <CopilotChat />
+        <CopilotChat />
         </div>
       </div>
       ):(
