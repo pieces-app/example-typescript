@@ -170,6 +170,8 @@ export function App(): React.JSX.Element {
     })
   },[]);
 
+  const filteredArray = array.filter(item => searchTerm === '' || item.name.includes(searchResult));
+
   return (
       <div className="container">
       <Header isConnected={ !error} />
@@ -192,8 +194,8 @@ export function App(): React.JSX.Element {
 
             <div className="snippets-grid">
             {
-              array.filter(item => searchTerm === '' || item.name.includes(searchResult)).length > 0 ?
-              array.filter(item => searchTerm === '' || item.name.includes(searchResult)).map((item: LocalAsset, index) => (
+              filteredArray.length > 0 ? (
+                filteredArray.map((item: LocalAsset, index) => (
                 <div
                   onKeyDown={handleKeyPress}
                   tabIndex={0}
@@ -213,7 +215,7 @@ export function App(): React.JSX.Element {
                   </div>
                 </div>
               ))
-              :
+            ):
               <div className="white-text">No matching snippets found.</div>
             }
             </div>
