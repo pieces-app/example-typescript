@@ -21,6 +21,11 @@ type LocalAsset = {
   classification: Pieces.ClassificationSpecificEnum,
 }
 
+type SnippetSelector = ( arg: number ) => void;
+type SnippetDeselector = () => void;
+type KeyboardInputHandler = ( arg: React.KeyboardEvent ) => void;
+type FormHandler = (event: React.BaseSyntheticEvent) => void;
+
 //=============================[GLOBALS]================================//
 let full_context: JSON;
 export var applicationData: Application;
@@ -78,42 +83,41 @@ export function App(): React.JSX.Element {
     setArray([])
   }
 
-  const handleSelect = (index) => {
+  const handleSelect: SnippetSelector = (index) => {
     setSelectedIndex(index!=selectedIndex?index:-1);
   };
 
-  const handleDeSelect = () => {
+  const handleDeSelect: SnippetDeselector = () => {
     setSelectedIndex(-1)
   };
 
   // Keyboard event handler
-  const handleKeyPress = (event) => {
+  const handleKeyPress: KeyboardInputHandler = (event) => {
     // Check if 'Cmd' on MacOS or 'Ctrl' on Windows is pressed along with '\'
     if ((event.metaKey || event.ctrlKey) && event.key === '\\') {
       handleDeSelect();
     }
   };
-
-  function refreshSnippetList() {
-    new Pieces.AssetsApi().assetsSnapshot({}).then((assets) => {
-      // console.log('Response', assets)
-      clearArray()
-
-      for (let i = 0; i < assets.iterable.length; i++) {
-        let _local: LocalAsset = {
-          id: assets.iterable[i].id,
-          name: assets.iterable[i].name,
-          classification: assets.iterable[i].original.reference.classification.specific
+    async function refreshSnippetList() {
+      try {
+        const assets = await new Pieces.AssetsApi().assetsSnapshot({});
+        clearArray();
+    
+        for (let i = 0; i < assets.iterable.length; i++) {
+          let _local: LocalAsset = {
+            id: assets.iterable[i].id,
+            name: assets.iterable[i].name,
+            classification: assets.iterable[i].original.reference.classification.specific
+          }
+          console.log("refreshSnippet", i, _local);
+          refresh(_local);
         }
-        console.log("refreshSnippet",i,_local);
-        refresh(_local);
+      } catch (error) {
+        console.error(error);
+        setError(true);
       }
-    }).catch((error) => {
-      console.error(error);
-      setError(true);
-    });
-  }
-
+    }
+  
   async function searchSnippetList(snippetName: string) {
     try {
       const searchedAssets = await new Pieces.SearchApi().fullTextSearch({ query: snippetName });
@@ -144,7 +148,7 @@ export function App(): React.JSX.Element {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResult, setSearchResult] = useState('')
-  const handleSearch = async (event) => {
+  const handleSearch: FormHandler = async (event) => {
     event.preventDefault()
     const searchTerm = event.target.elements['search-term'].value
     if (!searchTerm) {
@@ -201,6 +205,8 @@ export function App(): React.JSX.Element {
     })
   },[]);
 
+  const filteredArray = array.filter(item => searchTerm === '' || item.name.includes(searchResult));
+
   return (
     <>
     { isLoggedIn ? (
@@ -229,8 +235,8 @@ export function App(): React.JSX.Element {
 
             <div className="snippets-grid">
             {
-              array.filter(item => searchTerm === '' || item.name.includes(searchResult)).length > 0 ?
-              array.filter(item => searchTerm === '' || item.name.includes(searchResult)).map((item: LocalAsset, index) => (
+              filteredArray.length > 0 ? (
+                filteredArray.map((item: LocalAsset, index) => (
                 <div
                   onKeyDown={handleKeyPress}
                   tabIndex={0}
@@ -250,7 +256,7 @@ export function App(): React.JSX.Element {
                   </div>
                 </div>
               ))
-              :
+            ):
               <div className="white-text">No matching snippets found.</div>
             }
               </div>
