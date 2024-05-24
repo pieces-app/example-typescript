@@ -215,15 +215,15 @@ export function App(): React.JSX.Element {
           <div className="workflow-activity-container">
             <h3 className="activity-heading">Workflow Activity</h3>
             <WorkflowActivityList />
-          </div>
-          <div className="snippets-container">
-            <div className="snippets-header">
-              <div className="snippets-subheader">
+        </div>
+        <div className="snippets-container">
+          <div className="snippets-header">
+            <div className="snippets-subheader">
                 <h2 className="snippets-heading">Saved Snippets</h2>
               <button className="refresh-btn" onClick={refreshSnippetList}>Refresh Snippet List
-                </button>
+              </button>
               <button className="deselect-btn" onClick={handleDeSelect}>DESELECT
-                </button>
+              </button>
               <DeleteAssetButton assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "" )} selectedIndex={selectedIndex} setArray={setArray}/>
               </div>
 
@@ -231,25 +231,25 @@ export function App(): React.JSX.Element {
             {
               array.filter(item => searchTerm === '' || item.name.includes(searchResult)).length > 0 ?
               array.filter(item => searchTerm === '' || item.name.includes(searchResult)).map((item: LocalAsset, index) => (
-                      <div
-                        onKeyDown={handleKeyPress}
-                        tabIndex={0}
-                        key={index}
-                        className="snippet-item"
-                        style={{
+                <div
+                  onKeyDown={handleKeyPress}
+                  tabIndex={0}
+                  key={index}
+                  className="snippet-item"
+                  style={{
                     backgroundColor: selectedIndex == index ? 'lightblue' : 'white', // Add background color based on selection
-                        }}
-                        onClick={() => handleSelect(index)}
-                      >
-                        <div>
-                          <h3>{item.name}</h3>
-                          <div className="snippet-details">
-                            <p>{item.id}</p>
-                            <p>{item.classification}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))
+                  }}
+                  onClick={() => handleSelect(index)}
+                >
+                  <div>
+                    <h3>{item.name}</h3>
+                    <div className="snippet-details">
+                      <p>{item.id}</p>
+                      <p>{item.classification}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
               :
                   <div className="white-text">No matching snippets found.</div>
             }
