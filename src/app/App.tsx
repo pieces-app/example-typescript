@@ -10,6 +10,7 @@ import { Indicator } from "./components/Indicator/Indicator";
 import CopilotStreamController from "./controllers/copilotStreamController";
 import "./global.css";
 import WorkflowActivityList from "./components/WorkflowActivity";
+// import { UpdateAssetButton } from "./components/TextInput/TextInput";
 
 
 // types
@@ -225,7 +226,8 @@ export function App(): React.JSX.Element {
             }
             </div>
           </div>
-
+         
+          
           <div className="snippet-grid-container">
               <form onSubmit={handleSearch}>
                 <input type="text" className="search-input-style" name="search-term" />
@@ -234,11 +236,11 @@ export function App(): React.JSX.Element {
             <h3 className="snippets-heading-2">Create a New Snippet</h3>
             <DataTextInput applicationData={appData}/>
             <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
+            {/* <UpdateAssetButton  assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")} setArray={setArray} /> */}
           </div>
         </div>
         </div>
 
-        {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
         <div className="copilot-container">
             <CopilotChat />
         </div>

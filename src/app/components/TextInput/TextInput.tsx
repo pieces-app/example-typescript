@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { deleteAsset, renameAsset } from "../Asset/Asset";
 import { CreateButton } from "../Button/Button";
+import {updateAsset} from "../Asset/Asset"
 import "./TextInput.css";
 
 export function DataTextInput({ applicationData }) {
@@ -46,6 +47,8 @@ export function DeleteAssetButton({ assetID, selectedIndex ,setArray}) {
   );
 }
 
+
+
 export function RenameAssetInput({ assetID }) {
   const [name, setNameValue] = useState("");
 
@@ -70,4 +73,27 @@ export function RenameAssetInput({ assetID }) {
   );
 }
 
+// export function UpdateAssetButton({ assetID, setArray }) {
+//   const [data, setData] = useState("");
+//   const handleDataChange = (event) => {
+//     setData(event.target.value);
+//   };
 
+//   const editAsset = () => {
+//     updateAsset(assetID, data, setArray);
+//   };
+
+//   return (
+//     <>
+//       <input
+//         placeholder="Add your code/text content into this box"
+//         value={data}
+//         className="textarea-data"
+//         onChange={handleDataChange}
+//       />
+//       <button className="rename-button" onClick={editAsset}>
+//         Edit Selected Snippet
+//       </button>
+//     </>
+//   );
+// }
