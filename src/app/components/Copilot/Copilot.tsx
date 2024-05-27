@@ -4,6 +4,8 @@ import * as Pieces from "@pieces.app/pieces-os-client";
 import {ConversationTypeEnum, SeededConversation} from "@pieces.app/pieces-os-client";
 import "./Copilot.css";
 import { marked } from 'marked';
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 
 import { applicationData } from "../../App";
 import CopilotStreamController from '../../controllers/copilotStreamController';
@@ -160,6 +162,13 @@ export function CopilotChat(): React.JSX.Element {
     getInitialChat();
   }, []);
 
+  const SanitizedMarkdown = ({ message }) => {
+    // Sanitize the HTML output from marked
+    const cleanHtml = DOMPurify.sanitize(marked(message));
+    const msg = parse(cleanHtml);
+    return <p>{msg}</p>;
+  }
+
   return (
     <div className="container">
       <div className="header">
@@ -180,7 +189,7 @@ export function CopilotChat(): React.JSX.Element {
         </div>
         <div className="messages">
           <div>
-          <p dangerouslySetInnerHTML={{ __html: marked(message) }}></p> 
+          <SanitizedMarkdown message={message} />
           </div>
         </div>
       </div>
