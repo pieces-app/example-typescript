@@ -1,6 +1,6 @@
 import * as Pieces from "@pieces.app/pieces-os-client";
-import { SeededAsset, SeedTypeEnum } from "@pieces.app/pieces-os-client";
-import { Application } from "@pieces.app/pieces-os-client";
+import {SeededAsset, SeedTypeEnum} from "@pieces.app/pieces-os-client";
+import {Application} from "@pieces.app/pieces-os-client";
 
 
 type LocalAsset = {
@@ -12,30 +12,30 @@ type LocalAsset = {
 //==============================[/create]==================================//
 export function createAsset(applicationData: Application, data: string, name: string) {
 
-    let _seededAsset: SeededAsset = {
-        application: applicationData,
-        format: {
-            fragment: {
-                string: { raw: data },
-            },
+let _seededAsset: SeededAsset = {
+    application: applicationData,
+    format: {
+        fragment: {
+            string: { raw: data },
         },
-        metadata: {
-            name: name
-        }
+    },
+    metadata: {
+         name: name
     }
+}
 
     // create your seed
-    let _seed: Pieces.Seed = {
-        asset: _seededAsset,
-        type: SeedTypeEnum.Asset
-    }
+let _seed: Pieces.Seed = {
+    asset: _seededAsset,
+    type: SeedTypeEnum.Asset
+}
 
-    console.log("here at asset seed:", _seed)
+console.log("here at asset seed:", _seed)
 
     // make your api call.
-    new Pieces.AssetsApi().assetsCreateNewAsset({ seed: _seed }).then(_a => {
-        console.log("well howdy", _a);
-    })
+ new Pieces.AssetsApi().assetsCreateNewAsset({ seed: _seed }).then(_a => {
+    console.log("well howdy", _a);
+})
 
 }
 //==============================[.end /create]==================================//
@@ -44,22 +44,22 @@ export function deleteAsset(_id: String, setArray: Function) {
 
     const newAssetsList: Array<LocalAsset> = [];
 
-    new Pieces.AssetsApi().assetsSnapshot({}).then(_assetList => {
-        for (let i = 0; i < _assetList.iterable.length; i++) {
-            if (_assetList.iterable[i].id == _id) {
-                new Pieces.AssetsApi().assetsDeleteAsset({ asset: _assetList.iterable[i].id }).then(() => console.log(_id));
+new Pieces.AssetsApi().assetsSnapshot({}).then(_assetList => {
+    for (let i = 0; i < _assetList.iterable.length; i++) {
+        if (_assetList.iterable[i].id == _id) {
+            new Pieces.AssetsApi().assetsDeleteAsset({ asset: _assetList.iterable[i].id }).then(() => console.log(_id));
             }
-            else {
+            else{
                 newAssetsList.push({
                     id: _assetList.iterable[i].id,
                     name: _assetList.iterable[i].name,
                     classification: _assetList.iterable[i].original.reference.classification.specific
                 })
             }
-        }
-        window.alert("selected snippet got deleted");
-        setArray(newAssetsList);
-    })
+    }
+    window.alert("selected snippet got deleted");
+    setArray(newAssetsList);
+})
 }
 
 // used to rename an asset, takes in an _id and _name that comes from the input fields on
@@ -93,9 +93,8 @@ export function updateAsset(_id: string, data: string, setArray: Function) {
     const AssestList: Array<LocalAsset> = []
 
     new Pieces.AssetsApi().assetsSnapshot({}).then(_assetList => {
-
-        for (let i = 0; i < _assetList.iterable.length; i++) {
-            if (_assetList.iterable[i].id == _id) {
+        for(let i = 0; i < _assetList.iterable.length; i++) {
+            if(_assetList.iterable[i].id == _id) {
 
                 let _asset = _assetList.iterable[i];
 
