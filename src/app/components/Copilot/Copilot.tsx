@@ -7,6 +7,8 @@ import "./Copilot.css";
 
 import { applicationData } from "../../App";
 import CopilotStreamController from '../../controllers/copilotStreamController';
+import ReactMarkdown from 'react-markdown';
+import rehypeSanitize from 'rehype-sanitize';
 
 
 let GlobalConversationID: string;
@@ -180,7 +182,7 @@ export function CopilotChat(): React.JSX.Element {
         </div>
         <div className="messages">
           <div>
-            <p>{message}</p>
+          <ReactMarkdown rehypePlugins={[rehypeSanitize]}>{message}</ReactMarkdown>
           </div>
         </div>
       </div>
