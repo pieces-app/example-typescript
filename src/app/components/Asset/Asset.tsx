@@ -97,22 +97,15 @@ export function updateAsset(_id: string, data: string, setArray: Function) {
             if(_assetList.iterable[i].id == _id) {
 
                 let _asset = _assetList.iterable[i];
-                console.log("_asset before updated",_asset)
+
                 new Pieces.AssetApi().assetAssociateTag({ asset: _asset.id, tag: data })
                 .then((response) => {
-                    console.log("response",response)
+
                     console.log("Tag associated with asset successfully");
                     setArray([...AssestList]);
                 }).catch(error => {
                     console.error("Failed to associate tag with asset:", error);
                 });
-            }
-        }
-        for(let i = 0; i < _assetList.iterable.length; i++) {
-            if(_assetList.iterable[i].id == _id) {
-
-                let _asset = _assetList.iterable[i];
-                console.log("_asset after updated",_asset)
             }
         }
     })
