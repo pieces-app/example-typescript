@@ -73,27 +73,27 @@ export function RenameAssetInput({ assetID }) {
   );
 }
 
-// export function UpdateAssetButton({ assetID, setArray }) {
-//   const [data, setData] = useState("");
-//   const handleDataChange = (event) => {
-//     setData(event.target.value);
-//   };
+export function UpdateAssetButton({ assetID, setArray }) {
+  const [data, setData] = useState("");
+  const handleDataChange = (event) => {
+    setData(event.target.value);
+  };
 
-//   const editAsset = () => {
-//     updateAsset(assetID, data, setArray);
-//   };
+  const editAsset = () => {
+    updateAsset(assetID, data, setArray);
+  };
 
-//   return (
-//     <>
-//       <input
-//         placeholder="Add your code/text content into this box"
-//         value={data}
-//         className="textarea-data"
-//         onChange={handleDataChange}
-//       />
-//       <button className="rename-button" onClick={editAsset}>
-//         Edit Selected Snippet
-//       </button>
-//     </>
-//   );
-// }
+  return (
+    <>
+      <input
+        placeholder="Add your code/text content into this box"
+        value={data}
+        className="textarea-data"
+        onChange={handleDataChange}
+      />
+      <button className="rename-button" onClick={editAsset}>
+        Edit Selected Snippet
+      </button>
+    </>
+  );
+}

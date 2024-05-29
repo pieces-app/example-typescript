@@ -10,7 +10,7 @@ import { Indicator } from "./components/Indicator/Indicator";
 import CopilotStreamController from "./controllers/copilotStreamController";
 import "./global.css";
 import WorkflowActivityList from "./components/WorkflowActivity";
-// import { UpdateAssetButton } from "./components/TextInput/TextInput";
+import { UpdateAssetButton } from "./components/TextInput/TextInput";
 
 
 // types
@@ -236,7 +236,7 @@ export function App(): React.JSX.Element {
             <h3 className="snippets-heading-2">Create a New Snippet</h3>
             <DataTextInput applicationData={appData}/>
             <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
-            {/* <UpdateAssetButton  assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")} setArray={setArray} /> */}
+            <UpdateAssetButton  assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")} setArray={setArray} />
           </div>
         </div>
         </div>
