@@ -162,12 +162,13 @@ export function CopilotChat(): React.JSX.Element {
     getInitialChat();
   }, []);
 
-  const SanitizedMarkdown = ({ message }) => {
+  const SanitizedMarkdown = ({ message }: { message: string }): JSX.Element => {
     // Sanitize the HTML output from marked
-    const cleanHtml = DOMPurify.sanitize(marked(message));
+    const cleanHtml: string = DOMPurify.sanitize(marked(message));
     const msg = parse(cleanHtml);
     return <p>{msg}</p>;
   }
+
 
   return (
     <div className="container">
