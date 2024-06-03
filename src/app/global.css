@@ -182,3 +182,48 @@ html {
   box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
 }
+/* styles.css */
+
+/* Common styles for the body */
+body {
+  --bg-color: #000000; /* Pure black background */
+  --text-color: #e0e0e0; /* Light text color */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+code {
+  --code-bg-color: #000000; /* Pure black code block background */
+  --code-text-color: #ffffff; /* Pure white code text color */
+  background-color: var(--code-bg-color);
+  color: var(--code-text-color);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Ensuring the styles for both light and dark modes */
+@media (prefers-color-scheme: light) {
+  body {
+    --bg-color: #000000;
+    --text-color: #e0e0e0;
+  }
+
+  code {
+    --code-bg-color: #000000;
+    --code-text-color: #ffffff;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --bg-color: #000000;
+    --text-color: #e0e0e0;
+  }
+
+  code {
+    --code-bg-color: #000000;
+    --code-text-color: #ffffff;
+  }
+}
+
