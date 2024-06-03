@@ -182,9 +182,9 @@ html {
   box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
 }
-/* styles.css */
 
-/* Common styles for the body */
+
+/* Common styles for the response formatting body */
 body {
   --bg-color: #000000; /* Pure black background */
   --text-color: #e0e0e0; /* Light text color */
