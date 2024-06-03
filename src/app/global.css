@@ -96,13 +96,11 @@ html {
 }
 
 .snippets-heading {
-  color: white;
   font-weight: normal;
   margin: 5px;
 }
 
 .snippets-heading-2 {
-  color: white;
   font-weight: normal;
 }
 
@@ -138,7 +136,6 @@ html {
   cursor: pointer;
   font-size: 12px;
 }
-
 .snippets-grid {
   overflow-y: scroll;
   min-width: 700px;
@@ -148,6 +145,8 @@ html {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 5px;
+  background-color: #0e1111; /* Dark background color */
+  color: black; /* Text color */
 }
 
 .snippet-item {
@@ -160,7 +159,7 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* background-color: white; */
+  background-color: white; /* Light background color */
   cursor: pointer; /* Add cursor style to indicate clickability */
 }
 
@@ -226,4 +225,3 @@ code {
     --code-text-color: #ffffff;
   }
 }
-
