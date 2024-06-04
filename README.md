@@ -11,7 +11,7 @@
 </h1>
 
 
-# <p align="center"> Example-Typescript
+# <p align="center"> React x Pieces
 <p align="center">
         <a href="https://github.com/pieces-app/example-typescript" alt="GitHub contributors">
             <img src="https://img.shields.io/github/contributors/pieces-app/example-typescript.svg" />
@@ -39,8 +39,8 @@ This is a Sample React Project with the integration of Pieces npm package.
 
 Before setting up the project we need to: 
 
-1. Download the [Pieces OS application](https://docs.pieces.app/installation-getting-started/what-am-i-installing)
-2. Install the [npm package](https://www.npmjs.com/package/@pieces.app/pieces-os-client)
+Download the [Pieces OS application](https://docs.pieces.app/installation-getting-started/what-am-i-installing)
+
 
 ## Local Setup
 
@@ -62,7 +62,7 @@ npm install
 ```sh
 npm start
 ```
-5. Access the url `http://localhost:8000` and start Exploring!
+5. Access the url `http://localhost:3000` and start Exploring!
 
 ## Additional Resources
 
