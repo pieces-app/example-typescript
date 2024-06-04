@@ -14,41 +14,45 @@ let GlobalConversationID: string;
 
 // going to use get all conversations with a few extra steps to store the current conversations locally.
 export function createNewConversation() {
+  try{
 
-  // logs --> CREATING CONVERSATION
-  console.log('Begin creating conversation...')
+    // logs --> CREATING CONVERSATION
+    console.log('Begin creating conversation...')
 
-  // to create a new conversation, you need to first pass in a seeded conversation in the request body.
-  // the only mandatory parameter is the ConversationTypeEnum.Copilot value.
-  let seededConversation: SeededConversation = { type: ConversationTypeEnum.Copilot, name: "Demo Seeded Conversation" }
+    // to create a new conversation, you need to first pass in a seeded conversation in the request body.
+    // the only mandatory parameter is the ConversationTypeEnum.Copilot value.
+    let seededConversation: SeededConversation = { type: ConversationTypeEnum.Copilot, name: "Demo Seeded Conversation" }
 
-  console.log('Conversation seeded')
-  console.log('Passing over the new conversation with name: ' + seededConversation.name)
+    console.log('Conversation seeded')
+    console.log('Passing over the new conversation with name: ' + seededConversation.name)
 
-  // creates new conversation, .then is for confirmation on creation.
-  // note the usage of transfereables here to expose the full conversation data and give access to the id and other
-  // conversation values.
-  new Pieces.ConversationsApi().conversationsCreateSpecificConversationRaw({transferables: true, seededConversation}).then((_c)  => {
-    console.log('Conversation created! : Here is the response:');
-    console.log(_c);
+    // creates new conversation, .then is for confirmation on creation.
+    // note the usage of transfereables here to expose the full conversation data and give access to the id and other
+    // conversation values.
+    new Pieces.ConversationsApi().conversationsCreateSpecificConversationRaw({transferables: true, seededConversation}).then((_c)  => {
+      console.log('Conversation created! : Here is the response:');
+      console.log(_c);
 
-    // check and ensure the response back is clean.
-    if (_c.raw.ok == true && _c.raw.status == 200) {
-      console.log('CLEAN RESPONSE BACK.')
-      _c.value().then(_conversation => {
-        console.log('Returning new conversation values.');
-        // console.log('ID | ' + _conversation.id);
-        // console.log('NAME | ' + _conversation.name);
-        // console.log('CREATED | ' + _conversation.created.readable);
-        // console.log('ID: ' + _conversation.);
+      // check and ensure the response back is clean.
+      if (_c.raw.ok == true && _c.raw.status == 200) {
+        console.log('CLEAN RESPONSE BACK.')
+        _c.value().then(_conversation => {
+          console.log('Returning new conversation values.');
+          // console.log('ID | ' + _conversation.id);
+          // console.log('NAME | ' + _conversation.name);
+          // console.log('CREATED | ' + _conversation.created.readable);
+          // console.log('ID: ' + _conversation.);
 
-        // Set the conversation variable here for the local file:
-        GlobalConversationID = _conversation.id;
-      })
-    }
+          // Set the conversation variable here for the local file:
+          GlobalConversationID = _conversation.id;
+        })
+      }
 
-    
-  })
+      
+    })
+  }catch(error){
+    console.error('An error occurred while creating a conversation:', error);
+  }
 }
 
 
