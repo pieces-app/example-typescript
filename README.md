@@ -37,9 +37,7 @@ This is a Sample React Project with the integration of Pieces npm package.
 
 ## Prerequisites
 
-Before setting up the project we need to: 
-
-Download the [Pieces OS application](https://docs.pieces.app/installation-getting-started/what-am-i-installing)
+Before setting up the project we need to download the [Pieces OS application](https://docs.pieces.app/installation-getting-started/what-am-i-installing)
 
 
 ## Local Setup
