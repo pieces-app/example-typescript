@@ -7,6 +7,7 @@ import "./Copilot.css";
 
 import { applicationData } from "../../App";
 import CopilotStreamController from '../../controllers/copilotStreamController';
+import Markdown from '../ResponseFormat/Markdown';
 
 
 let GlobalConversationID: string;
@@ -99,7 +100,7 @@ export function CopilotChat(): React.JSX.Element {
     setMessage("")
     setData("")
   };
-    
+
   // for setting the initial copilot chat that takes place on page load.
   useEffect(() => {
     const getInitialChat = async () => {
@@ -145,7 +146,7 @@ export function CopilotChat(): React.JSX.Element {
         </div>
         <div className="messages">
           <div>
-            <p>{message}</p>
+          <Markdown message={message} />
           </div>
         </div>
       </div>

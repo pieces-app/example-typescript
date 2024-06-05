@@ -96,13 +96,11 @@ html {
 }
 
 .snippets-heading {
-  color: white;
   font-weight: normal;
   margin: 5px;
 }
 
 .snippets-heading-2 {
-  color: white;
   font-weight: normal;
 }
 
@@ -138,7 +136,6 @@ html {
   cursor: pointer;
   font-size: 12px;
 }
-
 .snippets-grid {
   overflow-y: scroll;
   min-width: 700px;
@@ -148,6 +145,8 @@ html {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 5px;
+  background-color: #0e1111; /* Dark background color */
+  color: black; /* Text color */
 }
 
 .snippet-item {
@@ -160,7 +159,7 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* background-color: white; */
+  background-color: white; /* Light background color */
   cursor: pointer; /* Add cursor style to indicate clickability */
 }
 
@@ -181,4 +180,48 @@ html {
   display: flex;
   box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.2);
   margin-top: 20px;
+}
+
+
+/* Common styles for the response formatting body */
+body {
+  --bg-color: #000000; /* Pure black background */
+  --text-color: #e0e0e0; /* Light text color */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+code {
+  --code-bg-color: #000000; /* Pure black code block background */
+  --code-text-color: #ffffff; /* Pure white code text color */
+  background-color: var(--code-bg-color);
+  color: var(--code-text-color);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Ensuring the styles for both light and dark modes */
+@media (prefers-color-scheme: light) {
+  body {
+    --bg-color: #000000;
+    --text-color: #e0e0e0;
+  }
+
+  code {
+    --code-bg-color: #000000;
+    --code-text-color: #ffffff;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --bg-color: #000000;
+    --text-color: #e0e0e0;
+  }
+
+  code {
+    --code-bg-color: #000000;
+    --code-text-color: #ffffff;
+  }
 }
