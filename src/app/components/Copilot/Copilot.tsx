@@ -74,43 +74,6 @@ export function createNewConversation() {
 //     // GlobalConversationAnswers = [..._answers];
 //   })
 // }
-
-export async function askQuestion({
-                                    query,
-                                    relevant,
-                                  }: {
-  query: string;
-  relevant: string;
-}) {
-  // TODO: need to get instance here - current config is stored in app.tsx (maybe not actually)
-  // const config = ConnectorSingleton.getInstance();
-  const params: Pieces.QGPTQuestionInput = {
-    query,
-    relevant: {
-      iterable: [
-        {
-          seed: {
-            type: Pieces.SeedTypeEnum.Asset,
-            asset: {
-              application: applicationData,
-              format: {
-                fragment: {
-                  string: {
-                    raw: relevant,
-                  },
-                },
-              },
-            },
-          },
-        },
-      ],
-    },
-  };
-  // const result = await Pieces.QGPTApi.question({qGPTQuestionInput: params});
-  const result = new Pieces.QGPTApi().question({qGPTQuestionInput: params});
-  return {result, query};
-}
-
 export function CopilotChat(): React.JSX.Element {
   const [chatSelected, setChatSelected] = useState('-- no chat selected --');
   const [chatInputData, setData] = useState('');
