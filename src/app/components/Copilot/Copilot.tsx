@@ -14,7 +14,7 @@ let GlobalConversationID: string;
 
 // going to use get all conversations with a few extra steps to store the current conversations locally.
 export function createNewConversation() {
-  try{
+  try {
 
     // logs --> CREATING CONVERSATION
     console.log('Begin creating conversation...')
@@ -47,10 +47,8 @@ export function createNewConversation() {
           GlobalConversationID = _conversation.id;
         })
       }
-
-      
     })
-  }catch(error){
+  } catch (error) {
     console.error('An error occurred while creating a conversation:', error);
   }
 }
