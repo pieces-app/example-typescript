@@ -235,7 +235,7 @@ export function App(): React.JSX.Element {
               </form>
             <h3 className="snippets-heading-2">Create a New Snippet</h3>
             <DataTextInput applicationData={appData}/>
-            <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
+            <RenameAssetInput  assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
             <UpdateAssetButton  assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")} setArray={setArray} />
           </div>
         </div>

@@ -101,7 +101,6 @@ export function updateAsset(_id: string, data: string, setArray: Function) {
                 new Pieces.AssetApi().assetAssociateTag({ asset: _asset.id, tag: data })
                 .then((response) => {
 
-                    console.log("Tag associated with asset successfully");
                     setArray([...AssestList]);
                 }).catch(error => {
                     console.error("Failed to associate tag with asset:", error);
