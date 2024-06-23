@@ -32,11 +32,66 @@ These are, in general, rules that you should be following while contributing to 
 ### Pre-requisites
 
 1. Ensure you have the latest version of Pieces OS installed on your system:
+
    - [Windows](https://docs.pieces.app/installation-getting-started/windows)
    - [macOS](https://docs.pieces.app/installation-getting-started/macos)
    - [Linux](https://docs.pieces.app/installation-getting-started/linux)
 
 2. Ensure that you have [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
+
+### Prettier Setup
+
+To ensure consistent code formatting across the project, we've integrated Prettier into our workflow. You can find more details about Prettier [Here](https://prettier.io/).
+
+**1.** Configuration
+
+We've included a .prettierrc file at the root of the project with the following configuration:
+
+```json
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "bracketSpacing": true
+}
+```
+
+This will enforce consistent code formatting rules across the project, including semicolons, single quotes, trailing commas, line width, tab spacing, and bracket spacing.
+
+**2.** Scripts in `package.json`
+
+We've added the following scripts in `package.json`:
+
+```json
+{
+  "scripts": {
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+  }
+}
+```
+
+These scripts automate code formatting (format) and checking (format:check) for JavaScript, TypeScript, JSX, JSON, CSS, SCSS, and Markdown files within the src directory.
+
+**3.** Check Formatting
+
+To verify code formatting without making any changes, run:
+
+```bash
+npm run format:check
+```
+
+**4.** Format Code
+
+To format your code automatically, use the following npm script:
+
+```bash
+npm run format
+```
+
+These configurations automate code formatting and ensure consistent style across the project.
 
 ### Pull Request
 
@@ -96,7 +151,6 @@ git push -u origin <YOUR_BRANCH_NAME>
 
 **12.** Give a proper title to your PR and describe the changes you made in the description box. (Note: Sometimes there are PR templates that are to be filled in as instructed.)
 
-
 **13.** Open a pull request by clicking the `Create pull request` button.
 
 `Voila, you have made your first contribution to this project`
@@ -128,7 +182,7 @@ Check out these steps for uploading a **pdf export** into the `/mockups` folder:
 
 1. Export your file from your design software as a .PDF file
 2. After you have followed the above steps to fork the repo and download the project, open up the `/mockups` folder and locate either draft or final depending on your current status
-3. Then save the PDF to one of the directories, and set the title in this pattern: 
+3. Then save the PDF to one of the directories, and set the title in this pattern:
    - [date]_[pagename]_[authorname].pdf
 4. Then commit your changes to your local branch, push those change and open up a PR! From there you should be all good to go.
 
@@ -136,4 +190,3 @@ Check out these steps for uploading a **pdf export** into the `/mockups` folder:
 
 - [Git & GitHub Tutorial](https://www.youtube.com/watch?v=RGOj5yH7evk)
 - [Resolve merge conflict](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/resolving-a-merge-conflict-on-github)
-
