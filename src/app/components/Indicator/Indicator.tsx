@@ -12,7 +12,7 @@ interface IndicatorProps {
 // this is your indicator badge that we will manipulate through the initial connect call. it will either
 // be green or red depending on the current status.
 
-export function Indicator({ isConnected }: IndicatorProps): React.JSX.Element {
+export const Indicator = React.memo(({ isConnected }: IndicatorProps): React.JSX.Element => {
   const osVersion = localStorage.getItem("version");
   return (
     <>
@@ -28,4 +28,4 @@ export function Indicator({ isConnected }: IndicatorProps): React.JSX.Element {
       </div>
     </>
   );
-}
+});
