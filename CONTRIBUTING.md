@@ -32,7 +32,6 @@ These are, in general, rules that you should be following while contributing to 
 ### Pre-requisites
 
 1. Ensure you have the latest version of Pieces OS installed on your system:
-
    - [Windows](https://docs.pieces.app/installation-getting-started/windows)
    - [macOS](https://docs.pieces.app/installation-getting-started/macos)
    - [Linux](https://docs.pieces.app/installation-getting-started/linux)
