@@ -23,11 +23,8 @@ export function createNewConversation(
       type: ConversationTypeEnum.Copilot,
       name: "Demo Seeded Conversation",
     };
-
-    console.log("Conversation seeded");
-    console.log(
-      "Passing over the new conversation with name: " + seededConversation.name
-    );
+    console.log('Conversation seeded')
+    console.log('Passing over the new conversation with name: ' + seededConversation.name)
 
     // creates new conversation, .then is for confirmation on creation.
     // note the usage of transfereables here to expose the full conversation data and give access to the id and other
@@ -57,7 +54,7 @@ export function createNewConversation(
         }
       });
   } catch (error) {
-    console.error("An error occurred while creating a conversation:", error);
+    console.error('An error occurred while creating a conversation:', error);
   }
 }
 
