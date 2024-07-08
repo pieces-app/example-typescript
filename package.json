@@ -18,7 +18,9 @@
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
     "ts-node": "^10.9.1",
-    "jest-environment-jsdom": "^29.7.0"
+    "jest-environment-jsdom": "^29.7.0",
+    "rehype-sanitize": "6.0.0",
+    "react-markdown": "9.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.2.0",
