@@ -14,7 +14,7 @@ const useVersion = (key: string): string => {
         setVersion(storedVersion)
       }
     } catch (error) {
-      throw error
+      throw new Error('Error assessing the local storage')
     }
   }, [key])
 
