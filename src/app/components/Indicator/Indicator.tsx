@@ -10,8 +10,7 @@ interface IndicatorProps {
   isConnected: boolean
 }
 
-// this is your indicator badge that we will manipulate through the initial connect call. it will either
-// be green or red depending on the current status.
+
 
 export function Indicator({ isConnected }: IndicatorProps): React.JSX.Element {
   const osVersion = useVersion('version')
