@@ -1,6 +1,8 @@
 import * as React from "react";
 import "./indicator.css";
 
+import { useOsVersion }  from './useOsVersion'; // Import the custom hook
+
 // @ts-ignore
 import check from "../../icons/check.png";
 import { launchPiecesOS } from "../../utils/launchPiecesOS";
@@ -13,7 +15,14 @@ interface IndicatorProps {
 // be green or red depending on the current status.
 
 export const Indicator = React.memo(({ isConnected }: IndicatorProps): React.JSX.Element => {
-  const osVersion = localStorage.getItem("version");
+  const {osVersion, updateOsVersion, error} = useOsVersion(); // Destructuring the returned values
+
+  if (error) {
+    console.error("Error with localStorage:", error);
+    // Display a user-friendly error message
+    return (<div>Error retrieving OS version.</div>);
+  }
+
   return (
     <>
       <div className="center-container">
