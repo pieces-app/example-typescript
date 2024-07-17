@@ -44,6 +44,8 @@ export function App(): React.JSX.Element {
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [error, setError] = useState(null);
 
+  const [userName, setUserName] = useState(null);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
 
 
@@ -51,13 +53,16 @@ export function App(): React.JSX.Element {
   const loginUser = async () => {
     try {
       // Call the signIntoOS() method to initiate the login process
-      await osApi.signIntoOS();
+      const userDetails = await osApi.signIntoOS();
+      setUserName(userDetails.name);
       setIsLoggedIn(true); // Update login status
+
     } catch (error) {
       console.error("Error logging in:", error);
       // Handle login error
     }
   };
+
 
   // Function to handle user logout
   const logoutUser = async () => {
@@ -209,12 +214,25 @@ export function App(): React.JSX.Element {
 
   return (
     <>
-    { isLoggedIn ? (
-          <div className="container">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h1 style={{ textAlign: "left" }}>Welcome to Your own Copilot</h1>
-              <button  className="logoutBtn" onClick={logoutUser}>Logout</button>
-            </div>
+    {isLoggedIn && userName ? (
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <h1 style={{ textAlign: "left" }}>Welcome to Your own Copilot, {userName}</h1>
+    <button className="logoutBtn " onClick={logoutUser}>Logout</button>
+  </div>
+) : (
+  <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <h2 style={{ textAlign: "left" }}>Please Login to use Pieces Copilot</h2>
+    <button
+      className="loginBtn "
+      onClick={loginUser}
+    >
+      Login
+    </button>
+  </div>
+)}
+
+
+      <div className="container">
       <Header isConnected={ !error} />
       {error && <div className="error-container"> Pieces OS is not running in the background. Click You're Not Connected to connect </div>}
         <div className="flex-container">
@@ -279,17 +297,6 @@ export function App(): React.JSX.Element {
         <CopilotChat />
         </div>
       </div>
-      ):(
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h1 style={{ textAlign: "left" }}>Please Login to use Pieces Copilot</h1>
-          <button
-            className="loginBtn"
-            onClick={loginUser}
-          >
-            Login
-          </button>
-        </div>
-      )}
     </>
   );
 }

@@ -1,11 +1,11 @@
 /* <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"> */
 .loginBtn {
-  font-size: large;
+  font-size: medium;
   color: white;
   height: 48px; /* Adjust height as needed */
   border-radius: 10px;
   border: none;
-  padding: 0 40px;
+  padding: 6px 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,12 +14,12 @@
   background-color: green;
 }
 .logoutBtn {
-  font-size: large;
+  font-size: medium;
   color: white;
   height: 48px; /* Adjust height as needed */
   border-radius: 10px;
   border: none;
-  padding: 0 40px;
+  padding:  6px 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,6 +27,8 @@
   transition: background-color 0.3s ease;
   background-color: red;
 }
+
+
 
 html {
   font-family: "Roboto", sans-serif;
