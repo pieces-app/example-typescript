@@ -55,8 +55,7 @@ export function App(): React.JSX.Element {
       // Call the signIntoOS() method to initiate the login process
       const userDetails = await osApi.signIntoOS();
       setUserName(userDetails.name);
-      setIsLoggedIn(true); // Update login status
-
+      setIsLoggedIn(true); 
     } catch (error) {
       console.error("Error logging in:", error);
       // Handle login error
@@ -180,6 +179,8 @@ export function App(): React.JSX.Element {
       applicationData = _t.application;
       setAppData(applicationData);
       let osVersion = _t.health.os.version
+      setUserName(_t.user.name);
+      setIsLoggedIn(true); 
       console.log('Application Data: ', applicationData);
       localStorage.setItem("version", osVersion)
       // define the indicator now that it exists.
@@ -214,23 +215,22 @@ export function App(): React.JSX.Element {
 
   return (
     <>
-    {isLoggedIn && userName ? (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h1 style={{ textAlign: "left" }}>Welcome to Your own Copilot, {userName}</h1>
-    <button className="logoutBtn " onClick={logoutUser}>Logout</button>
-  </div>
-) : (
-  <div style={{ display: "flex", justifyContent: "space-between" }}>
-    <h2 style={{ textAlign: "left" }}>Please Login to use Pieces Copilot</h2>
-    <button
-      className="loginBtn "
-      onClick={loginUser}
-    >
-      Login
-    </button>
-  </div>
-)}
-
+        {isLoggedIn && userName ? (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h1 style={{ textAlign: "left" }}>Welcome to Your own Copilot, {userName}</h1>
+          <button className="logoutBtn " onClick={logoutUser}>Logout</button>
+        </div>
+        ) : (
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <h2 style={{ textAlign: "left" }}>Please Login to use Pieces Copilot</h2>
+            <button
+              className="loginBtn"
+              onClick={loginUser}
+            >
+              Login
+            </button>
+          </div>
+        )}
 
       <div className="container">
       <Header isConnected={ !error} />
