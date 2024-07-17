@@ -179,7 +179,7 @@ export function App(): React.JSX.Element {
       applicationData = _t.application;
       setAppData(applicationData);
       let osVersion = _t.health.os.version
-      setUserName(_t.user.name);
+      setUserName(_t?.user?.name);
       setIsLoggedIn(true); 
       console.log('Application Data: ', applicationData);
       localStorage.setItem("version", osVersion)
@@ -217,7 +217,7 @@ export function App(): React.JSX.Element {
     <>
         {isLoggedIn && userName ? (
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h1 style={{ textAlign: "left" }}>Welcome to Your own Copilot, {userName}</h1>
+              <h2 style={{ textAlign: "left" }}>Welcome to your own copilot, {userName}</h2>
           <button className="logoutBtn " onClick={logoutUser}>Logout</button>
         </div>
         ) : (

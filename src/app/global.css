@@ -2,7 +2,7 @@
 .loginBtn {
   font-size: medium;
   color: white;
-  height: 48px; /* Adjust height as needed */
+  height: 36px; /* Adjust height as needed */
   border-radius: 10px;
   border: none;
   padding: 6px 12px;
@@ -16,7 +16,7 @@
 .logoutBtn {
   font-size: medium;
   color: white;
-  height: 48px; /* Adjust height as needed */
+  height: 36px; /* Adjust height as needed */
   border-radius: 10px;
   border: none;
   padding:  6px 12px;
