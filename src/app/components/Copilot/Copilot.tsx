@@ -8,6 +8,7 @@ import "./Copilot.css";
 import { applicationData } from "../../App";
 import CopilotStreamController from '../../controllers/copilotStreamController';
 import Markdown from '../ResponseFormat/Markdown';
+import { config } from '../../../platform.config';
 
 
 let GlobalConversationID: string;
@@ -30,7 +31,7 @@ export function createNewConversation() {
     // creates new conversation, .then is for confirmation on creation.
     // note the usage of transfereables here to expose the full conversation data and give access to the id and other
     // conversation values.
-    new Pieces.ConversationsApi().conversationsCreateSpecificConversationRaw({transferables: true, seededConversation}).then((_c)  => {
+    new Pieces.ConversationsApi(config).conversationsCreateSpecificConversationRaw({transferables: true, seededConversation}).then((_c)  => {
       console.log('Conversation created! : Here is the response:');
       console.log(_c);
 
@@ -106,7 +107,7 @@ export function CopilotChat(): React.JSX.Element {
     const getInitialChat = async () => {
       let _name: string;
 
-      await new Pieces.ConversationsApi()
+      await new Pieces.ConversationsApi(config)
         .conversationsSnapshot({})
         .then((output) => {
           if (
