@@ -46,9 +46,9 @@ export function App(): React.JSX.Element {
 
   const [userName, setUserName] = useState(null);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
-
-
+  const [isLoggedIn, setIsLoggedIn] = useState(null); // State to track login status
+  const [isLoading, setIsLoading] = useState(true);
+  
   // Function to handle user login
   const loginUser = async () => {
     try {
@@ -176,11 +176,12 @@ export function App(): React.JSX.Element {
       // for some reason i had to parse the stringified full_context object to get correct typing.
       full_context = __;
       let _t = JSON.parse(JSON.stringify(full_context));
+      setUserName(_t?.user?.name);
+      setIsLoggedIn(true); 
+      setIsLoading(false);
       applicationData = _t.application;
       setAppData(applicationData);
       let osVersion = _t.health.os.version
-      setUserName(_t?.user?.name);
-      setIsLoggedIn(true); 
       console.log('Application Data: ', applicationData);
       localStorage.setItem("version", osVersion)
       // define the indicator now that it exists.
@@ -213,6 +214,9 @@ export function App(): React.JSX.Element {
 
   const filteredArray = array.filter(item => searchTerm === '' || item.name.includes(searchResult));
 
+  if(isLoading){
+    return null ;
+  }
   return (
     <>
         {isLoggedIn && userName ? (
