@@ -319,9 +319,9 @@ export function App(): React.JSX.Element {
         </div>
 
         {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
-        <div className="copilot-container">
-        <CopilotChat />
-        </div>
+       
+            <CopilotChat />
+       
       </div>
     </>
   );
