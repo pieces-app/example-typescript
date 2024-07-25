@@ -86,7 +86,7 @@ export function CopilotChat(): React.JSX.Element {
               setConversations(allConversations);
               // console.log('allConversations', allConversations);
               if (allConversations.length > 0) {
-                  const { id, name } = allConversations[0];
+                  const { id, name, messages } = allConversations[0];
                   GlobalConversationID = id;
                   setChatSelected(name);
               }
@@ -103,6 +103,22 @@ export function CopilotChat(): React.JSX.Element {
     if (selectedConversation) {
       GlobalConversationID = selectedId;
       setChatSelected(selectedConversation.name);
+      const getConversationMessage = async (selectedId) => {
+        try {
+          const {rawMessages} = await piecesClient.getConversation({
+            conversationId: selectedId,
+            includeRawMessages: true,
+          });
+          // console.log("getMessages === ",rawMessages);
+          if (rawMessages.length>1) {
+            setMessage(rawMessages[1].message)
+          }
+          else setMessage("No previous conversation history, please ask the question below.");
+      } catch (error) {
+          console.error('Error fetching conversations:', error);
+      }
+      }
+      getConversationMessage(selectedId);
     }
   };
 
