@@ -4,7 +4,7 @@ import * as Pieces from "@pieces.app/pieces-os-client";
 import {Application} from "@pieces.app/pieces-os-client";
 import {DataTextInput, DeleteAssetButton, RenameAssetInput} from './components/TextInput/TextInput';
 import {Header} from './components/Header/Header'
-import {CopilotChat, piecesClient} from './components/Copilot/Copilot'
+import {CopilotChat} from './components/Copilot/Copilot'
 import {connect} from './utils/Connect'
 import { Indicator } from "./components/Indicator/Indicator";
 import "./global.css";

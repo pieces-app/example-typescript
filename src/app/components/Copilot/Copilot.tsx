@@ -1,14 +1,11 @@
 import * as React from 'react'
 import {useEffect, useState} from 'react'
-import * as Pieces from "@pieces.app/pieces-os-client";
 import "./Copilot.css";
 
 import Markdown from '../ResponseFormat/Markdown';
-import { PiecesClient } from 'pieces-copilot-sdk';
-import { BASE_URL } from '../../../platform.config';
+import { piecesClient } from '../../../platform.config';
 
 // Replace 'your_base_url' with your actual base URL
-export const piecesClient = new PiecesClient({ baseUrl: BASE_URL });
 
 let GlobalConversationID: string;
 
