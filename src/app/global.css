@@ -1,4 +1,36 @@
 /* <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"> */
+.loginBtn {
+  margin-top: 15px;
+  font-size: medium;
+  color: white;
+  height: 36px; /* Adjust height as needed */
+  border-radius: 10px;
+  border: none;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: green;
+}
+.logoutBtn {
+  margin-top: 15px;
+  font-size: medium;
+  color: white;
+  height: 36px; /* Adjust height as needed */
+  border-radius: 10px;
+  border: none;
+  padding:  6px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: red;
+}
+
+
 
 html {
   font-family: "Roboto", sans-serif;

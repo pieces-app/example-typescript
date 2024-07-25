@@ -10,7 +10,9 @@ import { Indicator } from "./components/Indicator/Indicator";
 import CopilotStreamController from "./controllers/copilotStreamController";
 import "./global.css";
 import WorkflowActivityList from "./components/WorkflowActivity";
+import { OSApi } from "@pieces.app/pieces-os-client";
 
+const osApi = new OSApi(); // Create an instance of the OSApi
 
 // types
 type LocalAsset = {
@@ -27,7 +29,7 @@ type FormHandler = (event: React.BaseSyntheticEvent) => void;
 //=============================[GLOBALS]================================//
 let full_context: JSON;
 export var applicationData: Application;
-let _indicator: HTMLElement;
+let _indicator: HTMLElement | null = null;
 let snippetList: Array<LocalAsset>;
 
 // you primary App function where all react elements render at their core.
@@ -42,6 +44,36 @@ export function App(): React.JSX.Element {
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [error, setError] = useState(null);
 
+  const [userName, setUserName] = useState(null);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(null); // State to track login status
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Function to handle user login
+  const loginUser = async () => {
+    try {
+      // Call the signIntoOS() method to initiate the login process
+      const userDetails = await osApi.signIntoOS();
+      setUserName(userDetails.name);
+      setIsLoggedIn(true); 
+    } catch (error) {
+      console.error("Error logging in:", error);
+      // Handle login error
+    }
+  };
+
+
+  // Function to handle user logout
+  const logoutUser = async () => {
+    try {
+      // Call the signOutOfOS() method to initiate the logout process
+      await osApi.signOutOfOS();
+      setIsLoggedIn(false); // Update login status
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   const refresh = (_newAsset: LocalAsset) => {
     setArray(prevArray => [...prevArray, _newAsset])
   }
@@ -49,7 +81,7 @@ export function App(): React.JSX.Element {
   useEffect(() => {
     refreshSnippetList();
     CopilotStreamController.getInstance();
-    }, []);
+}, []);
 
   const clearArray = () => {
     setArray([])
@@ -90,29 +122,28 @@ export function App(): React.JSX.Element {
       }
     }
   
-  
   async function searchSnippetList(snippetName: string) {
     try {
       const searchedAssets = await new Pieces.SearchApi().fullTextSearch({ query: snippetName });
-      
-      // Check if there are no matching snippets 
+
+      // Check if there are no matching snippets
       if (searchedAssets.iterable.length === 0) {
         return 'No matching snippets found';
       }
 
       // get the "ID" or identifier of the first match on the string you passed in as the query:
       let firstSearchMatchAssetIdentifier = searchedAssets.iterable[0].identifier;
-  
+
       let matchName: String;
-  
+
       // take that identifier to get your assets name using the Pieces.AssetApi()
       const asset = await new Pieces.AssetApi().assetSnapshot({asset: firstSearchMatchAssetIdentifier});
-  
+
       // assign that name to the matchName variable:
       matchName = asset.name;
       console.log("the matchName is" + matchName);
-  
-      // then you can do whatever you would like with that match:   
+
+      // then you can do whatever you would like with that match:
       return matchName;
     } catch (error) {
       console.error(error);
@@ -145,6 +176,9 @@ export function App(): React.JSX.Element {
       // for some reason i had to parse the stringified full_context object to get correct typing.
       full_context = __;
       let _t = JSON.parse(JSON.stringify(full_context));
+      setUserName(_t?.user?.name);
+      setIsLoggedIn(true); 
+      setIsLoading(false);
       applicationData = _t.application;
       setAppData(applicationData);
       let osVersion = _t.health.os.version
@@ -152,16 +186,19 @@ export function App(): React.JSX.Element {
       localStorage.setItem("version", osVersion)
       // define the indicator now that it exists.
       _indicator = document.getElementById("indicator");
-    
+
       // conditional for the response back on application.
       // TODO: add some better error handling components and log - abstract the connect to its own file as well.
+      // Inside the useEffect hook, ensure _indicator is not null before accessing its properties
       if (_indicator != null) {
         __ != undefined ? _indicator.style.backgroundColor = "green" : _indicator.style.backgroundColor = "red";
       }
-      
-      _indicator.firstElementChild.innerHTML = __ != undefined ? "You're Connected!" : "You're Not Connected";
-    
-      // @agrim implemented - Upon connecting to the Pieces OS, there is a need to enhance the user experience by implementing a timer 
+
+      // Accessing firstElementChild property with null check
+      if (_indicator != null && _indicator.firstElementChild != null) {
+        _indicator.firstElementChild.innerHTML = __ != undefined ? "You're Connected!" : "You're Not Connected";
+}
+      // @agrim implemented - Upon connecting to the Pieces OS, there is a need to enhance the user experience by implementing a timer
       // that automatically hides the "You're Connected" text and shrinks the button after a certain duration
       let time = 3000;
       setTimeout(() => {
@@ -177,7 +214,28 @@ export function App(): React.JSX.Element {
 
   const filteredArray = array.filter(item => searchTerm === '' || item.name.includes(searchResult));
 
+  if(isLoading){
+    return null ;
+  }
   return (
+    <>
+        {isLoggedIn && userName ? (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <h2 style={{ textAlign: "left" }}>Welcome to your own copilot, {userName}</h2>
+          <button className="logoutBtn " onClick={logoutUser}>Logout</button>
+        </div>
+        ) : (
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <h2 style={{ textAlign: "left" }}>Please Login to use Pieces Copilot</h2>
+            <button
+              className="loginBtn"
+              onClick={loginUser}
+            >
+              Login
+            </button>
+          </div>
+        )}
+
       <div className="container">
       <Header isConnected={ !error} />
       {error && <div className="error-container"> Pieces OS is not running in the background. Click You're Not Connected to connect </div>}
@@ -223,8 +281,8 @@ export function App(): React.JSX.Element {
             ):
               <div className="white-text">No matching snippets found.</div>
             }
+              </div>
             </div>
-          </div>
 
           <div className="snippet-grid-container">
               <form onSubmit={handleSearch}>
@@ -234,15 +292,15 @@ export function App(): React.JSX.Element {
             <h3 className="snippets-heading-2">Create a New Snippet</h3>
             <DataTextInput applicationData={appData}/>
             <RenameAssetInput assetID={((selectedIndex < array.length && selectedIndex!=-1) ? array[selectedIndex].id : "")}/>
+            </div>
           </div>
-        </div>
         </div>
 
         {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
         <div className="copilot-container">
-            <CopilotChat />
+        <CopilotChat />
         </div>
       </div>
-  )
+    </>
+  );
 }
-
