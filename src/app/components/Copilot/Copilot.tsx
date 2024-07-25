@@ -5,6 +5,7 @@ import "./Copilot.css";
 
 import Markdown from '../ResponseFormat/Markdown';
 import { PiecesClient } from 'pieces-copilot-sdk';
+
 // Replace 'your_base_url' with your actual base URL
 export const BASE_URL = 'http://localhost:1000';
 export const piecesClient = new PiecesClient({ baseUrl: BASE_URL });
@@ -48,6 +49,8 @@ export function CopilotChat(): React.JSX.Element {
   const [chatSelected, setChatSelected] = useState('no chat selected');
   const [chatInputData, setData] = useState('');
   const [message, setMessage] = useState<string>('');
+  const [conversations, setConversations] = useState([]);
+
 
   // handles the data changes on the chat input.
   const handleCopilotChatInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -80,6 +83,7 @@ export function CopilotChat(): React.JSX.Element {
       const getInitialChat = async () => {
           try {
               const allConversations = await piecesClient.getConversations();
+              setConversations(allConversations);
               // console.log('allConversations', allConversations);
               if (allConversations.length > 0) {
                   const { id, name } = allConversations[0];
@@ -93,6 +97,15 @@ export function CopilotChat(): React.JSX.Element {
       getInitialChat();
   }, []);
 
+  const handleConversationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = event.target.value;
+    const selectedConversation = conversations.find(convo => convo.id === selectedId);
+    if (selectedConversation) {
+      GlobalConversationID = selectedId;
+      setChatSelected(selectedConversation.name);
+    }
+  };
+
   return (
     <div className="container">
       <div className="header">
@@ -100,10 +113,15 @@ export function CopilotChat(): React.JSX.Element {
           <h1>Copilot Chat</h1>
           <button className="button" onClick={handleNewConversation}>Create Fresh Conversation</button>
         </div>
-        <div className="footer">
-          <button>back</button>
-          <p>{chatSelected}</p>
-          <button>forward</button>
+        <div>
+          Select your chat: 
+        <select onChange={handleConversationChange} value={GlobalConversationID}>
+        {conversations.map((conversation) => (
+          <option key={conversation.id} value={conversation.id}>
+            {conversation.name}
+          </option>
+        ))}
+      </select>
         </div>
       </div>
       <div className="chat-box">
