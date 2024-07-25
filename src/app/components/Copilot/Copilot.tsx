@@ -5,9 +5,9 @@ import "./Copilot.css";
 
 import Markdown from '../ResponseFormat/Markdown';
 import { PiecesClient } from 'pieces-copilot-sdk';
+import { BASE_URL } from '../../../platform.config';
 
 // Replace 'your_base_url' with your actual base URL
-export const BASE_URL = 'http://localhost:1000';
 export const piecesClient = new PiecesClient({ baseUrl: BASE_URL });
 
 let GlobalConversationID: string;
