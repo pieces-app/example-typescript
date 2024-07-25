@@ -1,4 +1,15 @@
 /* Container styles */
+.copilot-container {
+  border: 2px solid black;
+  background-color: #0e1111;
+  height: 600px;
+  padding: 20px;
+  border-radius: 9px;
+  display: flex;
+  box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
 .container {
     width: -webkit-fill-available;
   }
