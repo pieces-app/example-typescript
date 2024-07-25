@@ -89,6 +89,7 @@ export function CopilotChat(): React.JSX.Element {
                   const { id, name, messages } = allConversations[0];
                   GlobalConversationID = id;
                   setChatSelected(name);
+                  getConversationMessage(id);
               }
           } catch (error) {
               console.error('Error fetching conversations:', error);
@@ -97,27 +98,29 @@ export function CopilotChat(): React.JSX.Element {
       getInitialChat();
   }, []);
 
+  const getConversationMessage = async (selectedId) => {
+    try {
+      const {rawMessages} = await piecesClient.getConversation({
+        conversationId: selectedId,
+        includeRawMessages: true,
+      });
+      // console.log("getMessages === ",rawMessages);
+      if (rawMessages.length>1) {
+        setMessage(rawMessages[1].message)
+      }
+      else setMessage("No previous conversation history, please ask the question below.");
+  } catch (error) {
+      console.error('Error fetching conversations:', error);
+  }
+  }
+
   const handleConversationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = event.target.value;
     const selectedConversation = conversations.find(convo => convo.id === selectedId);
     if (selectedConversation) {
       GlobalConversationID = selectedId;
       setChatSelected(selectedConversation.name);
-      const getConversationMessage = async (selectedId) => {
-        try {
-          const {rawMessages} = await piecesClient.getConversation({
-            conversationId: selectedId,
-            includeRawMessages: true,
-          });
-          // console.log("getMessages === ",rawMessages);
-          if (rawMessages.length>1) {
-            setMessage(rawMessages[1].message)
-          }
-          else setMessage("No previous conversation history, please ask the question below.");
-      } catch (error) {
-          console.error('Error fetching conversations:', error);
-      }
-      }
+      
       getConversationMessage(selectedId);
     }
   };
