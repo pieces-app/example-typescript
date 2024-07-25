@@ -51,7 +51,7 @@ export function App(): React.JSX.Element {
 
   const handlePreview = async (snippetId:string) => {
     try {
-      const asset = await new Pieces.AssetApi().assetSnapshot({ asset: snippetId });
+      const asset = await new Pieces.AssetApi(config).assetSnapshot({ asset: snippetId });
       console.log('asset ===', asset)
       setPreviewData(asset);
       setShowModal(true);
