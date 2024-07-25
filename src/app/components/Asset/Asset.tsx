@@ -1,6 +1,7 @@
 import * as Pieces from "@pieces.app/pieces-os-client";
 import { SeededAsset, SeedTypeEnum } from "@pieces.app/pieces-os-client";
 import { Application } from "@pieces.app/pieces-os-client";
+import { config } from "../../../platform.config";
 
 type LocalAsset = {
   name: string,
@@ -32,7 +33,7 @@ export async function createAsset(applicationData: Application, data: string, na
 
   // make your api call.
   try {
-    const _a = await new Pieces.AssetsApi().assetsCreateNewAsset({ seed: _seed });
+    const _a = await new Pieces.AssetsApi(config).assetsCreateNewAsset({ seed: _seed });
     console.log("well howdy", _a);
   } catch (error) {
     console.error("Error creating asset:", error);
@@ -43,11 +44,11 @@ export async function createAsset(applicationData: Application, data: string, na
 export async function deleteAsset(_id: String, setArray: Function) {
   const newAssetsList: Array<LocalAsset> = [];
   try {
-    const _assetList = await new Pieces.AssetsApi().assetsSnapshot({});
+    const _assetList = await new Pieces.AssetsApi(config).assetsSnapshot({});
     for (let i = 0; i < _assetList.iterable.length; i++) {
       if (_assetList.iterable[i].id == _id) {
         try {
-          await new Pieces.AssetsApi().assetsDeleteAsset({ asset: _assetList.iterable[i].id });
+          await new Pieces.AssetsApi(config).assetsDeleteAsset({ asset: _assetList.iterable[i].id });
           console.log(_id);
         } catch (error) {
           console.error("Error deleting asset:", error);
@@ -74,13 +75,13 @@ export async function deleteAsset(_id: String, setArray: Function) {
 // then use the _id to select the snippet from the list of all snippets.
 export async function renameAsset(_name: string, _id: String) {
   try {
-    const _assetList = await new Pieces.AssetsApi().assetsSnapshot({});
+    const _assetList = await new Pieces.AssetsApi(config).assetsSnapshot({});
     for (let i = 0; i < _assetList.iterable.length; i++) {
       if (_assetList.iterable[i].id == _id) {
         let _asset = _assetList.iterable[i];
         _asset.name = _name;
         try {
-          const _updated = await new Pieces.AssetApi().assetUpdate({ asset: _asset });
+          const _updated = await new Pieces.AssetApi(config).assetUpdate({ asset: _asset });
           console.log("updated:", _updated);
         } catch (error) {
           console.error("Error updating asset:", error);

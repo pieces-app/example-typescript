@@ -11,7 +11,7 @@ import CopilotStreamController from "./controllers/copilotStreamController";
 import "./global.css";
 import WorkflowActivityList from "./components/WorkflowActivity";
 import { OSApi } from "@pieces.app/pieces-os-client";
-
+import { config } from "../platform.config";
 const osApi = new OSApi(); // Create an instance of the OSApi
 
 // types
@@ -104,7 +104,7 @@ export function App(): React.JSX.Element {
   };
     async function refreshSnippetList() {
       try {
-        const assets = await new Pieces.AssetsApi().assetsSnapshot({});
+        const assets = await new Pieces.AssetsApi(config).assetsSnapshot({});
         clearArray();
     
         for (let i = 0; i < assets.iterable.length; i++) {
@@ -124,9 +124,9 @@ export function App(): React.JSX.Element {
   
   async function searchSnippetList(snippetName: string) {
     try {
-      const searchedAssets = await new Pieces.SearchApi().fullTextSearch({ query: snippetName });
-
-      // Check if there are no matching snippets
+      const searchedAssets = await new Pieces.SearchApi(config).fullTextSearch({ query: snippetName });
+      
+      // Check if there are no matching snippets 
       if (searchedAssets.iterable.length === 0) {
         return 'No matching snippets found';
       }
@@ -137,8 +137,8 @@ export function App(): React.JSX.Element {
       let matchName: String;
 
       // take that identifier to get your assets name using the Pieces.AssetApi()
-      const asset = await new Pieces.AssetApi().assetSnapshot({asset: firstSearchMatchAssetIdentifier});
-
+      const asset = await new Pieces.AssetApi(config).assetSnapshot({asset: firstSearchMatchAssetIdentifier});
+  
       // assign that name to the matchName variable:
       matchName = asset.name;
       console.log("the matchName is" + matchName);

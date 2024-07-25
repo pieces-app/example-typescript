@@ -1,5 +1,6 @@
 
 import * as Pieces from "@pieces.app/pieces-os-client";
+import { BASE_URL, WS_URL } from "../../platform.config";
 
 export type MessageOutput = {
   answer: string;
@@ -51,7 +52,7 @@ export default class CopilotStreamController {
     if (!this.ws) {
       this.connect();
     } // need to connect the socket if it's not established.
-    await fetch(`http://localhost:1000/.well-known/health`).catch(() => {
+    await fetch(`${BASE_URL}/.well-known/health`).catch(() => {
       // @TODO add error handling here
     });
 
@@ -70,7 +71,7 @@ export default class CopilotStreamController {
    * Connects the websocket, handles all message callbacks, error handling, and rendering.
    */
   private connect() {
-    this.ws = new WebSocket(`ws://localhost:1000/qgpt/stream`);
+    this.ws = new WebSocket(`${WS_URL}/qgpt/stream`);
 
     let totalMessage = '';
     let relevantSnippets: Pieces.RelevantQGPTSeed[] = [];

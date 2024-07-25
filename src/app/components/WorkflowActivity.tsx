@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as Pieces from "@pieces.app/pieces-os-client";
 import ActivityCard from './ActivityCard';
+import { config } from '../../platform.config';
 
 interface WorkflowActivity {
     id: string;
@@ -20,7 +21,7 @@ const WorkflowActivityList: React.FC = () => {
     }
 
     React.useEffect(() => {
-        new Pieces.ActivitiesApi().activitiesSnapshot({}).then((activities) => {
+        new Pieces.ActivitiesApi(config).activitiesSnapshot({}).then((activities) => {
             console.log(activities);
             clearActivities();
             for(let i = 0; i < activities.iterable.length; i++){
