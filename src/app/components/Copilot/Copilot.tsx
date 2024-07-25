@@ -104,9 +104,12 @@ export function CopilotChat(): React.JSX.Element {
         conversationId: selectedId,
         includeRawMessages: true,
       });
-      // console.log("getMessages === ",rawMessages);
+      console.log("getMessages === ",rawMessages);
       if (rawMessages.length>1) {
-        setMessage(rawMessages[1].message)
+        if(rawMessages[1].isUserMessage){
+          setMessage(rawMessages[2].message)
+        }
+        else setMessage(rawMessages[1].message)
       }
       else setMessage("No previous conversation history, please ask the question below.");
   } catch (error) {
