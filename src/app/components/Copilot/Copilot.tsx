@@ -1,55 +1,21 @@
 import * as React from 'react'
 import {useEffect, useState} from 'react'
-import * as Pieces from "@pieces.app/pieces-os-client";
-import {ConversationTypeEnum, SeededConversation} from "@pieces.app/pieces-os-client";
 import "./Copilot.css";
 
-
-import { applicationData } from "../../App";
-import CopilotStreamController from '../../controllers/copilotStreamController';
 import Markdown from '../ResponseFormat/Markdown';
-import { config } from '../../../platform.config';
+import { piecesClient } from '../../../platform.config';
 
+// Replace 'your_base_url' with your actual base URL
 
 let GlobalConversationID: string;
 
-
 // going to use get all conversations with a few extra steps to store the current conversations locally.
-export function createNewConversation() {
+export async function createNewConversation() {
   try {
-
-    // logs --> CREATING CONVERSATION
-    console.log('Begin creating conversation...')
-
-    // to create a new conversation, you need to first pass in a seeded conversation in the request body.
-    // the only mandatory parameter is the ConversationTypeEnum.Copilot value.
-    let seededConversation: SeededConversation = { type: ConversationTypeEnum.Copilot, name: "Demo Seeded Conversation" }
-
-    console.log('Conversation seeded')
-    console.log('Passing over the new conversation with name: ' + seededConversation.name)
-
-    // creates new conversation, .then is for confirmation on creation.
-    // note the usage of transfereables here to expose the full conversation data and give access to the id and other
-    // conversation values.
-    new Pieces.ConversationsApi(config).conversationsCreateSpecificConversationRaw({transferables: true, seededConversation}).then((_c)  => {
-      console.log('Conversation created! : Here is the response:');
-      console.log(_c);
-
-      // check and ensure the response back is clean.
-      if (_c.raw.ok == true && _c.raw.status == 200) {
-        console.log('CLEAN RESPONSE BACK.')
-        _c.value().then(_conversation => {
-          console.log('Returning new conversation values.');
-          // console.log('ID | ' + _conversation.id);
-          // console.log('NAME | ' + _conversation.name);
-          // console.log('CREATED | ' + _conversation.created.readable);
-          // console.log('ID: ' + _conversation.);
-
-          // Set the conversation variable here for the local file:
-          GlobalConversationID = _conversation.id;
-        })
-      }
-    })
+    const newConversation = await piecesClient.createConversation({
+      name: 'Hello World Conversation'
+    });
+    GlobalConversationID = newConversation.conversation.id;
   } catch (error) {
     console.error('An error occurred while creating a conversation:', error);
   }
@@ -77,9 +43,11 @@ export function createNewConversation() {
 //   })
 // }
 export function CopilotChat(): React.JSX.Element {
-  const [chatSelected, setChatSelected] = useState('-- no chat selected --');
+  const [chatSelected, setChatSelected] = useState('no chat selected');
   const [chatInputData, setData] = useState('');
   const [message, setMessage] = useState<string>('');
+  const [conversations, setConversations] = useState([]);
+
 
   // handles the data changes on the chat input.
   const handleCopilotChatInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -87,14 +55,19 @@ export function CopilotChat(): React.JSX.Element {
   };
 
   // handles the ask button click.
-  const handleCopilotAskbuttonClick = async (chatInputData, setMessage)=>{
-    CopilotStreamController.getInstance().askQGPT({
-      query: chatInputData,
-      setMessage,
-    });
-    setData("");
-  }
-
+  const handleCopilotAskButtonClick = async (chatInputData) => {
+    try {
+      const { text } = await piecesClient.promptConversation({
+        message: chatInputData,
+        conversationId: GlobalConversationID
+      });
+      setMessage(text);
+      setData("");
+    } catch (error) {
+      console.error('An error occurred while prompting the conversation:', error);
+    }
+  };
+  
   // handles the new conversation button click.
   const handleNewConversation = async () => {
     createNewConversation();
@@ -104,28 +77,53 @@ export function CopilotChat(): React.JSX.Element {
 
   // for setting the initial copilot chat that takes place on page load.
   useEffect(() => {
-    const getInitialChat = async () => {
-      let _name: string;
-
-      await new Pieces.ConversationsApi(config)
-        .conversationsSnapshot({})
-        .then((output) => {
-          if (
-            output.iterable.length > 0 &&
-            output.iterable.at(0).hasOwnProperty("name")
-          ) {
-            _name = output.iterable.at(0).name;
-            GlobalConversationID = output.iterable.at(0).id;
+      const getInitialChat = async () => {
+          try {
+              const allConversations = await piecesClient.getConversations();
+              setConversations(allConversations);
+              // console.log('allConversations', allConversations);
+              if (allConversations.length > 0) {
+                  const { id, name, messages } = allConversations[0];
+                  GlobalConversationID = id;
+                  setChatSelected(name);
+                  getConversationMessage(id);
+              }
+          } catch (error) {
+              console.error('Error fetching conversations:', error);
           }
-          return _name;
-        });
-        
-      if (_name) {
-        setChatSelected(_name);
-      }
-    };
-    getInitialChat();
+      };
+      getInitialChat();
   }, []);
+
+  const getConversationMessage = async (selectedId) => {
+    try {
+      const {rawMessages} = await piecesClient.getConversation({
+        conversationId: selectedId,
+        includeRawMessages: true,
+      });
+      console.log("getMessages === ",rawMessages);
+      if (rawMessages.length>1) {
+        if(rawMessages[1].isUserMessage){
+          setMessage(rawMessages[2].message)
+        }
+        else setMessage(rawMessages[1].message)
+      }
+      else setMessage("No previous conversation history, please ask the question below.");
+  } catch (error) {
+      console.error('Error fetching conversations:', error);
+  }
+  }
+
+  const handleConversationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = event.target.value;
+    const selectedConversation = conversations.find(convo => convo.id === selectedId);
+    if (selectedConversation) {
+      GlobalConversationID = selectedId;
+      setChatSelected(selectedConversation.name);
+      
+      getConversationMessage(selectedId);
+    }
+  };
 
   return (
     <div className="container">
@@ -134,16 +132,21 @@ export function CopilotChat(): React.JSX.Element {
           <h1>Copilot Chat</h1>
           <button className="button" onClick={handleNewConversation}>Create Fresh Conversation</button>
         </div>
-        <div className="footer">
-          <button>back</button>
-          <p>{chatSelected}</p>
-          <button>forward</button>
+        <div>
+          Select your chat: 
+        <select onChange={handleConversationChange} value={GlobalConversationID}>
+        {conversations.map((conversation) => (
+          <option key={conversation.id} value={conversation.id}>
+            {conversation.name}
+          </option>
+        ))}
+      </select>
         </div>
       </div>
       <div className="chat-box">
         <div className="text-area">
           <textarea placeholder="Type your prompt here..." value={chatInputData} onChange={handleCopilotChatInputChange}></textarea>
-          <button onClick={() => handleCopilotAskbuttonClick(chatInputData,setMessage) }>Ask</button>
+          <button onClick={() => handleCopilotAskButtonClick(chatInputData) }>Ask</button>
         </div>
         <div className="messages">
           <div>
