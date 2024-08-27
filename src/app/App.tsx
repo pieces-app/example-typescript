@@ -9,6 +9,9 @@ import {connect} from './utils/Connect'
 import { Indicator } from "./components/Indicator/Indicator";
 import "./global.css";
 import WorkflowActivityList from "./components/WorkflowActivity";
+import Modal from "./components/Asset/Modal";
+import { AiFillEye } from 'react-icons/ai';
+
 import { OSApi } from "@pieces.app/pieces-os-client";
 import { config } from "../platform.config";
 const osApi = new OSApi(); // Create an instance of the OSApi
@@ -42,6 +45,19 @@ export function App(): React.JSX.Element {
   const [array, setArray] = useState<Array<LocalAsset>>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [error, setError] = useState(null);
+  const [previewData, setPreviewData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handlePreview = async (snippetId:string) => {
+    try {
+      const asset = await new Pieces.AssetApi(config).assetSnapshot({ asset: snippetId });
+      console.log('asset ===', asset)
+      setPreviewData(asset);
+      setShowModal(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const [userName, setUserName] = useState(null);
 
@@ -270,8 +286,14 @@ export function App(): React.JSX.Element {
                   <div>
                     <h3>{item.name}</h3>
                     <div className="snippet-details">
-                      <p>{item.id}</p>
+                      {/* <p>{item.id}</p> */}
                       <p>{item.classification}</p>
+                  <button onClick={() => handlePreview(item.id)}><AiFillEye title="Preview"/></button>
+                  {showModal && (
+                      <Modal asset={previewData} onClose={() => setShowModal(false)} />
+                    )}
+                  <div>
+                </div>
                     </div>
                   </div>
                 </div>
@@ -295,9 +317,9 @@ export function App(): React.JSX.Element {
         </div>
 
         {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
-        <div className="copilot-container">
-        <CopilotChat />
-        </div>
+       
+            <CopilotChat />
+       
       </div>
     </>
   );

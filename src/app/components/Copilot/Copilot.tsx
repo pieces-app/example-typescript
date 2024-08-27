@@ -126,6 +126,7 @@ export function CopilotChat(): React.JSX.Element {
   };
 
   return (
+    <div className="copilot-container">
     <div className="container">
       <div className="header">
         <div>
@@ -154,6 +155,7 @@ export function CopilotChat(): React.JSX.Element {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
