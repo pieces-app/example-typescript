@@ -7,7 +7,6 @@ import {Header} from './components/Header/Header'
 import {CopilotChat} from './components/Copilot/Copilot'
 import {connect} from './utils/Connect'
 import { Indicator } from "./components/Indicator/Indicator";
-import CopilotStreamController from "./controllers/copilotStreamController";
 import "./global.css";
 import WorkflowActivityList from "./components/WorkflowActivity";
 import { OSApi } from "@pieces.app/pieces-os-client";
@@ -80,8 +79,7 @@ export function App(): React.JSX.Element {
 
   useEffect(() => {
     refreshSnippetList();
-    CopilotStreamController.getInstance();
-}, []);
+    }, []);
 
   const clearArray = () => {
     setArray([])
