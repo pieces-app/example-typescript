@@ -14,6 +14,8 @@ import { AiFillEye } from 'react-icons/ai';
 
 import { OSApi } from "@pieces.app/pieces-os-client";
 import { config } from "../platform.config";
+import SecretKeyForm from '../components/SecretKeyForm';
+import RetrieveSecretKey from '../components/RetrieveSecretKey';
 const osApi = new OSApi(); // Create an instance of the OSApi
 
 // types
@@ -319,6 +321,9 @@ export function App(): React.JSX.Element {
         {/* this is the copilot container. the copilot logic is inside the /components/Copilot.tsx */}
        
             <CopilotChat />
+
+            <SecretKeyForm />
+      <RetrieveSecretKey />
        
       </div>
     </>
