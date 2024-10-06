@@ -50,8 +50,8 @@ export function CopilotChat(): React.JSX.Element {
 
 
   // handles the data changes on the chat input.
-  const handleCopilotChatInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setData(event.target.value);
+  const handleCopilotChatInputChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+    setData(value);
   };
 
   // handles the ask button click.
